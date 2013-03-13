@@ -4,7 +4,7 @@
   <title><![CDATA[a lonely miner]]></title>
   <link href="http://conditional.github.com/atom.xml" rel="self"/>
   <link href="http://conditional.github.com/"/>
-  <updated>2013-03-13T17:58:03+09:00</updated>
+  <updated>2013-03-13T18:00:06+09:00</updated>
   <id>http://conditional.github.com/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
@@ -24,6 +24,13 @@
 
 <p>が大変参考になりました．<a href="http://mouapp.com/">Mou</a>便利．markdown，必要に迫られたときしか
 書いてこなかったんだけど，少しづつ慣れていきたい．</p>
+
+<p>数式のテスト(<a href="https://gist.github.com/jessykate/834610">MathJax.rb</a>利用)</p>
+
+<script type="math/tex; mode=display">
+N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
+</script>
+
 ]]></content>
   </entry>
   
