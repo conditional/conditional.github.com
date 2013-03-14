@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[a lonely miner]]></title>
-  <link href="http://conditional.github.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: iPhone | a lonely miner]]></title>
+  <link href="http://conditional.github.com/blog/categories/iphone/atom.xml" rel="self"/>
   <link href="http://conditional.github.com/"/>
   <updated>2013-03-14T21:51:53+09:00</updated>
   <id>http://conditional.github.com/</id>
@@ -45,29 +45,27 @@
 
 <p>そんでもってスクリプトの中身はこんな感じ．<code>API_KEY</code>には先ほど取得したキーを．</p>
 
-<div><script src='https://gist.github.com/5161032.js'></script>
+<p><div><script src='https://gist.github.com/5161032.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
-
+</p>
 
 <p>環境変数 <code>PROWL_NOTICE_TITLE</code>, <code>PROWL_NOTICE_CONT</code> にメッセージをセットしておくと，その中身を通知してくれます．通知を受け取りたいプロセスと環境変数の設定をラップするようなシェルスクリプトを組んでおくと良いかもしれません．<code>ARGV</code> についてはあとで説明します．</p>
 
 <h2>Example</h2>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sleep 10 && ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
-
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sleep 10 &amp;&amp; ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>という感じでプロセスを実行すると，終了時にこんな感じで通知してくれます．</p>
 
 <p><img src="http://conditional.github.com/blog/images/prowl_sleep.png"></p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ export PROWL_NOTICE_TITLE='たいとるだよ'
 </span><span class='line'>$ export PROWL_NOTICE_DESC='おわったよ〜'
-</span><span class='line'>$ ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
-
+</span><span class='line'>$ ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>とかするとこんな感じ．</p>
 
@@ -79,9 +77,9 @@
 コマンドに一定以上の時間がかかったときに自動で通知してくれます．
 今回のスクリプトに合わせてちょっと改造してみました．<code>PROWL_NOTICE_TIME</code>を適当に設定して<code>.zshrc</code>に潜ませてみてください．</p>
 
-<div><script src='https://gist.github.com/5161045.js'></script>
+<p><div><script src='https://gist.github.com/5161045.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
-
+</p>
 
 <p>とくに環境変数が設定されていない場合は，プロセスの名前と引数が通知されてきます．(<code>ARGV</code>を通してRubyスクリプトに渡されます)</p>
 
@@ -105,27 +103,6 @@
 <li><a href="https://www.prowlapp.com/">Prowl</a></li>
 <li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Start Bloging With Octopress]]></title>
-    <link href="http://conditional.github.com/blog/2013/03/13/start-bloging-with-octopress/"/>
-    <updated>2013-03-13T16:51:00+09:00</updated>
-    <id>http://conditional.github.com/blog/2013/03/13/start-bloging-with-octopress</id>
-    <content type="html"><![CDATA[<p>とりあえずはじめてみた．</p>
-
-<p><a href="http://www.miukoba.net/blog/2013/01/05/start-octopress/">Octopressはじめました - mimemo</a></p>
-
-<p>が大変参考になりました．<a href="http://mouapp.com/">Mou</a>便利．markdown，必要に迫られたときしか
-書いてこなかったんだけど，少しづつ慣れていきたい．</p>
-
-<p>数式のテスト(<a href="https://gist.github.com/jessykate/834610">MathJax.rb</a>利用)</p>
-
-<script type="math/tex; mode=display">
-N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
-</script>
 
 ]]></content>
   </entry>
