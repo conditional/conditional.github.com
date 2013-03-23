@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>a lonely miner</title>
+  <title>Posterior Regularization と Unified Expectation Maximizationについて - a lonely miner</title>
   <meta name="author" content="Koji Matsuda">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://conditional.github.com">
+  <link rel="canonical" href="http://conditional.github.com/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="a lonely miner" type="application/atom+xml">
@@ -74,15 +74,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/">Posterior Regularization と Unified Expectation Maximizationについて</a></h1>
+      <h1 class="entry-title">Posterior Regularization と Unified Expectation Maximizationについて</h1>
     
     
       <p class="meta">
@@ -105,7 +102,7 @@
   </header>
 
 
-  <div class="entry-content"><p>桜がとってもきれいですね．すずかけ台は8分咲きといったところです．ところで，仲間で行っている小規模な勉強会で</p>
+<div class="entry-content"><p>桜がとってもきれいですね．すずかけ台は8分咲きといったところです．ところで，仲間で行っている小規模な勉強会で</p>
 
 <ul>
 <li><a href="http://www.aclweb.org/anthology/N/N12/N12-1087.pdf">&#8220;Unified Expectation Maximization&#8221;</a> Samdani et al, NAACL2012</li>
@@ -183,145 +180,16 @@
 
 <p>ひさびさに負荷の高い一週間だったので，来週はすこしゆっくりしたいと思います．（日記）</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Koji Matsuda</span></span>
 
-<time datetime="2013-03-14T17:59:00+09:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>眠いですね．</p>
-
-<p>とくに機械学習のクロスバリデーションや，ごっつい集計クエリなどの時間のかかるバッチジョブを流す間，とても眠い．</p>
-
-<p>私の場合，そういう時にはディスプレイの前を離れて，お昼寝タイムにすることが多いです（基本いつも眠い）．実行時間の見積もりがつくようなジョブなら適当にアラームかけておけばよいのですが，実際はそうも行かないことも多いですよね．</p>
-
-<p>そこで，iOSデバイスにプッシュ通知を送れるアプリケーション <strong>Prowl</strong> を用いて，ジョブの終了をiPhoneに通知してくれる短いRubyスクリプトを書いてみました．ジョブ終わったらブルッと鳴って目覚めスッキリ．</p>
-
-<h2>Requirement</h2>
-
-<ul>
-<li><a href="https://www.prowlapp.com/">Prowl</a></li>
-<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
-</ul>
-
-
-<p>gem は <code>gem intall prowl</code> でインストールできます．</p>
-
-<h2>Instalation</h2>
-
-<p>まず，ProwlのウェブサイトからAPIキーを取得します．いちおう登録＆ログインが必要ですが，メールアドレスは不要のようです，ログインして，<strong>API keys</strong> のページに進むと
-フォームが二つありますが，Provider keyは第三者にキー入りアプリを配布するときに使うものなので，今回は <strong>Generate a new API key</strong> のほうでOK．Noteは空でもいいのでとにかくサブミットボタンを押すと，API keyが取得できます．</p>
-
-<p><img src="http://conditional.github.com/images/generate_prowl_apikey.png"></p>
-
-<p>そんでもってスクリプトの中身はこんな感じ．<code>API_KEY</code>には先ほど取得したキーを．</p>
-
-<div><script src='https://gist.github.com/5161032.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p>環境変数 <code>PROWL_NOTICE_TITLE</code>, <code>PROWL_NOTICE_CONT</code> にメッセージをセットしておくと，その中身を通知してくれます．通知を受け取りたいプロセスと環境変数の設定をラップするようなシェルスクリプトを組んでおくと良いかもしれません．<code>ARGV</code> についてはあとで説明します．</p>
-
-<h2>Example</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sleep 10 && ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<p>という感じでプロセスを実行すると，終了時にこんな感じで通知してくれます．</p>
-
-<p><img src="http://conditional.github.com/images/prowl_sleep.jpg" width="320" height="480"></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ export PROWL_NOTICE_TITLE='たいとるだよ'
-</span><span class='line'>$ export PROWL_NOTICE_DESC='おわったよ〜'
-</span><span class='line'>$ ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<p>とかするとこんな感じ．</p>
-
-<p><img src="http://conditional.github.com/images/prowl_with_env.jpg" width="320" height="480"></p>
-
-<h2>zsh(precmd/preexec)との組み合わせ</h2>
-
-<p>しかし，毎回コマンド打つのは面倒ですね．そこで，<a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a> で紹介されている方法を使うと，
-コマンドに一定以上の時間がかかったときに自動で通知してくれます．
-今回のスクリプトに合わせてちょっと改造してみました．<code>PROWL_NOTICE_TIME</code>を適当に設定して<code>.zshrc</code>に潜ませてみてください．</p>
-
-<div><script src='https://gist.github.com/5161045.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p>とくに環境変数が設定されていない場合は，プロセスの名前と引数が通知されてきます．(<code>ARGV</code>を通してRubyスクリプトに渡されます)</p>
-
-<h2>まとめ</h2>
-
-<ul>
-<li>眠い時でも思う存分バッチを走らせることができるRubyスクリプトを書いてみました．</li>
-<li>実行に一定時間以上かかったら自動で通知してくれるzshの設定例を紹介しました．</li>
-<li>勤務時間中の居眠りは計画的に．</li>
-</ul>
-
-
-<p>Prowlは有料(執筆現在250円)アプリですが，単に通知を受け取るだけではなく，通知を他のアプリにフォワードしてくれる機能があったり，<a href="http://www.prowlapp.com/apps.php">Chromeで開いているページを通知してくれるプラグイン</a>が用意されていたり，そこそこ遊べそうなので，今回導入してみました．</p>
-
-<p>もし同様の機能の無料アプリをご存知でしたら是非教えてください．</p>
-
-<h2>参考</h2>
-
-<ul>
-<li><a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a></li>
-<li><a href="https://www.prowlapp.com/">Prowl</a></li>
-<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -333,39 +201,44 @@
   
 
 
-<time datetime="2013-03-13T16:51:00+09:00" pubdate data-updated="true">Mar 13<span>th</span>, 2013</time>
-        
-      </p>
+<time datetime="2013-03-23T16:20:00+09:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/learning/'>learning</a>, <a class='category' href='/blog/categories/machine/'>machine</a>, <a class='category' href='/blog/categories/study/'>study</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://conditional.github.com/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/" data-via="conditional" data-counturl="http://conditional.github.com/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/" >Tweet</a>
+  
+  
+  
+</div>
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/14/take-a-nap-with-prowl/" title="Previous Post: Prowl+zshで快適お昼寝タイム">&laquo; Prowl+zshで快適お昼寝タイム</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-  <div class="entry-content"><p>とりあえずはじめてみた．</p>
-
-<p><a href="http://www.miukoba.net/blog/2013/01/05/start-octopress/">Octopressはじめました - mimemo</a></p>
-
-<p>が大変参考になりました．<a href="http://mouapp.com/">Mou</a>便利．markdown，必要に迫られたときしか
-書いてこなかったんだけど，少しづつ慣れていきたい．</p>
-
-<p>数式のテスト(<a href="https://gist.github.com/jessykate/834610">MathJax.rb</a>利用)</p>
-
-<script type="math/tex; mode=display">
-N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
-</script>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -394,6 +267,7 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -408,7 +282,10 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
       var disqus_shortname = 'condi';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://conditional.github.com/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/';
+        var disqus_url = 'http://conditional.github.com/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
