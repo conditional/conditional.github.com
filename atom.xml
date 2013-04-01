@@ -4,7 +4,7 @@
   <title><![CDATA[a lonely miner]]></title>
   <link href="http://conditional.github.com/atom.xml" rel="self"/>
   <link href="http://conditional.github.com/"/>
-  <updated>2013-03-24T14:40:14+09:00</updated>
+  <updated>2013-04-01T14:35:32+09:00</updated>
   <id>http://conditional.github.com/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
@@ -12,6 +12,146 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[グラフ結合度に基づく教師なし語義曖昧性解消について]]></title>
+    <link href="http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/"/>
+    <updated>2013-04-01T13:13:00+09:00</updated>
+    <id>http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity</id>
+    <content type="html"><![CDATA[<p>完全に春ですね．そろそろ新入生が来る時期．</p>
+
+<p>書類を整理していたら，むかし読んだ Roberto Navigli (knowledge based WSDの大家) によるgraph based unsupervised WSDに関する論文の感想が出てきたのでちょっと再編集して公開してみます．あくまでメモなので，非常に読みづらいかも．もしご興味をもって頂けましたら，元論文をあたってみてください．</p>
+
+<ul>
+<li><a href="http://wwwusers.di.uniroma1.it/~navigli/pubs/PAMI_2010_Navigli_Lapata.pdf">R. Navigli, M. Lapata. An Experimental Study of Graph Connectivity for Unsupervised Word Sense Disambiguation. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 32(4), IEEE Press, 2010, pp. 678-692.</a></li>
+</ul>
+
+
+<p>グラフの G = (V, E) をコンテキストおよび、ワードネットのネットワークから作成し，その上で 各語義 (vertexに対応)の重要度をはかるという方法に基づいたWSDに関するお話．</p>
+
+<p>具体的には、まずコンテキスト（本論文では文）内の単語の各語義をグラフのノードとして初期化し、それぞれの語義からグラフ内のほかの語義へのリンクをDFSで探し，みつかればそのルート中の語義をグラフに追加していき，その間にエッジを張る．ということを行っている．</p>
+
+<p>この操作で出来たグラフの「あるノード」の重要度が高いようであれば，その語義はコンテキスト内での重要度が高く，語義候補である可能性が高い，という直感に基づいている．</p>
+
+<p>肝心の重要度の尺度であるが，彼らは local な尺度と globalな尺度の大きく分けて二種類の尺度について実験を行っている．</p>
+
+<p>localな尺度を用いた手法では、グラフ内のノードを尺度に基づいてランキングし、もっともSenses(wi)に対応するノードの中で最も高いランクを得た語義を出力する仕組み．</p>
+
+<p>globalな尺度はグラフ全体に対してスカラーの値を与えるものなので，語義選択に対してはそのままでは用いることができない．そこで， G の部分集合となるような G&#8217;(コンテキスト内の単語それぞれについて語義ひとつだけを考えたもの) を考え，そのサブグラフのglobal measureの値が高いものを語義の組み合わせとして導きだす． たとえば，文が 2単語から成っており、それぞれが， 3つ，4つの語義を持っている場合は、3 *4 で12個のサブグラフを作り，それぞれに対して global measureを計算する。もっとも高いglobal measueを得たサブグラフを語義の組み合わせとして出力する．（計算量が爆発するという意味でオリジナルのLeskアルゴリズムと類似している）</p>
+
+<p>過去の研究として，</p>
+
+<ul>
+<li>R. Barzilay and M. Elhadad, “Using Lexical Chains for Text Summarization,” Proc. ACL Workshop Intelligent Scalable Text Summarization, pp. 10-17, 1997.</li>
+<li>R. Mihalcea, “Unsupervised Large-Vocabulary Word Sense Disambiguation with Graph-Based Algorithms for Sequence Data Labeling,” Proc. Human Language Technology and Empirical Methods in Natural Language Processing, pp. 411-418, 2005</li>
+<li>M. Galley and K. McKeown, “Improving Word Sense Disambiguation in Lexical Chaining,” Proc. 18th Int’l Joint Conf. Artificial Intelligence, pp. 1486-1488, 2003.</li>
+</ul>
+
+
+<p>が比較に挙げられているが，本論文の手法は one sense per one discourse を強く仮定しない(同じドキュメント内で同じ対象語に対してもコンテキストが異なれば違う語義が出力されうる)．また、グラフをunlabeled &amp; unweightedに構築している点が異なる．これには以下の二つの理由があるらしい．</p>
+
+<ul>
+<li>広く合意を得たweightingの方法が確立されていない</li>
+<li>研究の焦点を絞りたい(まぁweightingは今のところ特に興味ない)</li>
+</ul>
+
+
+<p>また、WordNet にくっついている MFS(というより，語義頻度) は本論文ではつかっていない．なんでかというと，それはhand-labeledなSemcorコーパスから得られたものであり，他の言語とかドメインに対しても有効な指標とは言えないから（この点は激しく同意）．</p>
+
+<p>以下，それぞれの尺度についてまとめる．</p>
+
+<h3>local measure</h3>
+
+<p>local measureは特定のグラフのノードの重要度を表すもの．あるノードのグラフ全体に対する影響度，とみなすこともできる 値域は [0,1] で、1に近ければ重要、0に近ければ重要ではない．</p>
+
+<ul>
+<li><p><strong>Degree</strong> これは単なる次数。deg(v) = vの次数とすると， C_degree(v) = deg(v) / (|V| - 1)というように正規化しておく</p></li>
+<li><p><strong>Eigenvector</strong> ようは PagerankとHITS．特筆すべきことはなし．</p></li>
+<li><p><strong>KPP</strong>（あとで読む)</p></li>
+<li><p><strong>Betweeness</strong> shortest pathの数を用いる． σ<em>st = s->tへのshortest pathの数，　σ</em>st(v) そのうち、vを通るもの．σ<em>st(v) / σ</em>st をすべてのノードペアに対して和をとって，betweeness(v)とする．そして(|V| - 1)(|V| - 2)で割って正規化．</p></li>
+</ul>
+
+
+<h3>global measure</h3>
+
+<p>さきほどのlocal measureがグラフのノードに対して重要度を与えるものだったのに対して，こちらは特定の語義の組み合わせからなるグラフに対して[0,1]のスカラー値を与えるもの．</p>
+
+<ul>
+<li><strong>Compactness, Graph entropy, Edge density</strong> いわゆるグラフのコンパクト性などの一般的な尺度</li>
+</ul>
+
+
+<p>global measureは計算量的に無理がある（文内のすべての単語に対する語義の組み合わせを列挙してそれぞれに対して求めなければならない)ので工夫をしている．</p>
+
+<h4>global measure計算における工夫</h4>
+
+<ul>
+<li><p><strong>Simulated Annealing</strong> まずランダムに語義選択を初期化，ひとつ取りかえて上記 global measure の差分(ΔE)をみる．もしよくなっていれば採択、悪くなっている場合でも exp(ΔE/T)の確率で採択．Tは何らかの定数，これを u 回繰り返した結果を採用．書いてて思いましたが，Simulated Annealingというよりは，Metropolis Hastingsですねこれ．</p></li>
+<li><p><strong>Genetic Algorithms</strong>
+なんか面倒そうなので略．結局パラメータ調整は面倒だしあんまりいいこと無い，みたいな結論に至っており，若干残念な感じ．</p></li>
+</ul>
+
+
+<h3>Complexity</h3>
+
+<p>まず初期グラフのノード数について，</p>
+
+<p>k = WordNet内の語の最大の語彙数(最も多い語義を持つ語の語義数)</p>
+
+<p>n = sentence σの長さ
+|V_σ| は knのオーダーだけど、もう少しタイトに上界を抑えることはできるようだ</p>
+
+<p>グラフ作成には、だいたい O(n<sup>2</sup>
+)くらい。
+各尺度の計算量については，論文中のTable3に書いてある．</p>
+
+<h3>Experiment</h3>
+
+<p>データはSemCor, Senseval-3, Semeval-2007．Sensemapつかって全部WordNet2.0にマップしてある．</p>
+
+<p>Sense-inventoryにはWordNet2.0 と EnWordNetというものを使っている．EnWordNetはcollocational relationをもちいてedgeを6万本くらい増やしたWordNetらしい．具体的な構築方法はよく分からないが． WN++みたいなものか．</p>
+
+<p>ふつうのWordNetから構築したグラフと，EnWordNetから構築したグラフの性質の比較も行っている．</p>
+
+<ul>
+<li><p><strong>small world effect</strong> : l = グラフのスモールワールド性（任意の頂点ペアの間の最短距離の平均)</p></li>
+<li><p><strong>clustering rate(or transitivity)</strong> : C = probability that two neighbors of a vertex are connected 詳しくは式参照 ネットワーク内の三角形の数で計算するらしい。</p></li>
+<li><p><strong>cumulative degree distribution</strong> : P_k = Σ p_k&#8217; (&lt;- k次のノードの割合)</p></li>
+</ul>
+
+
+<p>結果として，EnWordNetから構築したグラフのほうがdenseでござるという当たり前の議論が．(そりゃあエッジ足してるだけなのだから当然)</p>
+
+<p>グラフ生成におけるDFSの深さは6にしている（SemCor上で実験して決めたらしい)</p>
+
+<p>その他、GA, SAのパラメータについてうんたらかんたら．</p>
+
+<h4>Result</h4>
+
+<p>Degree（もっとも単純なlocal measure,ノードの次数そのもの) がもっともよく，いろいろ工夫した他のlocal measureやglobal measureは振るわなかった．残念．．．</p>
+
+<p>WordNet vs EnWordNetの比較では，EnWordNetの方が若干ながら良い結果．</p>
+
+<p>しかしながら，unsupervised WSDの常として，MFS(First Sense Baseline)は非常に強く，F1 measureで20ポイント以上の差をつけられてしまっている．</p>
+
+<h3>感想</h3>
+
+<p>グラフとしては最も基本的な， unlabeled, undirected, unweightedなものの上で何ができるか，を追求した研究といえる．</p>
+
+<p>単純な指標がうまくいってしまい，いろいろ工夫しても無駄っぽいのは残念だが，unsupervised WSDの難しさは語義粒度とknowledge baseの質如何でいくらでも変動しうるので，言語資源の整備が進めば，また違った結果が得られるかもしれない．</p>
+
+<p>WSDにおいて宿命になっている，&#8221;MFSに勝てない問題&#8221;については，近年は</p>
+
+<ul>
+<li><a href="http://www.aclweb.org/anthology/P/P10/P10-1154.pdf">SP Ponzetto, R Navigli &#8220;Knowledge-rich Word Sense Disambiguation Rivaling Supervised Systems&#8221; Proc of ACL 2010</a></li>
+</ul>
+
+
+<p>のように，知識ベース(WordNet)側をガンガン強化することで，ほぼ遜色ない性能を出すことができる手法も出てきている．しかし，こちらも，もっとも性能の良い尺度はDegreeなので，なんだかなぁという気はする．</p>
+
+<p>結局知識ベースの品質に強く依存するknowledge based WSDではあるが，まだ何かできることは無いかと考えると，うまくいくかはともかくとして，いろいろ面白そうだ．（ニッチなためか，機械学習屋さんがまだあまり進出してこない分野でもあるので）</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Posterior Regularization と Unified Expectation Maximizationについて]]></title>

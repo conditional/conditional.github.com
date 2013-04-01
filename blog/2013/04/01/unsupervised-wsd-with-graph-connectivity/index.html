@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>a lonely miner</title>
+  <title>グラフ結合度に基づく教師なし語義曖昧性解消について - a lonely miner</title>
   <meta name="author" content="Koji Matsuda">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://conditional.github.com">
+  <link rel="canonical" href="http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="a lonely miner" type="application/atom+xml">
@@ -74,15 +74,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/">グラフ結合度に基づく教師なし語義曖昧性解消について</a></h1>
+      <h1 class="entry-title">グラフ結合度に基づく教師なし語義曖昧性解消について</h1>
     
     
       <p class="meta">
@@ -105,7 +102,7 @@
   </header>
 
 
-  <div class="entry-content"><p>完全に春ですね．そろそろ新入生が来る時期．</p>
+<div class="entry-content"><p>完全に春ですね．そろそろ新入生が来る時期．</p>
 
 <p>書類を整理していたら，むかし読んだ Roberto Navigli (knowledge based WSDの大家) によるgraph based unsupervised WSDに関する論文の感想が出てきたのでちょっと再編集して公開してみます．あくまでメモなので，非常に読みづらいかも．もしご興味をもって頂けましたら，元論文をあたってみてください．</p>
 
@@ -238,134 +235,16 @@
 
 <p>結局知識ベースの品質に強く依存するknowledge based WSDではあるが，まだ何かできることは無いかと考えると，うまくいくかはともかくとして，いろいろ面白そうだ．（ニッチなためか，機械学習屋さんがまだあまり進出してこない分野でもあるので）</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/">Posterior Regularization と Unified Expectation Maximizationについて</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Koji Matsuda</span></span>
 
-<time datetime="2013-03-23T16:20:00+09:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>桜がとってもきれいですね．すずかけ台は8分咲きといったところです．ところで，仲間で行っている小規模な勉強会で</p>
-
-<ul>
-<li><a href="http://www.aclweb.org/anthology/N/N12/N12-1087.pdf">&#8220;Unified Expectation Maximization&#8221;</a> Samdani et al, NAACL2012</li>
-</ul>
-
-
-<p>を紹介してきたので，資料をslideshareにあげておきました．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/17552885" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/unified-expectation-maximization" title="Unified Expectation Maximization" target="_blank">Unified Expectation Maximization</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
-
-<p>Unified EMというと，じゃっかん大風呂敷な感じのタイトルですが，キーとなるアイデアはとても単純で，EMアルゴリズムのE-Stepで最小化するKLダイバージェンスにちょっと細工を入れることで，Hard-EMとふつうのEMの中間くらいの性質を持ったアルゴリズムになりますよ．というお話です．Deterministic Annealing EMの逆バージョンみたいな雰囲気(実際，DAEMもこの枠組で書けることが示されています) 手元にEMのコードがあれば，実装も非常に容易．</p>
-
-<p>ただ，やっぱりそれだけだと一発ネタにしかならないので，「制約付きEM」のほうへ話を進めています．「制約付きEM」というと聞きなれないアルゴリズムですが，Un(semi-)supervised learningにおいて，事前知識を用いてモデルがとんでもない方向へ飛ぶのを防ごう，というモチベーションに基づく技法のようです．</p>
-
-<p>自然言語処理におけるアプリケーションでは，たとえば以下のような制約を考えることができます：</p>
-
-<ul>
-<li><p>品詞タグ付けなら</p>
-
-<ul>
-<li>ある文には，名詞と動詞が最低一つづつ含まれる</li>
-<li>ある語が，複数のPOSに割り当てられることは稀</li>
-</ul>
-</li>
-<li><p>機械翻訳におけるアラインメントなら</p>
-
-<ul>
-<li>L1->L2のアラインメントと，L2->L1のアラインメントは一致する</li>
-<li>L1の一つの語が，L2の多数の語と対応付けられることは稀</li>
-</ul>
-</li>
-<li><p>関係抽出なら</p>
-
-<ul>
-<li>ある種のエンティティと，ある種のエンティティの間には，特定のリレーションしか成り立たない
-
-<ul>
-<li>(PERSON, LOCATION) -> LIVE IN</li>
-<li>(ORGANIZATION, PERSON) -> WORK FOR</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>こういった事前知識に基づく制約を満たすモデルを，確率分布の集合として表現し，そこから離れないようにEMアルゴリズムを行うことによって，ラベルつきデータが利用可能ではない（または，少量しか存在しない）状況において，うまく学習が行おうというのが，「制約付きEM」の肝となる部分です．直感的には，Posterior Regularizationの論文から引用した以下の図が分かりやすいかもしれません．（日本語注釈は私によるものです）</p>
-
-<p><img src="http://conditional.github.com/images/posterior_regularization_fig.png" width="460" height="302"></p>
-
-<p>歯切れのよいタイトルに惹かれて軽い気持ちで選んだ論文でしたが，そこそこホットな分野のようで，ACL 2011のチュートリアルで1トラックまるまるこの話題だったりしたらしく，問題設定や前提を理解するのにけっこう苦労しました．</p>
-
-<p>結果として，UEMの本題ではなく，問題設定や先行研究の紹介に半分近くのスライドを割くことに・・・．まぁ，楽しんで頂けたようなのでなによりです．しかしひさびさに緊張感のあるプレゼンだった．</p>
-
-<p>最後のスライドにも記載しましたが，以下の文献が，理解の助けになると思います．</p>
-
-<ul>
-<li><a href="http://sideinfo.wikkii.com/">&#8220;Rich Prior Knowledge in Learning for Natural Language Processing&#8221;</a> ACL 2011 tutorial
-
-<ul>
-<li>ACLで行われたチュートリアルの資料です．このファミリーに属するアルゴリズムについての資料の多くはここからたどれるようになっています．各種のアルゴリズムのあいだの関係についてよくまとまっていますし，著者らによって異なる表記系もすっきりまとめられているので読みやすい．今回は取り上げませんでしたが，Labeled Feature とかも追ってみるとおもしろそうなトピックなので，ぜひ．</li>
-</ul>
-</li>
-<li><a href="http://jmlr.csail.mit.edu/papers/volume11/ganchev10a/ganchev10a.pdf">&#8220;Posterior Regularization for Structured Latent Variable Models&#8221;</a> JMLR 2010
-
-<ul>
-<li>今回紹介した論文の元ネタになっている Posterior Regularizationの論文です．品調ラベルづけにおける例とともに，少しづつ丁寧に議論が進められており，さすがジャーナルだけあって読みやすいです．</li>
-</ul>
-</li>
-</ul>
-
-
-<p>ひさびさに負荷の高い一週間だったので，来週はすこしゆっくりしたいと思います．（日記）</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -377,162 +256,45 @@
   
 
 
-<time datetime="2013-03-14T17:59:00+09:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>眠いですね．</p>
-
-<p>とくに機械学習のクロスバリデーションや，ごっつい集計クエリなどの時間のかかるバッチジョブを流す間，とても眠い．</p>
-
-<p>私の場合，そういう時にはディスプレイの前を離れて，お昼寝タイムにすることが多いです（基本いつも眠い）．実行時間の見積もりがつくようなジョブなら適当にアラームかけておけばよいのですが，実際はそうも行かないことも多いですよね．</p>
-
-<p>そこで，iOSデバイスにプッシュ通知を送れるアプリケーション <strong>Prowl</strong> を用いて，ジョブの終了をiPhoneに通知してくれる短いRubyスクリプトを書いてみました．ジョブ終わったらブルッと鳴って目覚めスッキリ．</p>
-
-<h2>Requirement</h2>
-
-<ul>
-<li><a href="https://www.prowlapp.com/">Prowl</a></li>
-<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
-</ul>
-
-
-<p>gem は <code>gem intall prowl</code> でインストールできます．</p>
-
-<h2>Instalation</h2>
-
-<p>まず，ProwlのウェブサイトからAPIキーを取得します．いちおう登録＆ログインが必要ですが，メールアドレスは不要のようです，ログインして，<strong>API keys</strong> のページに進むと
-フォームが二つありますが，Provider keyは第三者にキー入りアプリを配布するときに使うものなので，今回は <strong>Generate a new API key</strong> のほうでOK．Noteは空でもいいのでとにかくサブミットボタンを押すと，API keyが取得できます．</p>
-
-<p><img src="http://conditional.github.com/images/generate_prowl_apikey.png"></p>
-
-<p>そんでもってスクリプトの中身はこんな感じ．<code>API_KEY</code>には先ほど取得したキーを．</p>
-
-<div><script src='https://gist.github.com/5161032.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p>環境変数 <code>PROWL_NOTICE_TITLE</code>, <code>PROWL_NOTICE_CONT</code> にメッセージをセットしておくと，その中身を通知してくれます．通知を受け取りたいプロセスと環境変数の設定をラップするようなシェルスクリプトを組んでおくと良いかもしれません．<code>ARGV</code> についてはあとで説明します．</p>
-
-<h2>Example</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sleep 10 && ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<p>という感じでプロセスを実行すると，終了時にこんな感じで通知してくれます．</p>
-
-<p><img src="http://conditional.github.com/images/prowl_sleep.jpg" width="320" height="480"></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ export PROWL_NOTICE_TITLE='たいとるだよ'
-</span><span class='line'>$ export PROWL_NOTICE_DESC='おわったよ〜'
-</span><span class='line'>$ ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<p>とかするとこんな感じ．</p>
-
-<p><img src="http://conditional.github.com/images/prowl_with_env.jpg" width="320" height="480"></p>
-
-<h2>zsh(precmd/preexec)との組み合わせ</h2>
-
-<p>しかし，毎回コマンド打つのは面倒ですね．そこで，<a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a> で紹介されている方法を使うと，
-コマンドに一定以上の時間がかかったときに自動で通知してくれます．
-今回のスクリプトに合わせてちょっと改造してみました．<code>PROWL_NOTICE_TIME</code>を適当に設定して<code>.zshrc</code>に潜ませてみてください．</p>
-
-<div><script src='https://gist.github.com/5161045.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p>とくに環境変数が設定されていない場合は，プロセスの名前と引数が通知されてきます．(<code>ARGV</code>を通してRubyスクリプトに渡されます)</p>
-
-<h2>まとめ</h2>
-
-<ul>
-<li>眠い時でも思う存分バッチを走らせることができるRubyスクリプトを書いてみました．</li>
-<li>実行に一定時間以上かかったら自動で通知してくれるzshの設定例を紹介しました．</li>
-<li>勤務時間中の居眠りは計画的に．</li>
-</ul>
-
-
-<p>Prowlは有料(執筆現在250円)アプリですが，単に通知を受け取るだけではなく，通知を他のアプリにフォワードしてくれる機能があったり，<a href="http://www.prowlapp.com/apps.php">Chromeで開いているページを通知してくれるプラグイン</a>が用意されていたり，そこそこ遊べそうなので，今回導入してみました．</p>
-
-<p>もし同様の機能の無料アプリをご存知でしたら是非教えてください．</p>
-
-<h2>参考</h2>
-
-<ul>
-<li><a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a></li>
-<li><a href="https://www.prowlapp.com/">Prowl</a></li>
-<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2013-04-01T13:13:00+09:00" pubdate data-updated="true">Apr 1<span>st</span>, 2013</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/nlp/'>NLP</a>, <a class='category' href='/blog/categories/study/'>study</a>
+  
+</span>
 
 
-<time datetime="2013-03-13T16:51:00+09:00" pubdate data-updated="true">Mar 13<span>th</span>, 2013</time>
-        
-      </p>
+    </p>
     
-  </header>
+      <div class="sharing">
+  <a href="http://b.hatena.ne.jp/entry/http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/" data-via="conditional" data-counturl="http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/" >Tweet</a>
+  
+  
+  
+</div>
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/" title="Previous Post: Posterior Regularization と Unified Expectation Maximizationについて">&laquo; Posterior Regularization と Unified Expectation Maximizationについて</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-  <div class="entry-content"><p>とりあえずはじめてみた．</p>
-
-<p><a href="http://www.miukoba.net/blog/2013/01/05/start-octopress/">Octopressはじめました - mimemo</a></p>
-
-<p>が大変参考になりました．<a href="http://mouapp.com/">Mou</a>便利．markdown，必要に迫られたときしか
-書いてこなかったんだけど，少しづつ慣れていきたい．</p>
-
-<p>数式のテスト(<a href="https://gist.github.com/jessykate/834610">MathJax.rb</a>利用)</p>
-
-<script type="math/tex; mode=display">
-N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
-</script>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -565,6 +327,7 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -579,7 +342,10 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
       var disqus_shortname = 'condi';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/';
+        var disqus_url = 'http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
