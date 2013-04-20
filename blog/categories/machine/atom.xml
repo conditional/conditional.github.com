@@ -4,7 +4,7 @@
   <title><![CDATA[Category: machine | a lonely miner]]></title>
   <link href="http://conditional.github.com/blog/categories/machine/atom.xml" rel="self"/>
   <link href="http://conditional.github.com/"/>
-  <updated>2013-04-01T14:58:23+09:00</updated>
+  <updated>2013-04-20T17:44:41+09:00</updated>
   <id>http://conditional.github.com/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[距離計量学習とカーネル学習について]]></title>
+    <link href="http://conditional.github.com/blog/2013/04/20/distance-metric-learning-and-kernel-learning/"/>
+    <updated>2013-04-20T15:53:00+09:00</updated>
+    <id>http://conditional.github.com/blog/2013/04/20/distance-metric-learning-and-kernel-learning</id>
+    <content type="html"><![CDATA[<p>こんにちは．英語が書けなくて悩んでいる今日このごろです．</p>
+
+<p>先月に引き続き，仲間内で行っている小さな勉強会にて論文紹介をしてまいりました．</p>
+
+<ul>
+<li><a href="http://www.aclweb.org/anthology/N/N12/N12-1087.pdf">"Information-Theoretic Metric Learning"</a> V. Davis et al, ICML 2007 (Best Paper)</li>
+</ul>
+
+
+<p>ちょっと古めの論文ですが，あまり踏み込んだことのない分野なので，名著っぽいものから確実におさえていくスタンスで．</p>
+
+<p>発表スライドは以下においておきます．最後のスライドにいろいろ文献リンクしておいたので，ご興味をもって頂けましたら是非そちらも当たってみてください．</p>
+
+<p><a href="http://www.slideshare.net/koji_matsuda/ITML">http://www.slideshare.net/koji_matsuda/ITML</a></p>
+
+<p>距離学習とは何ぞや，というのは<a href="d.hatena.ne.jp/mamoruk/20090126/p1">小町さんの日記</a>をご参照いただけると良いと思うのですが，
+ざっくり言うと，「分類しやすいように前処理として空間を歪めてしまおう」という技法です．ケーキで表す（！）と以下のような感じ．マシンラーニングケーキかっこいい！</p>
+
+<blockquote><p> <a href="http://www.cse.wustl.edu/~kilian/code/page21/page21.html">Large Margin Nearest Neighbors</a></p>
+
+<p><img src="http://www.cse.wustl.edu/~kilian/code/page21/files/img_3825_2.jpg" width="480" height="437"></p></blockquote>
+
+<p>要するに，同じクラスの事例同士は近く，異なるクラスの事例同士は遠くなるように，元の空間を歪めてしまうのです．</p>
+
+<p>この論文では，距離学習を<em>多変量正規分布間の KL Divergence</em> (の特別な場合である <em>LogDet Divergence</em> )の最適化問題として定式化するとともに，<em>カーネル学習との等価性</em>について述べています．実際のアルゴリズムは，<em>Bregman Projection</em>とか名前はごっついけど実際はそんなに難しくない．</p>
+
+<p>確かに，カーネル行列というのは，バラすと特徴量空間での距離を畳み込んだものと言えますし，関連はありそうだと思ったものがきれいに証明されていてけっこう感動しました．</p>
+
+<p>さらには，(正直あまり理解できませんでしたが)元の距離学習のカーネル化やオンライン化（Regret Boundまで！）などなど，8ページギッシリ詰められています．</p>
+
+<p>ただ，学習されるのは単なるマハラノビス距離行列という<em>単なる線形変換</em>なので，どれほどのタスクで効くのかどうかは疑問が残ります．</p>
+
+<p>たとえば，<em>元の空間で線形分離不可能な問題というのは，どんな線形変換を施したとしても，きれいに線形分離できるようにはならない</em>でしょうし，特徴空間での回転（マハラノビス距離行列の非対角要素）は何を表しているのか正直よくわかりません．</p>
+
+<p>もっとも，このアルゴリズムはカーネル化ができるのことが示されているので，分離しやすい空間へ飛ばしてから距離学習を行えば別なのかもしれませんけど・・・けど・・・けど・・・．</p>
+
+<p>こういう点では，多様体学習（詳しくないのですが，たとえばLaplacian Eigenmapsとか）のような非線形のアプローチのほうが，もともとの目的（分類しやすいように前処理する）に合っているように感じます．</p>
+
+<p>計算量的な問題でいろいろ難しいのかもしれませんが，こういうSupervisedな距離学習あるいは次元削減で，オススメの文献がありましたら是非教えてください．</p>
+
+<p>は〜英語書きに戻ろう．実際に書いている時間なんてほんの僅かで，書けないよーってうんうん呻ってる時間がほとんどなのだけれど．</p>
+
+<p>そういえば，そういえば，一昨日第一回コンペが終わったCrowdSolvingについてはどれくらい書いていいのかな？いずれにしても，また次回．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Posterior Regularization と Unified Expectation Maximizationについて]]></title>
