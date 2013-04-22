@@ -1,41 +1,41 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://conditional.github.com/blog/2013/03/13/start-bloging-with-octopress/</loc>
+        <loc>http://conditional.github.io/blog/2013/03/13/start-bloging-with-octopress/</loc>
         <lastmod>2013-03-13T18:00:00+09:00</lastmod>
     </url>
     <url>
-        <loc>http://conditional.github.com/blog/2013/03/14/take-a-nap-with-prowl/</loc>
+        <loc>http://conditional.github.io/blog/2013/03/14/take-a-nap-with-prowl/</loc>
         <lastmod>2013-03-14T22:07:06+09:00</lastmod>
     </url>
     <url>
         <loc>
-            http://conditional.github.com/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/
+            http://conditional.github.io/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/
         </loc>
         <lastmod>2013-03-23T23:39:28+09:00</lastmod>
     </url>
     <url>
         <loc>
-            http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/
+            http://conditional.github.io/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/
         </loc>
         <lastmod>2013-04-01T14:54:34+09:00</lastmod>
     </url>
     <url>
         <loc>
-            http://conditional.github.com/blog/2013/04/20/distance-metric-learning-and-kernel-learning/
+            http://conditional.github.io/blog/2013/04/20/distance-metric-learning-and-kernel-learning/
         </loc>
         <lastmod>2013-04-22T13:48:44+09:00</lastmod>
     </url>
     <url>
-        <loc>http://conditional.github.com/blog/archives/</loc>
+        <loc>http://conditional.github.io/blog/archives/</loc>
         <lastmod>2013-04-22T13:48:44+09:00</lastmod>
     </url>
     <url>
-        <loc>http://conditional.github.com/</loc>
+        <loc>http://conditional.github.io/</loc>
         <lastmod>2013-04-22T13:48:44+09:00</lastmod>
     </url>
     <url>
-        <loc>http://conditional.github.com/robots.txt</loc>
+        <loc>http://conditional.github.io/robots.txt</loc>
         <lastmod>2013-03-13T16:30:43+09:00</lastmod>
     </url>
 </urlset>

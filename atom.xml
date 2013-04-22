@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[a lonely miner]]></title>
-  <link href="http://conditional.github.com/atom.xml" rel="self"/>
-  <link href="http://conditional.github.com/"/>
-  <updated>2013-04-22T13:48:56+09:00</updated>
-  <id>http://conditional.github.com/</id>
+  <link href="http://conditional.github.io/atom.xml" rel="self"/>
+  <link href="http://conditional.github.io/"/>
+  <updated>2013-04-22T13:52:46+09:00</updated>
+  <id>http://conditional.github.io/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[距離計量学習とカーネル学習について]]></title>
-    <link href="http://conditional.github.com/blog/2013/04/20/distance-metric-learning-and-kernel-learning/"/>
+    <link href="http://conditional.github.io/blog/2013/04/20/distance-metric-learning-and-kernel-learning/"/>
     <updated>2013-04-20T15:53:00+09:00</updated>
-    <id>http://conditional.github.com/blog/2013/04/20/distance-metric-learning-and-kernel-learning</id>
+    <id>http://conditional.github.io/blog/2013/04/20/distance-metric-learning-and-kernel-learning</id>
     <content type="html"><![CDATA[<p>こんにちは．英語が書けなくて悩んでいる今日このごろです．</p>
 
 <p>先月に引き続き，仲間内で行っている小さな勉強会にて論文紹介をしてまいりました．</p>
@@ -74,9 +74,9 @@
   
   <entry>
     <title type="html"><![CDATA[グラフ結合度に基づく教師なし語義曖昧性解消について]]></title>
-    <link href="http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/"/>
+    <link href="http://conditional.github.io/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/"/>
     <updated>2013-04-01T13:13:00+09:00</updated>
-    <id>http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity</id>
+    <id>http://conditional.github.io/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity</id>
     <content type="html"><![CDATA[<p>完全に春ですね．そろそろ新入生が来る時期．</p>
 
 <p>書類を整理していたら，むかし読んだ Roberto Navigli (knowledge based WSDの大家) によるgraph based unsupervised WSDに関する論文の感想が出てきたのでちょっと再編集して公開してみます．あくまでメモなので，非常に読みづらいかも．もしご興味をもって頂けましたら，元論文をあたってみてください．</p>
@@ -220,9 +220,9 @@ n = sentence σの長さ．
   
   <entry>
     <title type="html"><![CDATA[Posterior Regularization と Unified Expectation Maximizationについて]]></title>
-    <link href="http://conditional.github.com/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/"/>
+    <link href="http://conditional.github.io/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/"/>
     <updated>2013-03-23T16:20:00+09:00</updated>
-    <id>http://conditional.github.com/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization</id>
+    <id>http://conditional.github.io/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization</id>
     <content type="html"><![CDATA[<p>桜がとってもきれいですね．すずかけ台は8分咲きといったところです．ところで，仲間で行っている小規模な勉強会で</p>
 
 <ul>
@@ -305,9 +305,9 @@ n = sentence σの長さ．
   
   <entry>
     <title type="html"><![CDATA[Prowl+zshで快適お昼寝タイム]]></title>
-    <link href="http://conditional.github.com/blog/2013/03/14/take-a-nap-with-prowl/"/>
+    <link href="http://conditional.github.io/blog/2013/03/14/take-a-nap-with-prowl/"/>
     <updated>2013-03-14T17:59:00+09:00</updated>
-    <id>http://conditional.github.com/blog/2013/03/14/take-a-nap-with-prowl</id>
+    <id>http://conditional.github.io/blog/2013/03/14/take-a-nap-with-prowl</id>
     <content type="html"><![CDATA[<p>眠いですね．</p>
 
 <p>とくに機械学習のクロスバリデーションや，ごっつい集計クエリなどの時間のかかるバッチジョブを流す間，とても眠い．</p>
@@ -401,9 +401,9 @@ n = sentence σの長さ．
   
   <entry>
     <title type="html"><![CDATA[Start Bloging With Octopress]]></title>
-    <link href="http://conditional.github.com/blog/2013/03/13/start-bloging-with-octopress/"/>
+    <link href="http://conditional.github.io/blog/2013/03/13/start-bloging-with-octopress/"/>
     <updated>2013-03-13T16:51:00+09:00</updated>
-    <id>http://conditional.github.com/blog/2013/03/13/start-bloging-with-octopress</id>
+    <id>http://conditional.github.io/blog/2013/03/13/start-bloging-with-octopress</id>
     <content type="html"><![CDATA[<p>とりあえずはじめてみた．</p>
 
 <p><a href="http://www.miukoba.net/blog/2013/01/05/start-octopress/">Octopressはじめました - mimemo</a></p>

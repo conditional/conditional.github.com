@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: NLP | a lonely miner]]></title>
-  <link href="http://conditional.github.com/blog/categories/nlp/atom.xml" rel="self"/>
-  <link href="http://conditional.github.com/"/>
-  <updated>2013-04-22T13:48:56+09:00</updated>
-  <id>http://conditional.github.com/</id>
+  <link href="http://conditional.github.io/blog/categories/nlp/atom.xml" rel="self"/>
+  <link href="http://conditional.github.io/"/>
+  <updated>2013-04-22T13:52:46+09:00</updated>
+  <id>http://conditional.github.io/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[グラフ結合度に基づく教師なし語義曖昧性解消について]]></title>
-    <link href="http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/"/>
+    <link href="http://conditional.github.io/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/"/>
     <updated>2013-04-01T13:13:00+09:00</updated>
-    <id>http://conditional.github.com/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity</id>
+    <id>http://conditional.github.io/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity</id>
     <content type="html"><![CDATA[<p>完全に春ですね．そろそろ新入生が来る時期．</p>
 
 <p>書類を整理していたら，むかし読んだ Roberto Navigli (knowledge based WSDの大家) によるgraph based unsupervised WSDに関する論文の感想が出てきたのでちょっと再編集して公開してみます．あくまでメモなので，非常に読みづらいかも．もしご興味をもって頂けましたら，元論文をあたってみてください．</p>
