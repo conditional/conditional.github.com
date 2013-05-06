@@ -9,7 +9,7 @@
   <meta name="author" content="Koji Matsuda">
 
   
-  <meta name="description" content="こんにちは．英語が書けなくて悩んでいる今日このごろです． 先月に引き続き，仲間内で行っている小さな勉強会にて論文紹介をしてまいりました． &#8220;Information-Theoretic Metric Learning&#8221; V. Davis et al, ICML 2007 ( &hellip;">
+  <meta name="description" content="先日Prismaticを眺めていたら，興味深い記事を見つけたので紹介． Predicting Google closures Google Readerの停止がアナウンスされたのは記憶に新しいですね．はじまりあるものは，すべて終わりもあるもの．実際， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,129 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/06/predicting-google-closures/">生存率分析に基づくGoogle各種サービスの生存予測</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-06T11:53:00+09:00" pubdate data-updated="true">May 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>先日Prismaticを眺めていたら，興味深い記事を見つけたので紹介．</p>
+
+<ul>
+<li><a href="http://www.gwern.net/Google%20shutdowns">Predicting Google closures</a></li>
+</ul>
+
+
+<p>Google Readerの停止がアナウンスされたのは記憶に新しいですね．はじまりあるものは，すべて終わりもあるもの．実際，最近のGoogleはビジネスにならないと判断したプロダクトを大胆に切っていっているような印象をうけます．</p>
+
+<p>この記事では，これまでGoogleが運営してきた<strong>350のサービス／プロダクト</strong>のデータを，疫学統計でよく用いられる（らしい）Coxモデルとよばれる統計モデルによって解析し，<strong>どのようなサービスが今後停止されるおそれが高いのか</strong>，分析を行っています．</p>
+
+<h2>特徴量</h2>
+
+<p>特徴量として用いているのは以下のような情報．詳細な基準は元記事を参照いただくとして，簡単に抜粋してみます．</p>
+
+<ul>
+<li>プロダクト名をクエリとしたGoogleのヒット数(そのまま使うのは不公平なので，サービスのリリース時期に応じて補正を加えているそうです)</li>
+<li>プロダクトのタイプ．サービスなのか，プログラムなのか，モノ(Chrome Bookとか)なのか，それ以外（SoCとかI/Oのようなイベント等）なのか</li>
+<li>そのプロダクトが，直接Googleに収入をもたらしているか</li>
+<li>そのプロダクトが，FLOSSであるか，またはFLOSSに直接関係したものであるか</li>
+<li>そのプロダクトは，他社から買収したもの，またはそれをもとにしたものであるか</li>
+<li>そのプロダクトが，ソーシャルな要素を含んでいるか</li>
+<li>そのプロダクトは，Googleが2005年以前にリリースされたものであるか</li>
+</ul>
+
+
+<p>元記事の著者はこれらの情報をまとめたCSVファイルを公開してくださっていますが，そのままではちょっと見にくいので，<a href="https://docs.google.com/spreadsheet/ccc?key=0ApJZf-tS-BfedDJ4NmxFaEpMYVVPV2FTQ0RsaXZsbnc&amp;usp=sharing">Google Docsに転載＆ちょっと整形してみました</a>のでよろしければご覧ください．ライセンスは元記事のとおり，<a href="http://creativecommons.org/about/cc0">CC0</a>で．</p>
+
+<h2>分析結果</h2>
+
+<p>このデータをCoxモデルにフィットさせた結果，以下のような要素がシャットダウンの<strong>リスクを低減させる</strong>ことが分かったそうです．</p>
+
+<ol>
+<li>Googleが他社から<strong>買収したプロダクトではない</strong>こと</li>
+<li>FLOSS<strong>ではない</strong>こと</li>
+<li>Googleに直接収益をもたらすこと</li>
+<li>ソーシャルネットワークと<strong>関係ない</strong>こと</li>
+<li>Google検索でのヒット数が多いこと</li>
+<li>2005年以前にリリースされたものであること</li>
+</ol>
+
+
+<p>2番，4番の要素がちょっと意外．</p>
+
+<p>その結果，以下のようなプロダクトがシャットダウンのリスクが高い，という予測を行っています．</p>
+
+<ol>
+<li>Schemer</li>
+<li>Boutiques</li>
+<li>Magnifier</li>
+<li>Hotpot</li>
+<li>Page Speed Online API</li>
+<li>WhatsonWhen</li>
+<li>Unofficial Guides</li>
+<li>WDYL search engine</li>
+<li>Cloud Messaging</li>
+<li>Correlate</li>
+</ol>
+
+
+<p>あまり聞いたことないプロダクトが並びます．あれ，Google Boutiquesって閉鎖したんじゃなかったっけ？Google Correlateも，生きていたのが意外です．
+逆にシャットダウンのリスクが低いプロダクトは以下の通り．</p>
+
+<ol>
+<li>Search</li>
+<li>Translate</li>
+<li>AdWords</li>
+<li>Picasa</li>
+<li>Groups</li>
+<li>Image Search</li>
+<li>News</li>
+<li>Books</li>
+<li>Toolbar</li>
+<li>AdSense</li>
+</ol>
+
+
+<p>まぁこちらは妥当な感じ．PicasaやToolbarは微妙な感じもしますが．</p>
+
+<p><a href="http://www.gwern.net/Google%20shutdowns#TOC">元記事</a>には，いくつかの有名プロダクトの5年生存率を計算した表もありますので，そちらもあわせてご覧ください．<strong>Google Glassの5年生存率は37%</strong>，とか，ちょっぴりセンセーショナルな結果もあります．</p>
+
+<h2>まとめ</h2>
+
+<p>350ものGoogleプロダクトのデータを用いて，どのようなサービスがシャットダウンのリスクが高いのか分析を行った記事を紹介しました．</p>
+
+<p>特徴量としては，ここに挙げられているもの意外にもさまざまなな要因が考えられるとは思いますが，分析の切り口として面白いものではあると思います．ソーシャルものは苦手だとか，FLOSSには消極的になりつつあるとか，何となく感じていたGoogleの企業としての特徴がデータからも透けてみえるのが興味深い．</p>
+
+<p>個人的には，Google Code Searchのシャットダウンが痛かった．．．いまだによい代替を見つけられずにいます．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -628,8 +751,19 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>ロンリーなマイナーです．</p>
+  <ol>
+  <li><a href="http://twitter.com/conditional">Twitter</a></li>
+  </ol>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/06/predicting-google-closures/">生存率分析に基づくGoogle各種サービスの生存予測</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/04/20/distance-metric-learning-and-kernel-learning/">距離計量学習とカーネル学習について</a>
@@ -645,10 +779,6 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
     
       <li class="post">
         <a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a>
       </li>
     
   </ul>
