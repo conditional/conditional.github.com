@@ -4,7 +4,7 @@
   <title><![CDATA[Category: statistics | a lonely miner]]></title>
   <link href="http://conditional.github.io/blog/categories/statistics/atom.xml" rel="self"/>
   <link href="http://conditional.github.io/"/>
-  <updated>2013-05-06T12:21:08+09:00</updated>
+  <updated>2013-05-06T12:28:54+09:00</updated>
   <id>http://conditional.github.io/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[生存率分析に基づくGoogle各種サービスの生存予測]]></title>
+    <title type="html"><![CDATA[統計データに基づくGoogle各種サービスの生存予測]]></title>
     <link href="http://conditional.github.io/blog/2013/05/06/predicting-google-closures/"/>
     <updated>2013-05-06T11:53:00+09:00</updated>
     <id>http://conditional.github.io/blog/2013/05/06/predicting-google-closures</id>
