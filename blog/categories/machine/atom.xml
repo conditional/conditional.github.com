@@ -4,7 +4,7 @@
   <title><![CDATA[Category: machine | a lonely miner]]></title>
   <link href="http://conditional.github.io/blog/categories/machine/atom.xml" rel="self"/>
   <link href="http://conditional.github.io/"/>
-  <updated>2013-06-01T16:42:30+09:00</updated>
+  <updated>2013-06-01T16:55:21+09:00</updated>
   <id>http://conditional.github.io/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
@@ -27,7 +27,7 @@
 
 <p><iframe src="http://www.slideshare.net/slideshow/embed_code/22279251" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/a-machine-learning-framework-for-programming-by-example" title="A Machine Learning Framework for Programming by Example" target="_blank">A Machine Learning Framework for Programming by Example</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
 
-<p>機械学習を使って，Programming by Example(PbE)をしようという論文です．PbEというのは私も初耳だったのですが，ざっくり言うと，<strong>人間が「例」を与えることで，その例をうまく再現するようなプログラムを計算機生成する</strong>，というタスクのようです．</p>
+<p>機械学習を使って，Programming by Example(PbE)をしようという論文です．PbEというのは私も初耳だったのですが，ざっくり言うと，<strong>人間が「例」を与えることで，その例をうまく再現するようなプログラムを計算機で生成する</strong>，というタスクのようです．</p>
 
 <p>それを部分的に実現している（らしい）のが，Excel2013に新しく搭載されたという<a href="http://blogs.office.com/b/microsoft-excel/archive/2012/08/08/flash-fill.aspx">"Flash Fill"</a>という機能．<strong>ユーザーの意図を推測して，ルールにしたがったセルの補完</strong>なんかをしてくれるみたいです．百聞は一見にしかず，以下の動画をご覧ください．</p>
 
