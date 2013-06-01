@@ -4,7 +4,7 @@
   <title><![CDATA[Category: machine | a lonely miner]]></title>
   <link href="http://conditional.github.io/blog/categories/machine/atom.xml" rel="self"/>
   <link href="http://conditional.github.io/"/>
-  <updated>2013-05-06T12:28:54+09:00</updated>
+  <updated>2013-06-01T16:42:30+09:00</updated>
   <id>http://conditional.github.io/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
@@ -12,6 +12,48 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Proggraming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について]]></title>
+    <link href="http://conditional.github.io/blog/2013/06/01/machine-learning-framework-for-programming-by-example/"/>
+    <updated>2013-06-01T15:26:00+09:00</updated>
+    <id>http://conditional.github.io/blog/2013/06/01/machine-learning-framework-for-programming-by-example</id>
+    <content type="html"><![CDATA[<p>およそひと月ぶりに，仲間内で行っている小さな勉強会で論文紹介をしてまいりました．ICML2013の予稿がちょっとづつ出てきているので，本日はその中から一本．</p>
+
+<ul>
+<li><a href="http://jmlr.csail.mit.edu/proceedings/papers/v28/menon13.pdf">"A Machine Learning Framework for Programming by Example"</a> Aditya Menon et al, ICML 2013</li>
+</ul>
+
+
+<p><iframe src="http://www.slideshare.net/slideshow/embed_code/22279251" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/a-machine-learning-framework-for-programming-by-example" title="A Machine Learning Framework for Programming by Example" target="_blank">A Machine Learning Framework for Programming by Example</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
+
+<p>機械学習を使って，Programming by Example(PbE)をしようという論文です．PbEというのは私も初耳だったのですが，ざっくり言うと，<strong>人間が「例」を与えることで，その例をうまく再現するようなプログラムを計算機生成する</strong>，というタスクのようです．</p>
+
+<p>それを部分的に実現している（らしい）のが，Excel2013に新しく搭載されたという<a href="http://blogs.office.com/b/microsoft-excel/archive/2012/08/08/flash-fill.aspx">"Flash Fill"</a>という機能．<strong>ユーザーの意図を推測して，ルールにしたがったセルの補完</strong>なんかをしてくれるみたいです．百聞は一見にしかず，以下の動画をご覧ください．</p>
+
+<p><iframe width="480" height="270" src="http://www.youtube.com/embed/YPG8PAQQ894?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+
+<p>Flash Fillは一行から一行（というよりは，セルからセル）への変換のみがターゲットでしたが，本論文では<strong>集計であるとか，重複の削除のように，複数の行にまたがった処理</strong>をうまく解く枠組みを提案しています．</p>
+
+<p>具体的には以下の例が分かりやすいかもしれません．</p>
+
+<p><img class="center" src="/images/programming_by_example_menon2013.png" width="650"></p>
+
+<p>「書き換え前」「書き換え後」の文字列を与えると，それらをうまく繋ぐようなプログラムを生成する，というイメージです．Perlいらず？</p>
+
+<p>手法としてはさほど難しいことはしておらず，無理やり一言でまとめてしまうと，<strong>「書き換えプログラム」の生成モデルをPCFGでモデル化して，それぞれの生成ルールの確率をlog-linearで書き，そのパラメータをPCFGのn-best導出を延々と求めながら更新していく</strong>，というだけ．見方によっては，あまりICMLっぽくは無いかも．</p>
+
+<p>もちろん，書き換えルールの元になるような基礎的な関数セット(最低限チューリング完全なものがあれば原理的には可能ですが，現実的には重複除去とかカウントとかを用意しておくみたいです)はあらかじめ定義しておかなければならないのですが，あとは<strong>探索時間さえ掛ければ任意の書き換えを行うプログラムが生成可能</strong>である，というのがポイントです．</p>
+
+<p>ただ，現実的な時間で探索を行うためには<strong>探索に優先順位</strong>をつける必要があります．そこで，効率的に探索を行うために<strong>機械学習を用いて「書き換え」の集合をあつめたコーパスからPCFGのパラメータを学習</strong>しましょう，というのがこの論文の本旨のようです．実際，探索が難しいプログラムほど高速化が期待でき，brute forceな方法にくらべると40倍ほど速くなる場合もあるとのこと．</p>
+
+<p>機械学習は「適応的なシステム」を作るのに使われる「重い」手法，というイメージがありますが，<strong>もともと原理的に解ける問題を「高速化」するために用いる</strong>，という意味で面白い視点を与える論文だと思いました．</p>
+
+<p>ビッグデータ感もなければ，ディープラーニングでもなく，曼荼羅のようなグラフィカルモデルもなんとかダイバージェンスも出てこない論文ですが，なかなか面白かったです．実用に近そうなのもいい．</p>
+
+<p>話は変わりまして，先日大学の同期とのプチ同窓会で10人ばかり集まったのですが，誰一人結婚してなくて笑．もちろん，ある種の集合バイアスもあるとは思いますが，おいおい俺らそろそろみそじやで．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[距離計量学習とカーネル学習について]]></title>
