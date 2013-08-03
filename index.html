@@ -9,7 +9,8 @@
   <meta name="author" content="Koji Matsuda">
 
   
-  <meta name="description" content="急に蒸し暑くなってきましたね．でぶちんなのでけっこうこたえます．タイトルはちょっと釣り気味．ビビっと来た方は是非論文に目を通してみてください:) 例によって，仲間内でやっている小さな勉強会で論文紹介をしてきましたので，そのご紹介です．ぼくの専門というか興味の中心は自然言語処理なので， &hellip;">
+  <meta name="description" content="前回のVanishing Component Analysisに関する記事が思いのほか好評だったようで，
+なんか自分に対してのハードルあげちゃった感あったり，記事冒頭でデブとか書くんじゃなかった・・・（ハハハ）と後悔してたり．．． いつもどおり肩肘はらずに書きますね．例によって， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +77,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-03T14:12:00+09:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前回のVanishing Component Analysisに関する記事が思いのほか好評だったようで，
+なんか自分に対してのハードルあげちゃった感あったり，記事冒頭でデブとか書くんじゃなかった・・・（ハハハ）と後悔してたり．．．</p>
+
+<p>いつもどおり肩肘はらずに書きますね．例によって，マンスリー読み会で紹介した論文について．</p>
+
+<ul>
+<li><a href="http://books.nips.cc/papers/files/nips25/NIPS2012_0733.pdf">&#8220;Joint Modeling of a Matrix with Associated Text via Latent Binary Features&#8221;</a> XianXing Zhang and Lawrence Carin
+, NIPS 2012.</li>
+</ul>
+
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/24888804" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/joint-modeling-ofamatrixwithassociatedtext" title="Joint Modeling of a Matrix with Associated Text via Latent Binary Features" target="_blank">Joint Modeling of a Matrix with Associated Text via Latent Binary Features</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">Koji Matsuda</a></strong> </div></p>
+
+<p>行列と，その列or行に紐づいたテキストが存在するときに，行列をいかによくモデル化するか，というお話です．推薦システム界隈ではわりとよくある感じの話ではあると思うのですが，適用しているデータが面白かったので紹介．</p>
+
+<p><img class="center" src="/images/joint_modeling_matrix_and_text.png" width="650"></p>
+
+<p>なんと，<strong>アメリカ下院議員の(法案に対する)投票行動</strong>をモデル化しています．この問題ならではの面白い性質を使っているのかと思いながら読み進めたら実はそんなことも無くて肩透かしを食らった感じではあるのですが．</p>
+
+<p>法案が議会を通過するか（採択されるか）を予測する，というタスクでは，<strong>法案のテキストだけ</strong>が与えられた状況で，<strong>90%以上の正解率</strong>を達成しています．
+この数値が高いのか低いのか私には判断がつきかねる（そもそも，提出された法案がほとんど採択されるような状況では予測の意味が無い）ものの，かなり工夫の施された他手法に比べてもそれなりに高い性能を達成しているようです．
+特に政治ドメインならではのモデリングを行っているわけではなく，かなりGeneralなモデルなのですが，たとえば，政治に特化した工夫がなされたIdeal Point Topic Model(IPTM)のような既存手法に比べても高い性能，というのはなかなか面白いところです．</p>
+
+<p>割とよくある推薦システムの技術が，<strong>議会という，民主主義の根幹を担うおそらく極めて高度なシステムを，表面的にではあるもののエミュレーションできてしまう</strong>，というのはなかなか考えさせられるものがあります．</p>
+
+<p>今回の論文では，「議員の過去の投票行動と，法案のテキスト」の間の関係をモデル化しているだけなのですが，外部の情報，たとえば経済指標だとかパブリックコメントだとか，を組み込むことができるとすると（能力のある研究者がその気になれば不可能ではないとはおもいます），<strong>コンピュータが政治を行う，という時代も意外と近づいてきているのかも</strong>しれません．</p>
+
+<p>は〜ディストピアっぽい．</p>
+
+<hr />
+
+<p>以下，テクニカルな部分について．私は推薦システムだとかベイズモデルだとかはあんまり詳しくないので，色々間違っているかも．</p>
+
+<p>この論文では，テキストを<strong>Focused Topic Model</strong>というトピックモデル，賛否を表す行列を<strong>Binary Matrix Factorization</strong>という行列分解モデルで表現しています．</p>
+
+<p>そのうえで，<strong>全体を繋ぎあわせる</strong>ようなバイナリの変数を導入して，<strong>全体を一気にMCMCで推定</strong>する，という流れ．スライドの最後にも載せておきましたが，グラフィカルモデルにいろいろアノテーションしたものを貼っておきます．小さくて見づらい場合は「名前をつけて保存」とか，よしなに扱って頂いてかまいません．青四角はハイパーパラメータです．</p>
+
+<p><img class="center" src="/images/joint_modeling_matrix_and_text_model.png" width="650"></p>
+
+<p>そもそも，何故Focused Topic Modelなのか，何故Binary Matrix Fctorizationなのか，という部分には，論文中にはあまり説明がなかったのですが，ちょっと考えてみたらいくつか理由付け，というか動機の推察ができたのでメモしておきます．</p>
+
+<p>一つは，Focused Topic Modelの性質として，IBPから生成されるバイナリベクトルをトピック分布のサブセット選択に用いているため，トピック分布をスパースになる，というものがあります．スパースであること自体はさほど重要ではないのですが，<strong>IBPから出てくるバイナリのベクトルが，Binary Matrix Factorizationのバイナリ表現とうまくマッチする</strong>，というのは考えられそうです．両者が等価なものだとはあまり思えないのですが，<strong>複数のモデルの間にインタラクションを持たせる</strong>ための確率変数としては，なかなかよい選択に思えます．</p>
+
+<p>あとは，Focused Topic Modelの論文でも述べられている，<strong>コーパスレベルでのトピック生起確率と，個々のドキュメントでのトピック生起確率の相関</strong>に関する問題が，&#8221;法案&#8221;というドメインにおいては顕著に現れるという可能性もあります．私はアメリカの法律なんて読んだことないのですが，もし一つ一つの法案が(互いに語彙の重なりが少ないという意味で)専門的な文書になっているとすれば，Focused Topic Modelの利点が効いてくるのかもしれません．</p>
+
+<p>しかし，これくらいごちゃごちゃしたグラフィカルモデルをまじめに読み解くのは初めてで，なかなか骨が折れました．低ランク近似の周辺なんかは未だにイマイチつかめていませんし，Inferenceのところは理解を諦めてほぼ眺めただけですが，それでもたいへん勉強になりました．</p>
+
+<p>さて，読んでばっかいないで実装しろ，という声が聞こえたので今日はこのへんにて．とりあえず，ビールでも飲みに行ってきます．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -945,6 +1032,10 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a>
       </li>
     
@@ -958,10 +1049,6 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
     
       <li class="post">
         <a href="/blog/2013/04/20/distance-metric-learning-and-kernel-learning/">距離計量学習とカーネル学習について</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/">グラフ結合度に基づく教師なし語義曖昧性解消について</a>
       </li>
     
   </ul>
