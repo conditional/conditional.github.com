@@ -27,6 +27,10 @@
         <lastmod>2013-04-22T13:48:44+09:00</lastmod>
     </url>
     <url>
+        <loc>http://conditional.github.io/blog/2013/05/05/predicting-google-closures/</loc>
+        <lastmod>2013-08-07T23:35:03+09:00</lastmod>
+    </url>
+    <url>
         <loc>http://conditional.github.io/blog/2013/05/06/predicting-google-closures/</loc>
         <lastmod>2013-05-06T12:28:45+09:00</lastmod>
     </url>
@@ -44,15 +48,19 @@
         <loc>
             http://conditional.github.io/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/
         </loc>
-        <lastmod>2013-08-03T17:02:56+09:00</lastmod>
+        <lastmod>2013-08-03T17:30:43+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://conditional.github.io/blog/2013/08/19/acl2013-reading-list-part-1/</loc>
+        <lastmod>2013-08-19T13:50:17+09:00</lastmod>
     </url>
     <url>
         <loc>http://conditional.github.io/blog/archives/</loc>
-        <lastmod>2013-08-03T17:02:56+09:00</lastmod>
+        <lastmod>2013-08-19T13:50:17+09:00</lastmod>
     </url>
     <url>
         <loc>http://conditional.github.io/</loc>
-        <lastmod>2013-08-03T17:02:56+09:00</lastmod>
+        <lastmod>2013-08-19T13:50:17+09:00</lastmod>
     </url>
     <url>
         <loc>http://conditional.github.io/robots.txt</loc>

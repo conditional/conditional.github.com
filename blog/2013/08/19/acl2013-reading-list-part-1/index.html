@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>ACL2013 マイ・リーディングリスト(1) - a lonely miner</title>
+  <meta name="author" content="Koji Matsuda">
+
+  
+  <meta name="description" content="自然言語処理に関する最高峰の国際会議 ACL が先日開催されました．
+発表された論文をいくつか眺めてみたのでメモ． ほんとうはもっといっぱい紹介したい論文があるのだけれど，時間の都合上，5本だけ．気がむいたら続編あるかも． すべての論文は，ACL Anthologyで入手することができる． &# &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://conditional.github.io/blog/2013/08/19/acl2013-reading-list-part-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="a lonely miner" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39246182-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">a lonely miner</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:conditional.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">ACL2013 マイ・リーディングリスト(1)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-19T13:20:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>自然言語処理に関する最高峰の国際会議 <a href="http://www.acl2013.org/site/">ACL</a> が先日開催されました．
+発表された論文をいくつか眺めてみたのでメモ．</p>
+
+<p>ほんとうはもっといっぱい紹介したい論文があるのだけれど，時間の都合上，5本だけ．気がむいたら続編あるかも．</p>
+
+<p>すべての論文は，<a href="aclweb.org/anthology/">ACL Anthology</a>で入手することができる．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1044.pdf">&#8220;Nonconvex Global Optimization for Latent-Variable Models&#8221;</a> Matthew R. Gormley and Jason Eisner, ACL 2013</h3>
+
+<p>分枝限定法（評価関数の上限を推定しながら，探索木を刈りこむ）を用いて，隠れ変数モデルの大域解を求めよう，という話．
+実験にはDMV(Dependency Model with Valence)というわりと有名な Unsupervised Dependency Parsingのモデルを用いている．
+グラフを見る限り，劇的に性能が良くなっているわけではなさそう，というか，線がつぶれてよく分からないｗ</p>
+
+<p>正直さっぱり分かっていないんだけど，分枝限定法についてのぼくの限られた知識から推測すると，
+隠れ変数が離散値をとる場合しか使えないような気がする．
+(正確にmarginalを計算しているのではなく，MAP解だけを数え上げているようにみえる)</p>
+
+<p>実は，EMのような局所解に縛られる問題を，メタヒューリスティクスを使ってなんとかしよう，というのは，学部時代の恩氏が時々
+言っていた話なのだけれど，当時は（いまも）能力が追いつかなくてぜんぜん歯が立ちませんでした．</p>
+
+<p>すぐにどうこうする話ではなさそうだけれど，むかしから微妙に興味はあった話ではあるので，
+（小さな局所解がいっぱいあるような）モデルを扱うときのためにいちおう記憶にとどめておきたい．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1034.pdf">&#8220;Scaling Semi-supervised Naive Bayes with Feature Marginals&#8221;</a> Michael R. Lucas and Doug Downey, ACL 2013</h3>
+
+<p>Semi-supervised Naive Bayesというと，EMと組み合わせたNigamの有名な論文以来，きれいな構造とシンプルなアルゴリズムのため，
+よく使われるのだけれど，データ全体を何度もなめないといけないため，計算量が問題だった．あと，EMを使う以上，モデルが変な方向へ飛んでいってしまう(局所解につかまる)ため，性能が安定しないという問題があって，ちょっと扱いづらい．</p>
+
+<p>そこで，featureの各クラスにおける出現確率だけをunlabeledデータから求める，というアイディアに基づいて高速化をはかったのがこの論文．
+ラベルつきデータが少数しか利用できない場合，featureの出現回数の&#8221;信頼性&#8221;が無くなってしまうので，大量に用意できるunlabeledデータを用いてパラメータを補正する，という感じ．</p>
+
+<p>このとき，データが正例か負例かのどちらかに属する，という仮定を用いて，学習データにおける正例負例の割合をうまく取り込むことで精度を上げている．</p>
+
+<p>Semi-supervised NBだと，わりと最近では<a href="http://www.icml-2011.org/papers/93_icmlpaper.pdf">Semi-supervised Frequency Estimate</a>(Su+ ICML&#8217;11)という，ワンパスで解いちゃう劇的に速い方法が提案されていて，
+アイディアもとても似ている．精度では今回提案された手法が優れているよう．計算時間の比較はなかったけど，同じくらい？</p>
+
+<p>Naive Bayesは超有名なので，バリエーションも超大量にあるのだけれど，NBの良いところの一つはマルチクラス分類が自然に行えるところだと思っているので，
+データが2クラス限定になっちゃうこれはどうかなーと思ったりする部分もある．
+もちろん，one-versus-allのような仕組みでいくらでもマルチクラスに拡張できるのですが．</p>
+
+<p>このへんは，2010年代っぽくない，とか言う人もいるけど，最近でも時々掘って成果を出している人がいるみたい．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1021.pdf">&#8220;Unsupervised Transcription of Historical Documents&#8221;</a> Taylor Berg-Kirkpatrick, Greg Durrett and Dan Klein, ACL 2013</h3>
+
+<p>このあいだ草津にいったときに，ちょっと趣きのある看板をみつけたので，</p>
+
+<blockquote class="twitter-tweet"><p>そういや白根山でみつけたこの看板、自然言語処理に対する挑戦っぽい <a href="http://t.co/ps3qgUCGfO">pic.twitter.com/ps3qgUCGfO</a></p>&mdash; Koji Matsuda (@conditional) <a href="https://twitter.com/conditional/statuses/349186418167406593">June 24, 2013</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p></p>
+
+<p>とか言ってたら，マジで論文が出てきた・・・．主に，むかしのタイプライターとか活版印刷で印刷された，
+現在では読みにくくなってしまっている文書をいかにOCRするか，という題材．</p>
+
+<p>モデルは， 言語モデル × typesettingモデル(文字のレイアウト：右にこれくらいズレてる，とか) × inkingモデル(インクのつけすぎで太くなっちゃってるとか) × ノイズモデル(経時変化による文字の欠けとか)を一つひとつ丁寧に組み上げて，Jointしている．
+学習はEM．ちゃんと動くのか心配だけど，一つ一つの変数がちゃんと意味を持つよう工夫しているからか(むやみに変数が多くなりすぎないように工夫しているようにみえる)，
+ちゃんと学習できているらしい．</p>
+
+<p>学習したモデルでは，人工的にインクをダバ〜っとこぼした原稿も解読できたりするようで，このへんもなかなか興味深い．モデル自体の解釈も面白そう．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1036.pdf">&#8220;Scalable Decipherment for Machine Translation via Hash Sampling&#8221;</a> Sujith Ravi, ACL 2013</h3>
+
+<p>暗号解読のノリで，言語モデル+サンプリングを使って対訳コーパスなしで翻訳をしちゃうお話の続編．
+2011年の初出以来，年々進化を続けていて，今回は主に高速化がテーマになっている．</p>
+
+<p>最初はword-to-wordの置換に基づく翻訳だけだったのが，これまでの研究で，さまざまなfeatureが使えるようになったのだけれど，
+ちょっと計算に時間がかかりすぎるようになってきたので，Hash Samplingという手法で高速化を行っている．</p>
+
+<p>Hash Samplingというのは，あんまりよくわかっていないのだけれど，ベクトル同士の類似度をはかる
+(指数分布族からのサンプリングに用いる尤度項のテイラー近似は，パラメータベクトルと事例ベクトルの内積を用いて表せるらしい)
+ときに，feature vectorの空間で直接内積をとる代わりに，適当なハッシュ関数を通して，その間の差分(ハミング距離とか)を用いる方法のよう．</p>
+
+<p>この手法によって，現在のパラメーターに近い語は高い確率でサンプルされ，そうでない語は低い確率，というサンプリングを高速に実現している．
+{0,1}ベクトルのハミング距離は最近のCPUだとかなり高速に計算できるようで，BLEU値をほとんど落とさずに，2桁くらいの高速化を実現したらしい．</p>
+
+<p>Hash Samplingは，かなり汎用性が高い高速化手法っぽいので，そのうちじっくり読む機会があればいいなと思っている．
+テイラー展開による近似 + ハッシュによる近似，という2段階の近似を経ているあたりが少し気になったりはする．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1127.pdf">&#8220;From Natural Language Speciﬁcations to Program Input Parsers&#8221;</a> Tao Lei, Fan Long, Regina Barzilay, and Martin Rinard, ACL 2013</h3>
+
+<p>ICPCなどのプロコンの問題を，コンピュータに解かせよう！というモチベーションがありそうな研究．
+といっても，今回はまだ問題を解くところまでは行っていなくて，入力データの解析部分に対する挑戦．
+プロコンの問題では，たいてい，</p>
+
+<blockquote><p>入力は複数のデータセットからなる． 各データセットは2つの整数 a0  と L  が1個のスペースで区切られた1行であり，
+a0  が最初の整数を， L  が桁数を表す． ただし， 1 ≤ L  ≤ 6 かつ 0 ≤ a0  &lt; 10L である．</p>
+
+<p>from <a href="http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1180&amp;lang=jp">AIZU ONLINE JUDGE</a></p></blockquote>
+
+<p>というような入力データのフォーマット指示がなされているので，これを構文解析して，パーサーを構成するC++プログラムを自動で生成しよう，というテーマ．</p>
+
+<p>用いることの出来るデータは，上に挙げたようなフォーマット指示の問題文(英語)と，実際にプロコン主催者から与えられる入力データ．
+直接プログラムそのものへの変換を考えるのではなく，フォーマット指示文から，データ構造を表す &#8220;specification tree&#8221;を生成し，
+それを通してparsingプログラム(より正確には，yaccやbisonに入力するような形式文法)の生成を行っている．</p>
+
+<p>モデルは，
+テキスト中のそれぞれの要素が，他の要素とどのような関係を持っているかを当てるための dependency parsing と，
+ それぞれのノードがプログラム内でどのような役割をもつか当てるための role labeling のふたつの要素で構成されている．</p>
+
+<p>学習は，だいたい次のような流れ．</p>
+
+<ol>
+<li>現在のモデルから specification tree をサンプリングする</li>
+<li>サンプリングされたtreeからプログラムを生成し，テスト用データをすべてパースできるか調べる(feedbackと呼ばれている)</li>
+<li>treeがどれくらい良いか，に応じて，Metropolis-Hasting ruleで次の状態を定める</li>
+</ol>
+
+
+<p>このfeedbackと呼ばれる学習手法によって，F値が54から80程度に向上したらしい．
+<a href="http://people.csail.mit.edu/taolei/papers/acl2013-slides.pdf">著者による発表スライド</a>もあるので，興味をもって頂けましたら，ぜひそちらも．</p>
+
+<p>つづく・・・かも？</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Koji Matsuda</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-19T13:20:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/nlp/'>nlp</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  <a href="http://b.hatena.ne.jp/entry/http://conditional.github.io/blog/2013/08/19/acl2013-reading-list-part-1/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://conditional.github.io/blog/2013/08/19/acl2013-reading-list-part-1/" data-via="conditional" data-counturl="http://conditional.github.io/blog/2013/08/19/acl2013-reading-list-part-1/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/" title="Previous Post: コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について">&laquo; コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>ロンリーなマイナーです．</p>
+  <ol>
+  <li><a href="http://twitter.com/conditional">Twitter</a></li>
+  </ol>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/06/predicting-google-closures/">統計データに基づくGoogle各種サービスの生存予測</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Koji Matsuda -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'condi';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://conditional.github.io/blog/2013/08/19/acl2013-reading-list-part-1/';
+        var disqus_url = 'http://conditional.github.io/blog/2013/08/19/acl2013-reading-list-part-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
