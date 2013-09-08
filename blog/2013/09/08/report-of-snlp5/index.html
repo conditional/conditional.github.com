@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>第5回 最先端NLP勉強会に参加してきました - a lonely miner</title>
+  <meta name="author" content="Koji Matsuda">
+
+  
+  <meta name="description" content="もう一週間ほど前になってしまうのですが，最先端NLP勉強会 という会に参加させていただきました． じつは昨年も参加するべく申し込みまでは行ったものの，事情があって参加できず．今年はなんとかリベンジを果たせました． 二日間で30本もの論文を読むこの勉強会， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://conditional.github.io/blog/2013/09/08/report-of-snlp5">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="a lonely miner" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39246182-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">a lonely miner</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:conditional.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">第5回 最先端NLP勉強会に参加してきました</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-08T14:29:00+09:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>もう一週間ほど前になってしまうのですが，<a href="http://www.logos.t.u-tokyo.ac.jp/snlp5/">最先端NLP勉強会</a> という会に参加させていただきました．</p>
+
+<p>じつは昨年も参加するべく申し込みまでは行ったものの，事情があって参加できず．今年はなんとかリベンジを果たせました．</p>
+
+<p>二日間で30本もの論文を読むこの勉強会，<strong>読む論文の選出プロセスにも工夫が凝らされて</strong>います．</p>
+
+<ol>
+<li>参加者全員が，対象となる会議の予稿集に目を通し，面白そうだと思った論文数本(今年は12本)に対して投票を行う．<!--例年は，ACL, NAACL, EMNLPが対象らしいのですが，今年はEMNLPの開催が遅いので，そのかわりに，新しく創刊されたTACL．--></li>
+<li>多くの票を集めた論文，上位30本ほどを候補とし，参加者はその中から自分が紹介する論文を選ぶ．</li>
+</ol>
+
+
+<p>という二段階をとっているので，いわゆる「ハズレ」な論文が少なくなっており，どの発表もたいへん勉強になりました．</p>
+
+<hr />
+
+<p>私が紹介したのは以下の論文，</p>
+
+<ul>
+<li>Mohammad Taher Pilehvar, David Jurgens and Roberto Navigli, <a href="http://aclweb.org/anthology-new/P/P13/P13-1132.pdf"><em>Align, Disambiguate and Walk</em>  : A Uniﬁed Approach for Measuring Semantic Similarity</a>, ACL2013</li>
+</ul>
+
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/25994117" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/koji_matsuda/snlp5-matsuda" title="Align, Disambiguate and Walk : A Uniﬁed Approach forMeasuring Semantic Similarity" target="_blank">Align, Disambiguate and Walk : A Uniﬁed Approach forMeasuring Semantic Similarity</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">Koji Matsuda</a></strong> </div></p>
+
+<p>発表スライドはそのうち公開されるような気もしますが，今のところ認証が必要みたいなので，私のぶんだけ．
+他の方の発表がすばらしいものばかりで，ちょっと手抜きすぎな感じがしたので，発表時のものから大幅に加筆しています．英語がおかしいのには，目をつぶってください・・・．</p>
+
+<p><a href="/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/">以前紹介したGraph Connectivityに基づくWSDの論文</a>と同じ，Roberto Navigliのチームによる論文です．</p>
+
+<p>WSDの論文というよりは，<strong>文間の意味的な類似度を精度良く求めるために，WSDを活用する</strong>，という主旨．いちおう，WSDのための新たなアルゴリズムも提案していますが，そちらは限定的な状況を想定しているため，直接一般のWSDに適用するのは難しいかも．</p>
+
+<p>この論文の優れているところは，語義(WordNet上の一つのSynset)，単語，一つの文，(論文中では書かれていませんが，おそらくドキュメント全体も)といった，<strong>さまざまな粒度の言語的要素を，ひとつの表現</strong>(WordNet Synset上の確率分布)で表すことができる，というところ．</p>
+
+<p>アイデアは単純で，文(とか単語とか，意味表現を求めたい言語要素)を語義の集合にバラして，それを種として，<strong>WordNetのグラフ上をランダムウォークさせる</strong>，というもの．
+ただ，多義語が含まれる場合は種にノイズが混ざってしまうので，それをWSDで解決してから，グラフにつっこむという解決策を提案しています．</p>
+
+<p>WSDのアルゴリズムは，<a href="http://en.wikipedia.org/wiki/Yarowsky_algorithm">Yarowskyのアルゴリズム</a>などと同様に&#8221;one sense per discourse&#8221;仮説に立脚したもので，二文それぞれが近い意味になるような語義の組み合わせを二文間のアラインメントで探索する，というもの．べつにこの方法でなければならない，ということもなさそうですが，もともとの目的が&#8221;文間の意味的な類似度&#8221;ですので，対になる文が意味的にだいたい似ている，ということが仮定できる状況下では，有効な方法に思えます．</p>
+
+<p>ツッコミどころはいっぱいあって，例えば<strong>語順とか構文のような，文全体の意味を決めるのに重要な要素を捨象してしまっている</strong>とか，マルチシードのランダムウォークって，それシード一つのランダムウォーク単純に重ねあわせただけなのでは，とか，</p>
+
+<p>勉強会での説明のときは，この論文が主に「文間の意味的な類似度」に最もフォーカスを当てていることがうまく説明できなかったのですが，帰りの電車でうんうん唸りながら考えて，ここに焦点をあてて説明すれば良かったな，と帰宅してからチマチマスライドなおすなど．</p>
+
+<hr />
+
+<p>その他，勉強会で紹介していただいたものの中で，いくつか気になった論文を．</p>
+
+<ul>
+<li>Mike Lewis and Mark Steedman, <a href="http://aclweb.org/anthology/Q/Q13/Q13-1015.pdf">Combined Distributional and Logical Semantics</a>, TACL Vol.1</li>
+</ul>
+
+
+<p>CCGパーシングに，distributional semanticsを結合する，という話．CCGのpredicateに，大きなコーパスをクラスタリングして得られたentity(項)とrelation(述語)を統合する，という研究．LogicとDistributional Semanticsは，それぞれ別個に発展してきているので，それらを一度まとめて考えてみよう，というモチベーションがありそう．組み合わせることで何が新しく解けるようになるのか，というのはまだオープンプロブレムみたい（そもそも，評価に使えるデータがない？）だけれど，今後が楽しみ．</p>
+
+<ul>
+<li>Dan Garrette and Jason Baldridge, <a href="http://aclweb.org/anthology/N/N13/N13-1014.pdf">Learning a Part-of-Speech Tagger from Two Hours of Annotation</a>, NAACL2013</li>
+</ul>
+
+
+<p>ルワンダ語とかマダガスカル語のような，電子的に扱える言語リソースが限られている語に対して，いかに小さな労力で品詞タガーを学習できるか，という問題を扱った研究．<a href="http://d.hatena.ne.jp/mamoruk/20130612">小町さんの日記</a>に大まかなストーリーが書いてあるのでそちらもご参照ください．個人的には，生のコーパスにアノテーションを付与するよりも，同じ時間であれば辞書のエントリ数を充実させたほうが若干性能が良い，つまり，語間のマルコフ性に関するデータよりも，語自体の品詞情報のほうが（人手のラベル付けにおいては），時間に対するコストパフォーマンスが良い，というのがなかなか興味深く感じました．</p>
+
+<ul>
+<li>Kai Zhao and Liang Huang, <a href="http://aclweb.org/anthology/N/N13/N13-1038.pdf">Minibatch and Parallelization for Online Large Margin Structured Learning</a>, NAACL 2013</li>
+</ul>
+
+
+<p>オンライン学習を並列化するためには，それぞれのノード間でパラメータを共有する必要があるのだけれど，そのタイミングをうまく調節することで，スケーラブルにしよう，という研究．とくに構造学習においては，デコード（新しいデータを評価してみて，パラメータの更新が必要かどうか判断する）というフェーズに時間がかかることが多いのだけれど，これはそれぞれのデータに対しては独立に行える（並列化できる）．しかしながら，間違えたたびにパラメータの更新を行っていてはオーバーヘッドが大きすぎるので，途中で間違えたとしても気にせず数事例まとめて評価する(ミニバッチ)ことで，パラメータの更新回数を少なくしよう，というアイディア．うーんうまく説明できないのですが，ミニバッチ，という考え方は Deep Learning でも重要とされていて，完全なオンライン(SGDとか)安定して収束しない，完全なバッチ（BFGSとか）だとメモリがキツい，みたいなときによく使われているので，おさえておいて損はなさそう．</p>
+
+<ul>
+<li>Carina Silberer, Vittorio Ferrari and Mirella Lapata, <a href="http://aclweb.org/anthology/P/P13/P13-1056.pdf">Models of Semantic Representation with Visual Attributes</a>, ACL 2013</li>
+</ul>
+
+
+<p>実世界の物体（クマとか，カップとか）と，テキスト上に現れる Bear, Cup などをうまく結びつけよう，という研究．SIFTとかHOGといった，CVの研究においてよく用いられている特徴量ではなく，「クマは茶色い」「クマは四本足だ」などといったような，より高レベルな特徴量(Visual Attributeと呼ばれています)を用いる方法を提案．この高レベルな特徴量は，人手で用意する必要があるようなのですが，画像の特徴と，テキストの特徴を結びつける，という話はなかなか興味深く感じました．</p>
+
+<hr />
+
+<p>全体としては， Grounding(実世界との対応付け？うまい日本語訳が分かりませぬ) がジャンルとして大きな注目を集めているという印象を受けました．マルチモーダル！</p>
+
+<p>道具としては，CCGはもう何処にでも出てくる感じ．CFGなどの伝統的な文法に比べて，どの辺に利点があるのかイマイチ分かっていないので，よく勉強する必要がありそうです．</p>
+
+<p>かなりムシムシする部屋に二日間缶詰になっていたので，汗かきな私にはちょっとシンドイ感もありましたが，みなさま質の高い発表ばかりで，とても楽しい時間を過ごすことができました．幹事のみなさま，発表者のみなさま，どうもありがとうございました．</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Koji Matsuda</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-08T14:29:00+09:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/nlp/'>nlp</a>, <a class='category' href='/blog/categories/research/'>research</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  <a href="http://b.hatena.ne.jp/entry/http://conditional.github.io/blog/2013/09/08/report-of-snlp5/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://conditional.github.io/blog/2013/09/08/report-of-snlp5/" data-via="conditional" data-counturl="http://conditional.github.io/blog/2013/09/08/report-of-snlp5/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/19/acl2013-reading-list-part-1/" title="Previous Post: ACL2013 マイ・リーディングリスト(1)">&laquo; ACL2013 マイ・リーディングリスト(1)</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>ロンリーなマイナーです．</p>
+  <ol>
+  <li><a href="http://twitter.com/conditional">Twitter</a></li>
+  </ol>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/08/report-of-snlp5/">第5回 最先端NLP勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Koji Matsuda -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'condi';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://conditional.github.io/blog/2013/09/08/report-of-snlp5/';
+        var disqus_url = 'http://conditional.github.io/blog/2013/09/08/report-of-snlp5/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

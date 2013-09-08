@@ -9,8 +9,7 @@
   <meta name="author" content="Koji Matsuda">
 
   
-  <meta name="description" content="とりあえずはじめてみた． Octopressはじめました - mimemo が大変参考になりました．Mou便利．markdown，必要に迫られたときしか
-書いてこなかったんだけど，少しづつ慣れていきたい． 数式のテスト(MathJax.rb利用) N(m,\sigma^{2})=\frac{1 &hellip;">
+  <meta name="description" content="眠いですね． とくに機械学習のクロスバリデーションや，ごっつい集計クエリなどの時間のかかるバッチジョブを流す間，とても眠い． 私の場合，そういう時にはディスプレイの前を離れて，お昼寝タイムにすることが多いです（基本いつも眠い）． &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +82,129 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-14T17:59:00+09:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>眠いですね．</p>
+
+<p>とくに機械学習のクロスバリデーションや，ごっつい集計クエリなどの時間のかかるバッチジョブを流す間，とても眠い．</p>
+
+<p>私の場合，そういう時にはディスプレイの前を離れて，お昼寝タイムにすることが多いです（基本いつも眠い）．実行時間の見積もりがつくようなジョブなら適当にアラームかけておけばよいのですが，実際はそうも行かないことも多いですよね．</p>
+
+<p>そこで，iOSデバイスにプッシュ通知を送れるアプリケーション <strong>Prowl</strong> を用いて，ジョブの終了をiPhoneに通知してくれる短いRubyスクリプトを書いてみました．ジョブ終わったらブルッと鳴って目覚めスッキリ．</p>
+
+<h2>Requirement</h2>
+
+<ul>
+<li><a href="https://www.prowlapp.com/">Prowl</a></li>
+<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
+</ul>
+
+
+<p>gem は <code>gem intall prowl</code> でインストールできます．</p>
+
+<h2>Instalation</h2>
+
+<p>まず，ProwlのウェブサイトからAPIキーを取得します．いちおう登録＆ログインが必要ですが，メールアドレスは不要のようです，ログインして，<strong>API keys</strong> のページに進むと
+フォームが二つありますが，Provider keyは第三者にキー入りアプリを配布するときに使うものなので，今回は <strong>Generate a new API key</strong> のほうでOK．Noteは空でもいいのでとにかくサブミットボタンを押すと，API keyが取得できます．</p>
+
+<p><img src="http://conditional.github.com/images/generate_prowl_apikey.png"></p>
+
+<p>そんでもってスクリプトの中身はこんな感じ．<code>API_KEY</code>には先ほど取得したキーを．</p>
+
+<div><script src='https://gist.github.com/5161032.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>環境変数 <code>PROWL_NOTICE_TITLE</code>, <code>PROWL_NOTICE_CONT</code> にメッセージをセットしておくと，その中身を通知してくれます．通知を受け取りたいプロセスと環境変数の設定をラップするようなシェルスクリプトを組んでおくと良いかもしれません．<code>ARGV</code> についてはあとで説明します．</p>
+
+<h2>Example</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sleep 10 && ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>という感じでプロセスを実行すると，終了時にこんな感じで通知してくれます．</p>
+
+<p><img src="http://conditional.github.com/images/prowl_sleep.jpg" width="320" height="480"></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ export PROWL_NOTICE_TITLE='たいとるだよ'
+</span><span class='line'>$ export PROWL_NOTICE_DESC='おわったよ〜'
+</span><span class='line'>$ ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>とかするとこんな感じ．</p>
+
+<p><img src="http://conditional.github.com/images/prowl_with_env.jpg" width="320" height="480"></p>
+
+<h2>zsh(precmd/preexec)との組み合わせ</h2>
+
+<p>しかし，毎回コマンド打つのは面倒ですね．そこで，<a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a> で紹介されている方法を使うと，
+コマンドに一定以上の時間がかかったときに自動で通知してくれます．
+今回のスクリプトに合わせてちょっと改造してみました．<code>PROWL_NOTICE_TIME</code>を適当に設定して<code>.zshrc</code>に潜ませてみてください．</p>
+
+<div><script src='https://gist.github.com/5161045.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>とくに環境変数が設定されていない場合は，プロセスの名前と引数が通知されてきます．(<code>ARGV</code>を通してRubyスクリプトに渡されます)</p>
+
+<h2>まとめ</h2>
+
+<ul>
+<li>眠い時でも思う存分バッチを走らせることができるRubyスクリプトを書いてみました．</li>
+<li>実行に一定時間以上かかったら自動で通知してくれるzshの設定例を紹介しました．</li>
+<li>勤務時間中の居眠りは計画的に．</li>
+</ul>
+
+
+<p>Prowlは有料(執筆現在250円)アプリですが，単に通知を受け取るだけではなく，通知を他のアプリにフォワードしてくれる機能があったり，<a href="http://www.prowlapp.com/apps.php">Chromeで開いているページを通知してくれるプラグイン</a>が用意されていたり，そこそこ遊べそうなので，今回導入してみました．</p>
+
+<p>もし同様の機能の無料アプリをご存知でしたら是非教えてください．</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a></li>
+<li><a href="https://www.prowlapp.com/">Prowl</a></li>
+<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a></h1>
     
     
@@ -148,6 +270,10 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/08/report-of-snlp5/">第5回 最先端NLP勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a>
       </li>
     
@@ -161,10 +287,6 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
     
       <li class="post">
         <a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/06/predicting-google-closures/">統計データに基づくGoogle各種サービスの生存予測</a>
       </li>
     
   </ul>
