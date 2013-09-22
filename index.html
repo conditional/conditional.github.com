@@ -9,7 +9,7 @@
   <meta name="author" content="Koji Matsuda">
 
   
-  <meta name="description" content="もう一週間ほど前になってしまうのですが，最先端NLP勉強会 という会に参加させていただきました． じつは昨年も参加するべく申し込みまでは行ったものの，事情があって参加できず．今年はなんとかリベンジを果たせました． 二日間で30本もの論文を読むこの勉強会， &hellip;">
+  <meta name="description" content="先日，身内の勉強会(&amp;ラボの勉強会)で，Deep Learningについてお話してきました．これまで興味がなさそうだったのに何故急に？というのはおいておいて． 紹介したのは，Deep Learningの第一人者のひとり， Yoshua Bengio先生自身が執筆された，以下の論文． &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,115 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/">Deep Learning : Bengio先生のおすすめレシピ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-22T10:09:00+09:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>先日，身内の勉強会(&amp;ラボの勉強会)で，Deep Learningについてお話してきました．これまで興味がなさそうだったのに何故急に？というのはおいておいて．</p>
+
+<p>紹介したのは，Deep Learningの第一人者のひとり， <a href="http://www.iro.umontreal.ca/~bengioy/yoshua_en/index.html">Yoshua Bengio先生</a>自身が執筆された，以下の論文．</p>
+
+<ul>
+<li>Yoshua Bengio, <a href="http://arxiv.org/abs/1206.5533">Practical recommendations for gradient-based training of deep architectures</a>, arXiv:1206.5533v2, 2012</li>
+</ul>
+
+
+<p>どうやら書籍の草稿のようで，<strong>Bengio先生の長年の研究で得られたさまざまなノウハウ</strong>(最近の手法まで)がぎっしり詰め込まれています．すごい．</p>
+
+<p>以前から気にはなりつつも，ちょっと分量が多い(30ページくらいある)ので，なかなか手を出すことができなかったのですが，ようやくヤル気が出てきたので，ちょっとがんばって読み込んでみました．</p>
+
+<p>スライドも置いておきます．50枚くらいあります（作るのしんどかった・・・．</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/26420875" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/koji_matsuda/practical-recommendation-fordeeplearning" title="ractical recommendations for gradient-based training of deep architectures" target="_blank">ractical recommendations for gradient-based training of deep architectures</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">Koji Matsuda</a></strong> </div></p>
+
+<p>Deep Learningは，その性能の高さから各所でブームになっていますが，実際に手を出してみると<strong>ハイパーパラメータがやたらと多く，最適化も難しい</strong>，ということで，使いこなしにくい技術になってしまっている感があります．</p>
+
+<p>この記事では，Bengio先生が長年蓄積されたきたノウハウをもとに，</p>
+
+<ul>
+<li>どんなハイパーパラメータがあるか</li>
+<li>どのように最適化すればよいか</li>
+<li>うまく動かないときは，何をチェックすればよいか</li>
+<li>学習の結果得られたネットワークを解釈するための可視化の方法</li>
+</ul>
+
+
+<p>など，実問題に適用する場合に役立つ，様々なアドバイスがまとめられています．</p>
+
+<p>特に興味深かったのは，<strong>ハイパーパラメータはグリッドサーチするのではなく，ランダムサンプリングしたほうが性能が出る場合が多い</strong>よ，という知見．</p>
+
+<p>何故なのか，というのは，スライドを見ていただいたり，以下の文献</p>
+
+<ul>
+<li>James Bergstra, <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">Yoshua Bengio, Random Search for Hyper-Parameter Optimization</a>, Journal of Machine Learning Research, 13(Feb):281−305, 2012.</li>
+</ul>
+
+
+<p>を読んで頂ければ合点がいくのではないかと思います．</p>
+
+<p>これが機械学習一般に対して言えるか，というと必ずしもそうではなく，SVMのようにハイパーパラメータが少ないモデルでは成り立たないのではないかとは思いますがが，なかなか衝撃的な事実です．は〜グリッドサーチとは一体なんだったのか．</p>
+
+<p>この論文を読めばDeep Learningが自在に使えるようになる，ということは無さそうですが，上手くいかず悩んでいる方がいらっしゃいましたら，少しでも参考にしていただければ幸いです．</p>
+
+<hr />
+
+<p>ところで，ふだんはPowerPointを使ってスライドを書いているのですが，今回は<a href="https://bitbucket.org/rivanvx/beamer/wiki/Home">Beamer</a>を使って作ってみました．まじめに使ったのは初めて．</p>
+
+<p>PowerPointと比較すると，以下のような感想を持ちました．</p>
+
+<ul>
+<li>あらかじめ用意されたスタイルから逸脱したことは非常にやりにくくなっているので，よくある「文字が小さすぎてギッシリ」みたいな読みにくいスライドは作りにくく，結果として読みやすいものができあがる</li>
+<li>タイプセット&amp;PDF生成に時間がかかるので(今回の場合，最終的に20秒くらいかかるようになってしまいました)，枚数がふえるとけっこうイライラ(要素の位置をちょっと調整する，とかで20秒かかるのはアホらしい)</li>
+<li>図を入れるのがめんどい．PPTならコピペでよいところが，キャプチャしてバウンディングボックス作ってincludegraphics…</li>
+<li>要素の入れ子の嵐になる(PPTならタブ一個でいいところが，itemize環境の追加になる)ので，可読性に劣る
+
+<ul>
+<li>Markdownとかから変換できればいいな〜</li>
+</ul>
+</li>
+<li>TeXの(バッド)ノウハウ・・・</li>
+</ul>
+
+
+<p>全体的に，準備に時間がかけられて，かつソコソコ長いプレゼン(20枚〜)であれば，使う価値はあると思います(ただしTeX慣れしてるのが大前提)</p>
+
+<p>ただ，長すぎるとタイプセットの時間でイライラするようになるので，一長一短ですね．</p>
+
+<p><a href="ftp://ftp.u-aizu.ac.jp/pub/tex/CTAN/macros/latex/contrib/beamer/doc/beameruserguide.pdf">公式のリファレンスマニュアル</a>は異様に詳しいのですが，どう見ても入門向きではないですし，読む気も起きないと思いますので，まずは<a href="http://www.uncg.edu/cmp/reu/presentations/Charles%20Batts%20-%20Beamer%20Tutorial.pdf">A Beamer Tutorial in Beamer</a>あたりを参考にされるとよいのではないかと思います．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1051,118 +1160,6 @@ n = sentence σの長さ．
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/">Posterior Regularization と Unified Expectation Maximizationについて</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-23T16:20:00+09:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>桜がとってもきれいですね．すずかけ台は8分咲きといったところです．ところで，仲間で行っている小規模な勉強会で</p>
-
-<ul>
-<li><a href="http://www.aclweb.org/anthology/N/N12/N12-1087.pdf">&#8220;Unified Expectation Maximization&#8221;</a> Samdani et al, NAACL2012</li>
-</ul>
-
-
-<p>を紹介してきたので，資料をslideshareにあげておきました．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/17552885" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/unified-expectation-maximization" title="Unified Expectation Maximization" target="_blank">Unified Expectation Maximization</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
-
-<p>Unified EMというと，じゃっかん大風呂敷な感じのタイトルですが，キーとなるアイデアはとても単純で，EMアルゴリズムのE-Stepで最小化するKLダイバージェンスにちょっと細工を入れることで，Hard-EMとふつうのEMの中間くらいの性質を持ったアルゴリズムになりますよ．というお話です．Deterministic Annealing EMの逆バージョンみたいな雰囲気(実際，DAEMもこの枠組で書けることが示されています) 手元にEMのコードがあれば，実装も非常に容易．</p>
-
-<p>ただ，やっぱりそれだけだと一発ネタにしかならないので，「制約付きEM」のほうへ話を進めています．「制約付きEM」というと聞きなれないアルゴリズムですが，Un(semi-)supervised learningにおいて，事前知識を用いてモデルがとんでもない方向へ飛ぶのを防ごう，というモチベーションに基づく技法のようです．</p>
-
-<p>自然言語処理におけるアプリケーションでは，たとえば以下のような制約を考えることができます：</p>
-
-<ul>
-<li><p>品詞タグ付けなら</p>
-
-<ul>
-<li>ある文には，名詞と動詞が最低一つづつ含まれる</li>
-<li>ある語が，複数のPOSに割り当てられることは稀</li>
-</ul>
-</li>
-<li><p>機械翻訳におけるアラインメントなら</p>
-
-<ul>
-<li>L1->L2のアラインメントと，L2->L1のアラインメントは一致する</li>
-<li>L1の一つの語が，L2の多数の語と対応付けられることは稀</li>
-</ul>
-</li>
-<li><p>関係抽出なら</p>
-
-<ul>
-<li>ある種のエンティティと，ある種のエンティティの間には，特定のリレーションしか成り立たない
-
-<ul>
-<li>(PERSON, LOCATION) -> LIVE IN</li>
-<li>(ORGANIZATION, PERSON) -> WORK FOR</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>こういった事前知識に基づく制約を満たすモデルを，確率分布の集合として表現し，そこから離れないようにEMアルゴリズムを行うことによって，ラベルつきデータが利用可能ではない（または，少量しか存在しない）状況において，うまく学習が行おうというのが，「制約付きEM」の肝となる部分です．直感的には，Posterior Regularizationの論文から引用した以下の図が分かりやすいかもしれません．（日本語注釈は私によるものです）</p>
-
-<p><img src="http://conditional.github.com/images/posterior_regularization_fig.png" width="460" height="302"></p>
-
-<p>歯切れのよいタイトルに惹かれて軽い気持ちで選んだ論文でしたが，そこそこホットな分野のようで，ACL 2011のチュートリアルで1トラックまるまるこの話題だったりしたらしく，問題設定や前提を理解するのにけっこう苦労しました．</p>
-
-<p>結果として，UEMの本題ではなく，問題設定や先行研究の紹介に半分近くのスライドを割くことに・・・．まぁ，楽しんで頂けたようなのでなによりです．しかしひさびさに緊張感のあるプレゼンだった．</p>
-
-<p>最後のスライドにも記載しましたが，以下の文献が，理解の助けになると思います．</p>
-
-<ul>
-<li><a href="http://sideinfo.wikkii.com/">&#8220;Rich Prior Knowledge in Learning for Natural Language Processing&#8221;</a> ACL 2011 tutorial
-
-<ul>
-<li>ACLで行われたチュートリアルの資料です．このファミリーに属するアルゴリズムについての資料の多くはここからたどれるようになっています．各種のアルゴリズムのあいだの関係についてよくまとまっていますし，著者らによって異なる表記系もすっきりまとめられているので読みやすい．今回は取り上げませんでしたが，Labeled Feature とかも追ってみるとおもしろそうなトピックなので，ぜひ．</li>
-</ul>
-</li>
-<li><a href="http://jmlr.csail.mit.edu/papers/volume11/ganchev10a/ganchev10a.pdf">&#8220;Posterior Regularization for Structured Latent Variable Models&#8221;</a> JMLR 2010
-
-<ul>
-<li>今回紹介した論文の元ネタになっている Posterior Regularizationの論文です．品調ラベルづけにおける例とともに，少しづつ丁寧に議論が進められており，さすがジャーナルだけあって読みやすいです．</li>
-</ul>
-</li>
-</ul>
-
-
-<p>ひさびさに負荷の高い一週間だったので，来週はすこしゆっくりしたいと思います．（日記）</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1185,6 +1182,10 @@ n = sentence σの長さ．
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/">Deep Learning : Bengio先生のおすすめレシピ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/08/report-of-snlp5/">第5回 最先端NLP勉強会に参加してきました</a>
       </li>
     
@@ -1198,10 +1199,6 @@ n = sentence σの長さ．
     
       <li class="post">
         <a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a>
       </li>
     
   </ul>
