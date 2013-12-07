@@ -4,7 +4,7 @@
   <title><![CDATA[Category: learning | a lonely miner]]></title>
   <link href="http://conditional.github.io/blog/categories/learning/atom.xml" rel="self"/>
   <link href="http://conditional.github.io/"/>
-  <updated>2013-09-22T11:26:57+09:00</updated>
+  <updated>2013-12-07T22:41:51+09:00</updated>
   <id>http://conditional.github.io/</id>
   <author>
     <name><![CDATA[Koji Matsuda]]></name>
@@ -12,6 +12,214 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[MLAC 2013 7日目] Torch7でお手軽ニューラルネットワーク]]></title>
+    <link href="http://conditional.github.io/blog/2013/12/07/an-introduction-to-torch7/"/>
+    <updated>2013-12-07T21:29:00+09:00</updated>
+    <id>http://conditional.github.io/blog/2013/12/07/an-introduction-to-torch7</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>この記事は <a href="http://qiita.com/advent-calendar/2013/machinelearning">Machine Learning Advent Calendar 2013</a> の 7日目の記事です．</p>
+
+<p>2013年，<em>Deep Learning</em> もアカデミックレベルではさまざまな分野への浸透が進み，バズワードの域を脱したように思えます．
+これまでは，機械学習というと，応用分野においては(分類/回帰といった)タスクを決めてしまった上でブラックボックスとして
+扱うもの，という空気がありましたが，
+<em>Deep Learning</em> に代表される柔軟な，いかようにも組み上げられるモデルは，問題の性質を積極的に(特徴量としてではなく，モデル自体に)組み込むことを容易にする，大きな武器になるのではないかと感じています．</p>
+
+<p>素性エンジニアリング vs モデルパラメータエンジニアリング の不毛な戦いが幕を上げた，という見方もできちゃいそうですが・・・．．</p>
+
+<p>さて今回は， <a href="http://torch.ch/">Torch7</a> という，Neural Networkを中心とした機械学習向けの環境をごくごく簡単に紹介します．
+Torch7自体は，比較的最近公開されたソフトウェアですが，”7"という文字から伺えるとおり，
+主開発者の Ronan Collobert 氏が中心となって，かれこれ10年以上継続的に開発されているパッケージのようです．</p>
+
+<p>論文としては， <a href="http://data.neuflow.org/pubs/biglearn11.pdf">NIPS’11 BigLearn Workshop のもの</a>が初出でしょうか．
+Neural Network向けのソフトウェアパッケージというと，
+<a href="http://deeplearning.net/software/theano/">Theano</a>/<a href="http://deeplearning.net/software/pylearn2/">Pylearn2</a> が主流ですが(要出典)，Torch7の特徴をいくつか挙げてみましょう．</p>
+
+<ul>
+<li>スクリプティング言語として， Lua が採用されています．
+　そのため，他のアプリケーションにおけるスクリプティング環境としての組み込みが容易になっているそうです．
+　試していないのですが，iOSアプリへの組み込みも可能だとか・・・？</li>
+<li>テンソルのサポートが手厚く，次元を変えたりメモリ上の配置を変えたり，四則演算を行ったり，がらくちん</li>
+<li>NNを構成するモジュールが大量に備わっており，ブロックを組み立てる感覚でモデルを作ることができる</li>
+<li>独自のオブジェクトシステムが備わっており，OOPっぽいプログラムが可能</li>
+<li>BLAS, CUDAなどのサポート</li>
+<li><strong>なぜかIDEがついてくる！！</strong> (<code>torch -ide</code>で起動できます)</li>
+</ul>
+
+
+<p>Theano/Pylearn2との比較については，Theano開発チームによる以下の資料(とくに Table 1)が参考になります．</p>
+
+<ul>
+<li><a href="http://arxiv.org/pdf/1211.5590v1.pdf">Theano: new features and speed improvements</a></li>
+</ul>
+
+
+<p><img class="center" src="/images/torch/features.png" width="650"></p>
+
+<p>Theano は Deep Learning の総本山であるモントリオール大のチームが強力に推進しているプロジェクトだけあって，
+機能面での対抗はなかなか厳しそうですが，頑張ってます，，，頑張っています！</p>
+
+<h2>Torch7のセットアップ</h2>
+
+<p><a href="http://torch.ch/">Torch7</a> よりどうぞ．</p>
+
+<p>インストールしたのがしばらく前なので記憶が曖昧なのですが，私の環境(MacOS X 10.9)では，特に引っかかるところはなかったように思います．要<code>cmake</code>．</p>
+
+<p>私は使いませんでしたが，<code>apt</code>が動くLinuxか，<code>homebrew</code>が動くMacなら，インストールスクリプトも用意されています．
+しかし，こちらのインストールスクリプト，若干お行儀が悪い気もするので，気になる方は実行前に一度眺めてみてください．</p>
+
+<p>各種の拡張機能(カメラへのアクセスなど)は，<code>luarocks</code>というパッケージマネージャ(Rubyにおける<code>gem</code>,Pythonにおける<code>pip</code>のようなもの)を用いて管理するようです．</p>
+
+<h2>Torch7で多層パーセプトロン</h2>
+
+<h3>ネットワークの構築</h3>
+
+<p>Torch7 における Neural Network の構築は非常に簡単です．
+たとえば，基本的な中間層1層のネットワークは，以下のようなコードで表現できます．</p>
+
+<p><code>lua
+ require “nn"
+ mlp = nn.Sequential()        -- Multi Layer Perceptron
+ mlp:add( nn.Linear(1000, 25) ) -- 1000 input, 25 hidden units
+ mlp:add( nn.Tanh() ) -- hyperbolic tangent transfer function
+ mlp:add( nn.Linear(25, 10) ) -- 10 output
+ mlp:add( nn.SoftMax() ) -- softmax output
+</code></p>
+
+<p>このネットワークを，トレーニングデータに対する負の対数尤度を目的関数として訓練するには，</p>
+
+<p><code>lua
+ criterion = nn.ClassNLLCriterion()
+ trainer   = nn.StochasticGradient(mlp, criterion)
+ trainer:train(dataset)
+</code></p>
+
+<p>とするだけです．明解ですね．</p>
+
+<p><code>“nn"</code>パッケージには，約80種類のさまざまな Module (NNの層や目的関数に相当)が用意されており，これらを自由に組み合わせてネットワークを作ることが可能です．
+行う価値や効率的な最適化法があるかどうかは別にして， <code>add()</code> を用いてどんどん繋げていけばいくらでも <em>Deeeeeeeeeep</em> にすることも簡単にできそうです．</p>
+
+<h3>学習過程の制御</h3>
+
+<p>基本的には以上なのですが，最近の Neural Network の訓練で必須になってきている mini-batch や momentum のような技術を用いたり，
+準ニュートン法や共役勾配法などのより高度な最適化を行うために，より細かく学習の制御を行う方法も用意されています．</p>
+
+<p>``` lua
+ parameters,_ = mlp:getParameters()
+ feval = function(x)</p>
+
+<pre><code>       -- input : 入力事例テンソル , target : inputに対する正解ラベル(一般にはテンソル)
+       local output = mlp:forward(input)     -- 前向きに伝播させて，出力を得る
+       local f      = criterion:forward(output, target) --　決められた Criterion の元での目的関数の値を計算
+       local df     = criterion:backward(output, target) -- 勾配を計算
+       return f, df   -- 目的関数の値と，その勾配を返す
+     end
+</code></pre>
+
+<p> optim.lbfgs(feval, parameters) -- parametersを更新
+ --（注意）細かい部分を省いた擬似コードなので，このままでは動かないと思います XD
+```</p>
+
+<p>というように，現在のパラメータの元での目的関数の値と，その勾配を返すようなクロージャを作ることで，
+ <code>“optim”</code> パッケージで用意されているさまざまな最適化アルゴリズム(SGD, AdaGrad, L-BFGSなど・・・)を用いることも可能です．</p>
+
+<p>本稿では触れませんが，<code>module:forward()</code>, <code>criterion:backward()</code> でネットワークの出力，勾配を得て <code>module:gradUpdate()</code> で直接更新するという手段も用意されています．</p>
+
+<h2>ためしてみる(数字認識タスク)</h2>
+
+<p>ここでは，　<a href="http://code.cogbits.com/wiki/doku.php?id=start">Machine Learning with Torch7</a> で用いられているチュートリアルコードを実際に動かしてみます．</p>
+
+<p><code>
+ git clone https://github.com/clementfarabet/torch-tutorials.git
+</code></p>
+
+<p>でお手元にクローンして， <code>2_supervised</code> の下にもぐってみてください．</p>
+
+<p><code>
+ torch ./doall.lua
+</code></p>
+
+<p>でデータセットのダウンロードを含めた実験スクリプト全体の実行が始まります．初回は 300MB くらいのファイルをいきなり <code>wget</code> しはじめるのでご注意ください．</p>
+
+<p>ここで扱っているのは， <a href="http://ufldl.stanford.edu/housenumbers/">Street View House Numbers (SVHN)Dataset</a>という，
+カラー画像から数字を認識するタスク，Format 2(32x32の画像)のほうです．</p>
+
+<p><img class="center" src="/images/torch/SVHN32x32eg.png" width="480"></p>
+
+<p><code>
+ torch ./doall.lua -size small -model linear -batchSize 100 -plot
+</code></p>
+
+<p>とかすると，ごく普通の線形モデルでの最適化が始まり，その過程が <code>gnuplot</code> でプロットされていきます．</p>
+
+<p><code>2_model.lua</code> には線形モデル(<code>linear</code>),隠れ層1層のニューラルネット(<code>mlp</code>),<a href="http://arxiv.org/abs/1204.3968">2-stageのたたみこみニューラルネット</a>(<code>convnet</code>)
+が定義されており， <code>-model</code> オプションで切り替えることが可能です．
+おフロに入っている間，40分くらい回した結果は以下のような感じです．</p>
+
+<ul>
+<li><code>mlp</code>モデル</li>
+</ul>
+
+
+<p><img class="center" src="/images/torch/test_mlp_15epoch.png" width="480"></p>
+
+<ul>
+<li><code>convnet</code>モデル</li>
+</ul>
+
+
+<p><img class="center" src="/images/torch/test_convnet_13epoch.png" width="480"></p>
+
+<p>うーん，<code>mlp</code>はまだまだ伸びそうだなぁ．<code>convnet</code>は局所解につかまってしまったのでしょうか．時間切れにつき，あまり直感に沿った結果は出せませんでしたが，学習によって正解率が向上している，ということは一応みてとれます．</p>
+
+<h2>Torch7 をより深く知るために</h2>
+
+<p>最後に，いくつか資料へのリンクをまとめておきます．</p>
+
+<ul>
+<li><a href="http://ronan.collobert.com/pub/matos/2012_implementingnn_springer.pdf">Implementing Neural Networks Eciently</a></li>
+</ul>
+
+
+<p>メイン開発者の Ronan Collobert 氏による Torch7 の解説です．ソフトウェア全体のアーキテクチャや， Lua を採用した理由，実際のパフォーマンスなどがまとめられています，</p>
+
+<ul>
+<li><a href="http://code.cogbits.com/wiki/doku.php?id=start">Machine Learning with Torch7</a></li>
+</ul>
+
+
+<p>上に挙げたチュートリアル資料です．Auto-Encoder のサンプルや，新しいモジュールのプログラミング方法など，本稿では触れられなかったトピックが盛りだくさんです．これを遊んでみるだけで年を越せるかも・・・</p>
+
+<ul>
+<li><a href="https://groups.google.com/forum/#!forum/torch7">torch7 - Google グループ</a></li>
+</ul>
+
+
+<p>流量はさほど多くありませんが，盛んに開発中のソフトウェアですので，こちらを追うことも重要かと思います．</p>
+
+<ul>
+<li><a href="http://www.slideshare.net/yurieoka37/ss-28152060">実装ディープラーニング - slideshare</a></li>
+</ul>
+
+
+<p>@0kayu さんによる，Pylearn2を中心としたディープラーニングの実装に関するよいまとめスライドです．</p>
+
+<ul>
+<li><a href="http://kiyukuta.github.io/2013/09/28/casualdeeplearning4nlp.html">自然言語処理まわりのDeep Learningを自分なりにまとめてみた — KiyuHub</a></li>
+</ul>
+
+
+<p>そもそもなんで自然言語処理においてニューラルネットが流行ってるの？というあたりに焦点を当てた資料です．ガッツリ！</p>
+
+<h2>まとめ</h2>
+
+<p>Lua を用いて Neural Network を簡単に構築できる， Torch7 というソフトウェアを紹介いたしました．</p>
+
+<p>Theano ひとり勝ちというのはいかにもつまらないので，皆様にお手にとって頂くきっかけになれば幸いです．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Deep Learning : Bengio先生のおすすめレシピ]]></title>
@@ -265,62 +473,6 @@
 <p>ビッグデータ感もなければ，ディープラーニングでもなく，曼荼羅のようなグラフィカルモデルもなんとかダイバージェンスも出てこない論文ですが，なかなか面白かったです．実用に近そうなのもいい．</p>
 
 <p>話は変わりまして，先日大学の同期とのプチ同窓会で10人ばかり集まったのですが，誰一人結婚してなくて笑．もちろん，ある種の集合バイアスもあるとは思いますが，おいおい俺らそろそろみそじやで．</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[距離計量学習とカーネル学習について]]></title>
-    <link href="http://conditional.github.io/blog/2013/04/20/distance-metric-learning-and-kernel-learning/"/>
-    <updated>2013-04-20T15:53:00+09:00</updated>
-    <id>http://conditional.github.io/blog/2013/04/20/distance-metric-learning-and-kernel-learning</id>
-    <content type="html"><![CDATA[<p>こんにちは．英語が書けなくて悩んでいる今日このごろです．</p>
-
-<p>先月に引き続き，仲間内で行っている小さな勉強会にて論文紹介をしてまいりました．</p>
-
-<ul>
-<li><a href="http://dl.acm.org/citation.cfm?id=1273523">"Information-Theoretic Metric Learning"</a> V. Davis et al, ICML 2007 (Best Paper)</li>
-</ul>
-
-
-<p>ちょっと古めの論文ですが，あまり踏み込んだことのない分野なので，名著っぽいものから確実におさえていくスタンスで．</p>
-
-<p>発表スライドは以下においておきます．最後のスライドにいろいろ文献リンクしておいたので，ご興味をもって頂けましたら是非そちらも当たってみてください．</p>
-
-<p><iframe src="http://www.slideshare.net/slideshow/embed_code/19254185" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/informationtheoretic-metric-learning" title="Information-Theoretic Metric Learning" target="_blank">Information-Theoretic Metric Learning</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
-
-<p>距離計量学習(以下単に距離学習)とは何ぞや，というのは<a href="http://d.hatena.ne.jp/mamoruk/20090126/p1">小町さんの日記</a>をご参照いただけると良いと思うのですが，
-ざっくり言うと，「分類しやすいように前処理として空間を歪めてしまおう」という技法です．ケーキで表す（！）と以下のような感じ．マシンラーニングケーキかっこいい！</p>
-
-<blockquote><p> <a href="http://www.cse.wustl.edu/~kilian/code/page21/page21.html">Large Margin Nearest Neighbors</a></p>
-
-<p><img src="http://www.cse.wustl.edu/~kilian/code/page21/files/img_3825_2.jpg" width="480" height="437"></p></blockquote>
-
-<p>要するに，同じクラスの事例同士は近く，異なるクラスの事例同士は遠くなるように，元の空間を歪めてしまうのです．</p>
-
-<p>この論文では，距離学習を<em>多変量正規分布間の KL Divergence</em> (の特別な場合である <em>LogDet Divergence</em> )の最適化問題として定式化するとともに，<em>カーネル学習との等価性</em>について述べています．実際のアルゴリズムは，<em>Bregman Projection</em>とか名前はごっついけど実際はそんなに難しくない．</p>
-
-<p>確かに，カーネル行列というのは，バラすと特徴量空間での距離を畳み込んだものと言えますし，関連はありそうだと思ったものがきれいに証明されていてけっこう感動しました．</p>
-
-<p>さらには，(正直あまり理解できませんでしたが)元の距離学習のカーネル化やオンライン化（Regret Boundまで！）などなど，8ページギッシリ詰められています．</p>
-
-<p>ただ，学習されるのは単なるマハラノビス距離行列という<em>単なる線形変換</em>なので，どれほどのタスクで効くのかどうかは疑問が残ります．</p>
-
-<p>たとえば，<em>元の空間で線形分離不可能な問題というのは，どんな線形変換を施したとしても，きれいに線形分離できるようにはならない</em>でしょうし，特徴空間での回転（マハラノビス距離行列の非対角要素）は何を表しているのか正直よくわかりません．</p>
-
-<p>もっとも，このアルゴリズムはカーネル化ができることが示されているので，分離しやすい空間へ飛ばしてから距離学習を行えば別なのかもしれませんけど・・・けど・・・けど・・・．</p>
-
-<p>こういう点では，多様体学習（詳しくないのですが，たとえばLaplacian Eigenmapsとか）のような非線形のアプローチのほうが，もともとの目的（分類しやすいように前処理する）に合っているように感じます．</p>
-
-<p>計算量的な問題でいろいろ難しいのかもしれませんが，こういうSupervisedな距離学習あるいは次元削減で，オススメの文献がありましたら是非教えてください．</p>
-
-<p>は〜英語書きに戻ろう．実際に書いている時間なんてほんの僅かで，書けないよーってうんうん呻ってる時間がほとんどなのだけれど．</p>
-
-<p>そういえば，そういえば，一昨日第一回コンペが終わったCrowdSolvingについてはどれくらい書いていいのかな？いずれにしても，また次回．</p>
-
-<ul>
-<li>4/22 14:00 論文等へのリンクが間違っていたので修正しました．</li>
-</ul>
-
 ]]></content>
   </entry>
   
