@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>「モデル」とは何か，について考えていたことを，DSIRNLP(データ構造と情報検索と言語処理勉強会)で発表してきました - a lonely miner</title>
+  <meta name="author" content="Koji Matsuda">
+
+  
+  <meta name="description" content="先日， @overlast さんから，DSIRNLP(データ構造と情報検索と言語処理勉強会 )という会にお誘いを頂きまして，以前から考えていたことをちょこっとお話してきました．当日の様子は， @mamoruk さんが togetter にまとめてくださっていますので，そちらもご覧ください． &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://conditional.github.io/blog/2014/01/13/report-of-dsirnlp5">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="a lonely miner" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39246182-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">a lonely miner</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:conditional.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">「モデル」とは何か，について考えていたことを，DSIRNLP(データ構造と情報検索と言語処理勉強会)で発表してきました</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-13T15:32:00+09:00" pubdate data-updated="true">Jan 13<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><!--Model-View-Controllerの'model'を想定して-->
+
+
+<p>先日， <a href="http://twitter.com/overlast">@overlast</a> さんから，<a href="http://partake.in/events/572bb762-87ed-490a-b993-8b864137e7e1">DSIRNLP(データ構造と情報検索と言語処理勉強会 )</a>という会にお誘いを頂きまして，以前から考えていたことをちょこっとお話してきました．当日の様子は， <a href="http://twitter.com/mamoruk">@mamoruk</a> さんが togetter にまとめてくださっていますので，そちらもご覧ください．</p>
+
+<ul>
+<li><a href="http://togetter.com/li/615110">第5回 データ構造と情報検索と言語処理勉強会 #DSIRNLP - Togetterまとめ</a></li>
+</ul>
+
+
+<p>私の発表スライドは slideshare に置いておきました．いくつか直したいところがあるので，そのうち差し替えるかも．</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/29901388" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/koji_matsuda/ss-29901388" title="いまさら聞けない “モデル” の話 @DSIRNLP#5" target="_blank">いまさら聞けない “モデル” の話 @DSIRNLP#5</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">Koji Matsuda</a></strong> </div></p>
+
+<p>他の方々がものっそい最先端な話ばかりのなか，私一人だけがひどくぼんやりとした内容でたいへん恐縮でしたが，問題意識を共有するきっかけを頂けたことに感謝しています．</p>
+
+<p>そもそもこの話をしようと思ったきっかけは，ふだん学生さんと話していて，今回取り上げた「モデル」といった，<strong>漠然とした概念について理解が共有されていなかったり</strong>，学生さんと研究室スタッフで，<strong>研究における目標が違っていたりする</strong>のではないか，という事例をいくつか目にしてきたことでした．(後者の問題については今回は触れなかったのですが，いろいろ思うところはありますので，いずれ機会をみつけて何か書けたらと思っています)</p>
+
+<p>そのなかでも，今回取りあげた「モデル」という言葉はなかなかに凶悪でして，たとえば言語処理学会全国大会の予稿集をみると，含まれていない論文のほうが少ないのでは（言いすぎ）というくらい多用されているのですが，それらに<strong>内包されている意味をつかむのがむずかしい</strong>状況だと感じていました．</p>
+
+<p>発表資料はあちらこちらに行って発散しているきらいがありますが，おちついて考えてみると，今回言いたかったことは以下の二点に要約されます．</p>
+
+<ul>
+<li>モデル（仮定） と アルゴリズム，パラメータはそれぞれ<strong>別のものだということをまずはじめに押さえておくことで，見通しが良くなる</strong>ということ</li>
+<li>モデルを計算機上に実現するということのハードルは，<strong>さまざまなドメイン特化言語やツールキットによって下がりつつある</strong>，ということ</li>
+</ul>
+
+
+<p>会場では，以下のようなご指摘をいただきました：</p>
+
+<ul>
+<li>これまで「libSVMを使えるかどうかを考える」であったところが，「TorchなりHBCなりを使えるかどうかを考える」という問題にすりかわっているだけではないのか，</li>
+<li>そもそも「モデル化」というものは問題を解くためにするものではなくて，現象を浮き彫りにするために行うものであるので，ちょっとモチベーションが違うのでは，</li>
+<li>モデル化，というところだけに目を向けてしまうと，実際の応用において必要になってくる効率化であるとか，モデル解釈の容易さのような点に目が向かなくなってしまうのではないか，</li>
+<li>「モデルもデータも（問題も）」一度に新しい設定に入れ替える，というのは無理があるので，まずはどちらかを固定して取り組むべきではなのか，</li>
+<li>ちょっと話が概念的にすぎるので，実際に手を動かしてもらうタイプのチュートリアルの方が有用なのでは，</li>
+</ul>
+
+
+<p>いずれもごもっともなご指摘であり，私の発表は工学側にもサイエンス側にも倒しきれていない，中途半端な内容になってしまった感じはしています．もうちょっと練ります．</p>
+
+<p>渡邊澄夫先生の書籍から一節だけ引用して，このエントリを締めたいと思います．最後になりましたが，快適な会場を提供してくださったスマートニュース株式会社のみなさま，勉強会をオーガナイズしてくださった @overlast さん，ありがとうございました．</p>
+
+<blockquote><p>よいアルゴリズムを思いつくための系統的な方法があるということはないと思いますが，あなたがこれからさまざまなことを探求するなかで思い出される可能性が高いのは，それまでに出会って美しいと思ったことや面白いと思ったことだろうと思います．ベイズ統計学に現れるアルゴリズムは一つは解析力学に基礎があるものです．もう一つは統計力学です．どちらも美しくとても面白い学問ですから，なにかに役立てようとは考えず，学問そのものを学ぶことをおすすめします．</p><footer><strong>渡邊澄夫</strong> <cite><a href='http://www.amazon.co.jp/dp/4339024627'>ベイズ統計の理論と方法</a></cite></footer></blockquote>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Koji Matsuda</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-13T15:32:00+09:00" pubdate data-updated="true">Jan 13<span>th</span>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  <a href="http://b.hatena.ne.jp/entry/http://conditional.github.io/blog/2014/01/13/report-of-dsirnlp5/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://conditional.github.io/blog/2014/01/13/report-of-dsirnlp5/" data-via="conditional" data-counturl="http://conditional.github.io/blog/2014/01/13/report-of-dsirnlp5/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/12/07/an-introduction-to-torch7/" title="Previous Post: [MLAC 2013 7日目] Torch7でお手軽ニューラルネットワーク">&laquo; [MLAC 2013 7日目] Torch7でお手軽ニューラルネットワーク</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>ロンリーなマイナーです．</p>
+  <ol>
+  <li><a href="http://twitter.com/conditional">Twitter</a></li>
+  </ol>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/01/13/report-of-dsirnlp5/">「モデル」とは何か，について考えていたことを，DSIRNLP(データ構造と情報検索と言語処理勉強会)で発表してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/07/an-introduction-to-torch7/">[MLAC 2013 7日目] Torch7でお手軽ニューラルネットワーク</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/">Deep Learning : Bengio先生のおすすめレシピ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/08/report-of-snlp5/">第5回 最先端NLP勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Koji Matsuda -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'condi';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://conditional.github.io/blog/2014/01/13/report-of-dsirnlp5/';
+        var disqus_url = 'http://conditional.github.io/blog/2014/01/13/report-of-dsirnlp5/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
