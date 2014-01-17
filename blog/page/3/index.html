@@ -1,0 +1,766 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>a lonely miner</title>
+  <meta name="author" content="Koji Matsuda">
+
+  
+  <meta name="description" content="こんにちは．英語が書けなくて悩んでいる今日このごろです． 先月に引き続き，仲間内で行っている小さな勉強会にて論文紹介をしてまいりました． &#8220;Information-Theoretic Metric Learning&#8221; V. Davis et al, ICML 2007 ( &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://conditional.github.io/blog/page/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="a lonely miner" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39246182-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">a lonely miner</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:conditional.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/20/distance-metric-learning-and-kernel-learning/">距離計量学習とカーネル学習について</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-20T15:53:00+09:00" pubdate data-updated="true">Apr 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>こんにちは．英語が書けなくて悩んでいる今日このごろです．</p>
+
+<p>先月に引き続き，仲間内で行っている小さな勉強会にて論文紹介をしてまいりました．</p>
+
+<ul>
+<li><a href="http://dl.acm.org/citation.cfm?id=1273523">&#8220;Information-Theoretic Metric Learning&#8221;</a> V. Davis et al, ICML 2007 (Best Paper)</li>
+</ul>
+
+
+<p>ちょっと古めの論文ですが，あまり踏み込んだことのない分野なので，名著っぽいものから確実におさえていくスタンスで．</p>
+
+<p>発表スライドは以下においておきます．最後のスライドにいろいろ文献リンクしておいたので，ご興味をもって頂けましたら是非そちらも当たってみてください．</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/19254185" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/informationtheoretic-metric-learning" title="Information-Theoretic Metric Learning" target="_blank">Information-Theoretic Metric Learning</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
+
+<p>距離計量学習(以下単に距離学習)とは何ぞや，というのは<a href="http://d.hatena.ne.jp/mamoruk/20090126/p1">小町さんの日記</a>をご参照いただけると良いと思うのですが，
+ざっくり言うと，「分類しやすいように前処理として空間を歪めてしまおう」という技法です．ケーキで表す（！）と以下のような感じ．マシンラーニングケーキかっこいい！</p>
+
+<blockquote><p> <a href="http://www.cse.wustl.edu/~kilian/code/page21/page21.html">Large Margin Nearest Neighbors</a></p>
+
+<p><img src="http://www.cse.wustl.edu/~kilian/code/page21/files/img_3825_2.jpg" width="480" height="437"></p></blockquote>
+
+<p>要するに，同じクラスの事例同士は近く，異なるクラスの事例同士は遠くなるように，元の空間を歪めてしまうのです．</p>
+
+<p>この論文では，距離学習を<em>多変量正規分布間の KL Divergence</em> (の特別な場合である <em>LogDet Divergence</em> )の最適化問題として定式化するとともに，<em>カーネル学習との等価性</em>について述べています．実際のアルゴリズムは，<em>Bregman Projection</em>とか名前はごっついけど実際はそんなに難しくない．</p>
+
+<p>確かに，カーネル行列というのは，バラすと特徴量空間での距離を畳み込んだものと言えますし，関連はありそうだと思ったものがきれいに証明されていてけっこう感動しました．</p>
+
+<p>さらには，(正直あまり理解できませんでしたが)元の距離学習のカーネル化やオンライン化（Regret Boundまで！）などなど，8ページギッシリ詰められています．</p>
+
+<p>ただ，学習されるのは単なるマハラノビス距離行列という<em>単なる線形変換</em>なので，どれほどのタスクで効くのかどうかは疑問が残ります．</p>
+
+<p>たとえば，<em>元の空間で線形分離不可能な問題というのは，どんな線形変換を施したとしても，きれいに線形分離できるようにはならない</em>でしょうし，特徴空間での回転（マハラノビス距離行列の非対角要素）は何を表しているのか正直よくわかりません．</p>
+
+<p>もっとも，このアルゴリズムはカーネル化ができることが示されているので，分離しやすい空間へ飛ばしてから距離学習を行えば別なのかもしれませんけど・・・けど・・・けど・・・．</p>
+
+<p>こういう点では，多様体学習（詳しくないのですが，たとえばLaplacian Eigenmapsとか）のような非線形のアプローチのほうが，もともとの目的（分類しやすいように前処理する）に合っているように感じます．</p>
+
+<p>計算量的な問題でいろいろ難しいのかもしれませんが，こういうSupervisedな距離学習あるいは次元削減で，オススメの文献がありましたら是非教えてください．</p>
+
+<p>は〜英語書きに戻ろう．実際に書いている時間なんてほんの僅かで，書けないよーってうんうん呻ってる時間がほとんどなのだけれど．</p>
+
+<p>そういえば，そういえば，一昨日第一回コンペが終わったCrowdSolvingについてはどれくらい書いていいのかな？いずれにしても，また次回．</p>
+
+<ul>
+<li>4/22 14:00 論文等へのリンクが間違っていたので修正しました．</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/">グラフ結合度に基づく教師なし語義曖昧性解消について</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-01T13:13:00+09:00" pubdate data-updated="true">Apr 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>完全に春ですね．そろそろ新入生が来る時期．</p>
+
+<p>書類を整理していたら，むかし読んだ Roberto Navigli (knowledge based WSDの大家) によるgraph based unsupervised WSDに関する論文の感想が出てきたのでちょっと再編集して公開してみます．あくまでメモなので，非常に読みづらいかも．もしご興味をもって頂けましたら，元論文をあたってみてください．</p>
+
+<ul>
+<li><a href="http://wwwusers.di.uniroma1.it/~navigli/pubs/PAMI_2010_Navigli_Lapata.pdf">R. Navigli, M. Lapata. An Experimental Study of Graph Connectivity for Unsupervised Word Sense Disambiguation. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 32(4), IEEE Press, 2010, pp. 678-692.</a></li>
+</ul>
+
+
+<p>グラフの G = (V, E) をコンテキストおよび、ワードネットのネットワークから作成し，その上で 各語義 (vertexに対応)の重要度をはかるという方法に基づいたWSDに関するお話．</p>
+
+<p>具体的には、まずコンテキスト（本論文では文）内の単語の各語義をグラフのノードとして初期化し、それぞれの語義からグラフ内のほかの語義へのリンクをDFSで探し，みつかればそのルート中の語義をグラフに追加していき，その間にエッジを張る．ということを行っている．</p>
+
+<p>この操作で出来たグラフの「あるノード」の重要度が高いようであれば，その語義はコンテキスト内での重要度が高く，語義候補である可能性が高い，という直感に基づいている．</p>
+
+<p>グラフは以下の図のような感じ．これは，{動詞drink, 名詞milk}の例．それぞれ5つ，4つの語義が定義されていて，それらが 名詞boozing_1, 名詞beverage_1 ような語義を通して間接的に連結されていることがわかる．</p>
+
+<p><img src="http://conditional.github.com/images/graph-based-wsd.png" width="480"></p>
+
+<p>肝心の重要度尺度であるが，彼らは local な尺度と globalな尺度という，大きく分けて二種類の尺度について実験を行っている．</p>
+
+<p>localな尺度を用いた手法では、グラフ内のノードをPagerankや度数といった指標に基づいてランキングし、もっともSenses(wi)に対応するノードの中で最も高いランクを得た語義を出力．こっちは簡単．</p>
+
+<p>globalな尺度はグラフ全体に対してスカラーの値を与えるものなので，語義選択においてはそのままでは用いることができない．そこで， G の部分集合となるような G&#8217;(コンテキスト内の単語それぞれについて語義ひとつだけを考えたもの) を考え，そのサブグラフのglobal measureの値が高いものを語義の組み合わせとして導きだす． たとえば，文が 2単語から成っており、それぞれが， 3つ，4つの語義を持っている場合は、3 *4 で12個のサブグラフを作り，それぞれに対して global measureを計算する。もっとも高いglobal measueを得たサブグラフを語義の組み合わせとして出力する．（計算量が爆発するという意味でオリジナルのLeskアルゴリズムと類似している）</p>
+
+<p>過去の研究として，</p>
+
+<ul>
+<li>R. Barzilay and M. Elhadad, “Using Lexical Chains for Text Summarization,” Proc. ACL Workshop Intelligent Scalable Text Summarization, pp. 10-17, 1997.</li>
+<li>R. Mihalcea, “Unsupervised Large-Vocabulary Word Sense Disambiguation with Graph-Based Algorithms for Sequence Data Labeling,” Proc. Human Language Technology and Empirical Methods in Natural Language Processing, pp. 411-418, 2005</li>
+<li>M. Galley and K. McKeown, “Improving Word Sense Disambiguation in Lexical Chaining,” Proc. 18th Int’l Joint Conf. Artificial Intelligence, pp. 1486-1488, 2003.</li>
+</ul>
+
+
+<p>が比較に挙げられているが，本論文の手法は one sense per one discourse を強く仮定しない(同じドキュメント内で同じ対象語に対してもコンテキストが異なれば違う語義が出力されうる)．また、グラフをunlabeled &amp; unweightedに構築している点が異なる．これには以下の二つの理由があるらしい．</p>
+
+<ul>
+<li>広く合意を得たweightingの方法が確立されていない</li>
+<li>研究の焦点を絞りたい(まぁweightingは今のところ特に興味ない)</li>
+</ul>
+
+
+<p>また、WordNet にくっついている MFS(というより，語義頻度) は本論文ではつかっていない．なんでかというと，それはhand-labeledなSemcorコーパスから得られたものであり，他の言語とかドメインに対しても有効な指標とは言えないから（この点は激しく同意）．</p>
+
+<p>以下，それぞれの尺度についてまとめる．</p>
+
+<h3>local measure</h3>
+
+<p>local measureは特定のグラフのノードの重要度を表すもの．あるノードのグラフ全体に対する影響度，とみなすこともできる 値域は [0,1] で、1に近ければ重要、0に近ければ重要ではない．</p>
+
+<ul>
+<li><p><strong>Degree</strong> これは単なる次数。deg(v) = vの次数とすると， C_degree(v) = deg(v) / (|V| - 1)というように正規化しておく</p></li>
+<li><p><strong>Eigenvector</strong> ようは PagerankとHITS．特筆すべきことはなし．</p></li>
+<li><p><strong>KPP</strong>（あとで読む)</p></li>
+<li><p><strong>Betweeness</strong> shortest pathの数を用いる． σ<em>st = s->tへのshortest pathの数，　σ</em>st(v) そのうち、vを通るもの．σ<em>st(v) / σ</em>st をすべてのノードペアに対して和をとって，betweeness(v)とする．そして(|V| - 1)(|V| - 2)で割って正規化．</p></li>
+</ul>
+
+
+<h3>global measure</h3>
+
+<p>さきほどのlocal measureがグラフのノードに対して重要度を与えるものだったのに対して，こちらは特定の語義の組み合わせからなるグラフに対して[0,1]のスカラー値を与えるもの．</p>
+
+<ul>
+<li><strong>Compactness, Graph entropy, Edge density</strong> いわゆるグラフのコンパクト性などの一般的な尺度</li>
+</ul>
+
+
+<p>global measureは計算量的に無理がある（文内のすべての単語に対する語義の組み合わせを列挙してそれぞれに対して求めなければならない)ので工夫をしている．</p>
+
+<h4>global measure計算における工夫</h4>
+
+<ul>
+<li><p><strong>Simulated Annealing</strong> まずランダムに語義選択を初期化，ひとつ取りかえて上記 global measure の差分(ΔE)をみる．もしよくなっていれば採択、悪くなっている場合でも exp(ΔE/T)の確率で採択．Tは何らかの定数，これを u 回繰り返した結果を採用．書いてて思いましたが，Simulated Annealingというよりは，Metropolis Hastingsですねこれ．</p></li>
+<li><p><strong>Genetic Algorithms</strong>
+なんか面倒そうなので略．結局パラメータ調整は面倒だしあんまりいいこと無い，みたいな結論に至っており，若干残念な感じ．</p></li>
+</ul>
+
+
+<!--
+### Complexity
+
+まず初期グラフのノード数について，
+
+k = WordNet内の語の最大の語彙数(最も多い語義を持つ語の語義数)
+n = sentence σの長さ．
+|V_σ| は knのオーダーだけど、もう少しタイトに上界を抑えることはできるようだ
+
+グラフ作成には、だいたい O(n^2
+)くらい。
+各尺度の計算量については，論文中のTable3に書いてある．
+-->
+
+
+<h3>Experiment</h3>
+
+<p>データはSemCor, Senseval-3, Semeval-2007．Sensemapつかって全部WordNet2.0にマップしてある．</p>
+
+<p>Sense-inventoryにはWordNet2.0 と EnWordNetというものを使っている．EnWordNetはcollocational relationをもちいてedgeを6万本くらい増やしたWordNetらしい．具体的な構築方法はよく分からないが． WN++みたいなものか．</p>
+
+<p>ふつうのWordNetから構築したグラフと，EnWordNetから構築したグラフの性質の比較も行っている．</p>
+
+<ul>
+<li><p><strong>small world effect</strong> : l = グラフのスモールワールド性（任意の頂点ペアの間の最短距離の平均)</p></li>
+<li><p><strong>clustering rate(or transitivity)</strong> : C = probability that two neighbors of a vertex are connected 詳しくは式参照 ネットワーク内の三角形の数で計算するらしい。</p></li>
+<li><p><strong>cumulative degree distribution</strong> : P_k = Σ p_k&#8217; (&lt;- k次のノードの割合)</p></li>
+</ul>
+
+
+<p>結果として，EnWordNetから構築したグラフのほうがdenseでござるという当たり前の議論が．(そりゃあエッジ足してるだけなのだから当然)</p>
+
+<p>グラフ生成におけるDFSの深さは6にしている（SemCor上で実験して決めたらしい)</p>
+
+<p>その他、GA, SAのパラメータについてうんたらかんたら．</p>
+
+<h4>Result</h4>
+
+<p>Degree（もっとも単純なlocal measure,ノードの次数そのもの) がもっともよく，いろいろ工夫した他のlocal measureやglobal measureは振るわなかった．残念．．．</p>
+
+<p>WordNet vs EnWordNetの比較では，EnWordNetの方が若干ながら良い結果．</p>
+
+<p>しかしながら，unsupervised WSDの常として，MFS(First Sense Baseline)は非常に強く，F1 measureで20ポイント以上の差をつけられてしまっている．</p>
+
+<h3>感想</h3>
+
+<p>グラフとしては最も基本的な， unlabeled, undirected, unweightedなものの上で何ができるか，を追求した研究といえる．</p>
+
+<p>単純な指標がうまくいってしまい，いろいろ工夫しても無駄っぽいのは残念だが，unsupervised WSDの難しさは語義粒度とknowledge baseの質如何でいくらでも変動しうるので，言語資源の整備が進めば，また違った結果が得られるかもしれない．</p>
+
+<p>WSDにおいて宿命になっている，&#8221;MFSに勝てない問題&#8221;については，近年は</p>
+
+<ul>
+<li><a href="http://www.aclweb.org/anthology/P/P10/P10-1154.pdf">SP Ponzetto, R Navigli &#8220;Knowledge-rich Word Sense Disambiguation Rivaling Supervised Systems&#8221; Proc of ACL 2010</a></li>
+</ul>
+
+
+<p>のように，知識ベース(WordNet)側をガンガン強化することで，ほぼ遜色ない性能を出すことができる手法も出てきている．しかし，こちらも，もっとも性能の良い尺度はDegreeなので，なんだかなぁという気はする．</p>
+
+<p>結局知識ベースの品質に強く依存するknowledge based WSDではあるが，まだ何かできることは無いかと考えると，うまくいくかはともかくとして，いろいろ面白そうだ．（ニッチなためか，機械学習屋さんがまだあまり進出してこない分野でもあるので）</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/">Posterior Regularization と Unified Expectation Maximizationについて</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-23T16:20:00+09:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>桜がとってもきれいですね．すずかけ台は8分咲きといったところです．ところで，仲間で行っている小規模な勉強会で</p>
+
+<ul>
+<li><a href="http://www.aclweb.org/anthology/N/N12/N12-1087.pdf">&#8220;Unified Expectation Maximization&#8221;</a> Samdani et al, NAACL2012</li>
+</ul>
+
+
+<p>を紹介してきたので，資料をslideshareにあげておきました．</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/17552885" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/unified-expectation-maximization" title="Unified Expectation Maximization" target="_blank">Unified Expectation Maximization</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
+
+<p>Unified EMというと，じゃっかん大風呂敷な感じのタイトルですが，キーとなるアイデアはとても単純で，EMアルゴリズムのE-Stepで最小化するKLダイバージェンスにちょっと細工を入れることで，Hard-EMとふつうのEMの中間くらいの性質を持ったアルゴリズムになりますよ．というお話です．Deterministic Annealing EMの逆バージョンみたいな雰囲気(実際，DAEMもこの枠組で書けることが示されています) 手元にEMのコードがあれば，実装も非常に容易．</p>
+
+<p>ただ，やっぱりそれだけだと一発ネタにしかならないので，「制約付きEM」のほうへ話を進めています．「制約付きEM」というと聞きなれないアルゴリズムですが，Un(semi-)supervised learningにおいて，事前知識を用いてモデルがとんでもない方向へ飛ぶのを防ごう，というモチベーションに基づく技法のようです．</p>
+
+<p>自然言語処理におけるアプリケーションでは，たとえば以下のような制約を考えることができます：</p>
+
+<ul>
+<li><p>品詞タグ付けなら</p>
+
+<ul>
+<li>ある文には，名詞と動詞が最低一つづつ含まれる</li>
+<li>ある語が，複数のPOSに割り当てられることは稀</li>
+</ul>
+</li>
+<li><p>機械翻訳におけるアラインメントなら</p>
+
+<ul>
+<li>L1->L2のアラインメントと，L2->L1のアラインメントは一致する</li>
+<li>L1の一つの語が，L2の多数の語と対応付けられることは稀</li>
+</ul>
+</li>
+<li><p>関係抽出なら</p>
+
+<ul>
+<li>ある種のエンティティと，ある種のエンティティの間には，特定のリレーションしか成り立たない
+
+<ul>
+<li>(PERSON, LOCATION) -> LIVE IN</li>
+<li>(ORGANIZATION, PERSON) -> WORK FOR</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>こういった事前知識に基づく制約を満たすモデルを，確率分布の集合として表現し，そこから離れないようにEMアルゴリズムを行うことによって，ラベルつきデータが利用可能ではない（または，少量しか存在しない）状況において，うまく学習が行おうというのが，「制約付きEM」の肝となる部分です．直感的には，Posterior Regularizationの論文から引用した以下の図が分かりやすいかもしれません．（日本語注釈は私によるものです）</p>
+
+<p><img src="http://conditional.github.com/images/posterior_regularization_fig.png" width="460" height="302"></p>
+
+<p>歯切れのよいタイトルに惹かれて軽い気持ちで選んだ論文でしたが，そこそこホットな分野のようで，ACL 2011のチュートリアルで1トラックまるまるこの話題だったりしたらしく，問題設定や前提を理解するのにけっこう苦労しました．</p>
+
+<p>結果として，UEMの本題ではなく，問題設定や先行研究の紹介に半分近くのスライドを割くことに・・・．まぁ，楽しんで頂けたようなのでなによりです．しかしひさびさに緊張感のあるプレゼンだった．</p>
+
+<p>最後のスライドにも記載しましたが，以下の文献が，理解の助けになると思います．</p>
+
+<ul>
+<li><a href="http://sideinfo.wikkii.com/">&#8220;Rich Prior Knowledge in Learning for Natural Language Processing&#8221;</a> ACL 2011 tutorial
+
+<ul>
+<li>ACLで行われたチュートリアルの資料です．このファミリーに属するアルゴリズムについての資料の多くはここからたどれるようになっています．各種のアルゴリズムのあいだの関係についてよくまとまっていますし，著者らによって異なる表記系もすっきりまとめられているので読みやすい．今回は取り上げませんでしたが，Labeled Feature とかも追ってみるとおもしろそうなトピックなので，ぜひ．</li>
+</ul>
+</li>
+<li><a href="http://jmlr.csail.mit.edu/papers/volume11/ganchev10a/ganchev10a.pdf">&#8220;Posterior Regularization for Structured Latent Variable Models&#8221;</a> JMLR 2010
+
+<ul>
+<li>今回紹介した論文の元ネタになっている Posterior Regularizationの論文です．品調ラベルづけにおける例とともに，少しづつ丁寧に議論が進められており，さすがジャーナルだけあって読みやすいです．</li>
+</ul>
+</li>
+</ul>
+
+
+<p>ひさびさに負荷の高い一週間だったので，来週はすこしゆっくりしたいと思います．（日記）</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-14T17:59:00+09:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>眠いですね．</p>
+
+<p>とくに機械学習のクロスバリデーションや，ごっつい集計クエリなどの時間のかかるバッチジョブを流す間，とても眠い．</p>
+
+<p>私の場合，そういう時にはディスプレイの前を離れて，お昼寝タイムにすることが多いです（基本いつも眠い）．実行時間の見積もりがつくようなジョブなら適当にアラームかけておけばよいのですが，実際はそうも行かないことも多いですよね．</p>
+
+<p>そこで，iOSデバイスにプッシュ通知を送れるアプリケーション <strong>Prowl</strong> を用いて，ジョブの終了をiPhoneに通知してくれる短いRubyスクリプトを書いてみました．ジョブ終わったらブルッと鳴って目覚めスッキリ．</p>
+
+<h2>Requirement</h2>
+
+<ul>
+<li><a href="https://www.prowlapp.com/">Prowl</a></li>
+<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
+</ul>
+
+
+<p>gem は <code>gem intall prowl</code> でインストールできます．</p>
+
+<h2>Instalation</h2>
+
+<p>まず，ProwlのウェブサイトからAPIキーを取得します．いちおう登録＆ログインが必要ですが，メールアドレスは不要のようです，ログインして，<strong>API keys</strong> のページに進むと
+フォームが二つありますが，Provider keyは第三者にキー入りアプリを配布するときに使うものなので，今回は <strong>Generate a new API key</strong> のほうでOK．Noteは空でもいいのでとにかくサブミットボタンを押すと，API keyが取得できます．</p>
+
+<p><img src="http://conditional.github.com/images/generate_prowl_apikey.png"></p>
+
+<p>そんでもってスクリプトの中身はこんな感じ．<code>API_KEY</code>には先ほど取得したキーを．</p>
+
+<div><script src='https://gist.github.com/5161032.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>環境変数 <code>PROWL_NOTICE_TITLE</code>, <code>PROWL_NOTICE_CONT</code> にメッセージをセットしておくと，その中身を通知してくれます．通知を受け取りたいプロセスと環境変数の設定をラップするようなシェルスクリプトを組んでおくと良いかもしれません．<code>ARGV</code> についてはあとで説明します．</p>
+
+<h2>Example</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sleep 10 && ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>という感じでプロセスを実行すると，終了時にこんな感じで通知してくれます．</p>
+
+<p><img src="http://conditional.github.com/images/prowl_sleep.jpg" width="320" height="480"></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ export PROWL_NOTICE_TITLE='たいとるだよ'
+</span><span class='line'>$ export PROWL_NOTICE_DESC='おわったよ〜'
+</span><span class='line'>$ ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>とかするとこんな感じ．</p>
+
+<p><img src="http://conditional.github.com/images/prowl_with_env.jpg" width="320" height="480"></p>
+
+<h2>zsh(precmd/preexec)との組み合わせ</h2>
+
+<p>しかし，毎回コマンド打つのは面倒ですね．そこで，<a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a> で紹介されている方法を使うと，
+コマンドに一定以上の時間がかかったときに自動で通知してくれます．
+今回のスクリプトに合わせてちょっと改造してみました．<code>PROWL_NOTICE_TIME</code>を適当に設定して<code>.zshrc</code>に潜ませてみてください．</p>
+
+<div><script src='https://gist.github.com/5161045.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>とくに環境変数が設定されていない場合は，プロセスの名前と引数が通知されてきます．(<code>ARGV</code>を通してRubyスクリプトに渡されます)</p>
+
+<h2>まとめ</h2>
+
+<ul>
+<li>眠い時でも思う存分バッチを走らせることができるRubyスクリプトを書いてみました．</li>
+<li>実行に一定時間以上かかったら自動で通知してくれるzshの設定例を紹介しました．</li>
+<li>勤務時間中の居眠りは計画的に．</li>
+</ul>
+
+
+<p>Prowlは有料(執筆現在250円)アプリですが，単に通知を受け取るだけではなく，通知を他のアプリにフォワードしてくれる機能があったり，<a href="http://www.prowlapp.com/apps.php">Chromeで開いているページを通知してくれるプラグイン</a>が用意されていたり，そこそこ遊べそうなので，今回導入してみました．</p>
+
+<p>もし同様の機能の無料アプリをご存知でしたら是非教えてください．</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a></li>
+<li><a href="https://www.prowlapp.com/">Prowl</a></li>
+<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-13T16:51:00+09:00" pubdate data-updated="true">Mar 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>とりあえずはじめてみた．</p>
+
+<p><a href="http://www.miukoba.net/blog/2013/01/05/start-octopress/">Octopressはじめました - mimemo</a></p>
+
+<p>が大変参考になりました．<a href="http://mouapp.com/">Mou</a>便利．markdown，必要に迫られたときしか
+書いてこなかったんだけど，少しづつ慣れていきたい．</p>
+
+<p>数式のテスト(<a href="https://gist.github.com/jessykate/834610">MathJax.rb</a>利用)</p>
+
+<script type="math/tex; mode=display">
+N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
+</script>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>ロンリーなマイナーです．</p>
+  <ol>
+  <li><a href="http://twitter.com/conditional">Twitter</a></li>
+  </ol>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/01/13/report-of-dsirnlp5/">「モデル」とは何か，について考えていたことを，DSIRNLP(データ構造と情報検索と言語処理勉強会)で発表してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/07/an-introduction-to-torch7/">[MLAC 2013 7日目] Torch7でお手軽ニューラルネットワーク</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/">Deep Learning : Bengio先生のおすすめレシピ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/08/report-of-snlp5/">第5回 最先端NLP勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/06/predicting-google-closures/">統計データに基づくGoogle各種サービスの生存予測</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/05/predicting-google-closures/">Predicting Google Closures</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/20/distance-metric-learning-and-kernel-learning/">距離計量学習とカーネル学習について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/">グラフ結合度に基づく教師なし語義曖昧性解消について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/">Posterior Regularization と Unified Expectation Maximizationについて</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Koji Matsuda -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'condi';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

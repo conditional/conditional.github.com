@@ -9,7 +9,8 @@
   <meta name="author" content="Koji Matsuda">
 
   
-  <meta name="description" content="こんにちは．英語が書けなくて悩んでいる今日このごろです． 先月に引き続き，仲間内で行っている小さな勉強会にて論文紹介をしてまいりました． &#8220;Information-Theoretic Metric Learning&#8221; V. Davis et al, ICML 2007 ( &hellip;">
+  <meta name="description" content="前回のVanishing Component Analysisに関する記事が思いのほか好評だったようで，
+なんか自分に対してのハードルあげちゃった感あったり，記事冒頭でデブとか書くんじゃなかった・・・（ハハハ）と後悔してたり．．． いつもどおり肩肘はらずに書きますね．例によって， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +83,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/20/distance-metric-learning-and-kernel-learning/">距離計量学習とカーネル学習について</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a></h1>
     
     
       <p class="meta">
@@ -98,64 +99,64 @@
   
 
 
-<time datetime="2013-04-20T15:53:00+09:00" pubdate data-updated="true">Apr 20<span>th</span>, 2013</time>
+<time datetime="2013-08-03T14:12:00+09:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>こんにちは．英語が書けなくて悩んでいる今日このごろです．</p>
+  <div class="entry-content"><p>前回のVanishing Component Analysisに関する記事が思いのほか好評だったようで，
+なんか自分に対してのハードルあげちゃった感あったり，記事冒頭でデブとか書くんじゃなかった・・・（ハハハ）と後悔してたり．．．</p>
 
-<p>先月に引き続き，仲間内で行っている小さな勉強会にて論文紹介をしてまいりました．</p>
+<p>いつもどおり肩肘はらずに書きますね．例によって，マンスリー読み会で紹介した論文について．</p>
 
 <ul>
-<li><a href="http://dl.acm.org/citation.cfm?id=1273523">&#8220;Information-Theoretic Metric Learning&#8221;</a> V. Davis et al, ICML 2007 (Best Paper)</li>
+<li><a href="http://books.nips.cc/papers/files/nips25/NIPS2012_0733.pdf">&#8220;Joint Modeling of a Matrix with Associated Text via Latent Binary Features&#8221;</a> XianXing Zhang and Lawrence Carin
+, NIPS 2012.</li>
 </ul>
 
 
-<p>ちょっと古めの論文ですが，あまり踏み込んだことのない分野なので，名著っぽいものから確実におさえていくスタンスで．</p>
-
-<p>発表スライドは以下においておきます．最後のスライドにいろいろ文献リンクしておいたので，ご興味をもって頂けましたら是非そちらも当たってみてください．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/19254185" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/24888804" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
 
 
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/informationtheoretic-metric-learning" title="Information-Theoretic Metric Learning" target="_blank">Information-Theoretic Metric Learning</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/joint-modeling-ofamatrixwithassociatedtext" title="Joint Modeling of a Matrix with Associated Text via Latent Binary Features" target="_blank">Joint Modeling of a Matrix with Associated Text via Latent Binary Features</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">Koji Matsuda</a></strong> </div></p>
 
-<p>距離計量学習(以下単に距離学習)とは何ぞや，というのは<a href="http://d.hatena.ne.jp/mamoruk/20090126/p1">小町さんの日記</a>をご参照いただけると良いと思うのですが，
-ざっくり言うと，「分類しやすいように前処理として空間を歪めてしまおう」という技法です．ケーキで表す（！）と以下のような感じ．マシンラーニングケーキかっこいい！</p>
+<p>行列と，その列or行に紐づいたテキストが存在するときに，行列をいかによくモデル化するか，というお話です．推薦システム界隈ではわりとよくある感じの話ではあると思うのですが，適用しているデータが面白かったので紹介．</p>
 
-<blockquote><p> <a href="http://www.cse.wustl.edu/~kilian/code/page21/page21.html">Large Margin Nearest Neighbors</a></p>
+<p><img class="center" src="/images/joint_modeling_matrix_and_text.png" width="650"></p>
 
-<p><img src="http://www.cse.wustl.edu/~kilian/code/page21/files/img_3825_2.jpg" width="480" height="437"></p></blockquote>
+<p>なんと，<strong>アメリカ下院議員の(法案に対する)投票行動</strong>をモデル化しています．この問題ならではの面白い性質を使っているのかと思いながら読み進めたら実はそんなことも無くて肩透かしを食らった感じではあるのですが．</p>
 
-<p>要するに，同じクラスの事例同士は近く，異なるクラスの事例同士は遠くなるように，元の空間を歪めてしまうのです．</p>
+<p>法案が議会を通過するか（採択されるか）を予測する，というタスクでは，<strong>法案のテキストだけ</strong>が与えられた状況で，<strong>90%以上の正解率</strong>を達成しています．
+この数値が高いのか低いのか私には判断がつきかねる（そもそも，提出された法案がほとんど採択されるような状況では予測の意味が無い）ものの，かなり工夫の施された他手法に比べてもそれなりに高い性能を達成しているようです．
+特に政治ドメインならではのモデリングを行っているわけではなく，かなりGeneralなモデルなのですが，たとえば，政治に特化した工夫がなされたIdeal Point Topic Model(IPTM)のような既存手法に比べても高い性能，というのはなかなか面白いところです．</p>
 
-<p>この論文では，距離学習を<em>多変量正規分布間の KL Divergence</em> (の特別な場合である <em>LogDet Divergence</em> )の最適化問題として定式化するとともに，<em>カーネル学習との等価性</em>について述べています．実際のアルゴリズムは，<em>Bregman Projection</em>とか名前はごっついけど実際はそんなに難しくない．</p>
+<p>割とよくある推薦システムの技術が，<strong>議会という，民主主義の根幹を担うおそらく極めて高度なシステムを，表面的にではあるもののエミュレーションできてしまう</strong>，というのはなかなか考えさせられるものがあります．</p>
 
-<p>確かに，カーネル行列というのは，バラすと特徴量空間での距離を畳み込んだものと言えますし，関連はありそうだと思ったものがきれいに証明されていてけっこう感動しました．</p>
+<p>今回の論文では，「議員の過去の投票行動と，法案のテキスト」の間の関係をモデル化しているだけなのですが，外部の情報，たとえば経済指標だとかパブリックコメントだとか，を組み込むことができるとすると（能力のある研究者がその気になれば不可能ではないとはおもいます），<strong>コンピュータが政治を行う，という時代も意外と近づいてきているのかも</strong>しれません．</p>
 
-<p>さらには，(正直あまり理解できませんでしたが)元の距離学習のカーネル化やオンライン化（Regret Boundまで！）などなど，8ページギッシリ詰められています．</p>
+<p>は〜ディストピアっぽい．</p>
 
-<p>ただ，学習されるのは単なるマハラノビス距離行列という<em>単なる線形変換</em>なので，どれほどのタスクで効くのかどうかは疑問が残ります．</p>
+<hr />
 
-<p>たとえば，<em>元の空間で線形分離不可能な問題というのは，どんな線形変換を施したとしても，きれいに線形分離できるようにはならない</em>でしょうし，特徴空間での回転（マハラノビス距離行列の非対角要素）は何を表しているのか正直よくわかりません．</p>
+<p>以下，テクニカルな部分について．私は推薦システムだとかベイズモデルだとかはあんまり詳しくないので，色々間違っているかも．</p>
 
-<p>もっとも，このアルゴリズムはカーネル化ができることが示されているので，分離しやすい空間へ飛ばしてから距離学習を行えば別なのかもしれませんけど・・・けど・・・けど・・・．</p>
+<p>この論文では，テキストを<strong>Focused Topic Model</strong>というトピックモデル，賛否を表す行列を<strong>Binary Matrix Factorization</strong>という行列分解モデルで表現しています．</p>
 
-<p>こういう点では，多様体学習（詳しくないのですが，たとえばLaplacian Eigenmapsとか）のような非線形のアプローチのほうが，もともとの目的（分類しやすいように前処理する）に合っているように感じます．</p>
+<p>そのうえで，<strong>全体を繋ぎあわせる</strong>ようなバイナリの変数を導入して，<strong>全体を一気にMCMCで推定</strong>する，という流れ．スライドの最後にも載せておきましたが，グラフィカルモデルにいろいろアノテーションしたものを貼っておきます．小さくて見づらい場合は「名前をつけて保存」とか，よしなに扱って頂いてかまいません．青四角はハイパーパラメータです．</p>
 
-<p>計算量的な問題でいろいろ難しいのかもしれませんが，こういうSupervisedな距離学習あるいは次元削減で，オススメの文献がありましたら是非教えてください．</p>
+<p><img class="center" src="/images/joint_modeling_matrix_and_text_model.png" width="650"></p>
 
-<p>は〜英語書きに戻ろう．実際に書いている時間なんてほんの僅かで，書けないよーってうんうん呻ってる時間がほとんどなのだけれど．</p>
+<p>そもそも，何故Focused Topic Modelなのか，何故Binary Matrix Fctorizationなのか，という部分には，論文中にはあまり説明がなかったのですが，ちょっと考えてみたらいくつか理由付け，というか動機の推察ができたのでメモしておきます．</p>
 
-<p>そういえば，そういえば，一昨日第一回コンペが終わったCrowdSolvingについてはどれくらい書いていいのかな？いずれにしても，また次回．</p>
+<p>一つは，Focused Topic Modelの性質として，IBPから生成されるバイナリベクトルをトピック分布のサブセット選択に用いているため，トピック分布をスパースになる，というものがあります．スパースであること自体はさほど重要ではないのですが，<strong>IBPから出てくるバイナリのベクトルが，Binary Matrix Factorizationのバイナリ表現とうまくマッチする</strong>，というのは考えられそうです．両者が等価なものだとはあまり思えないのですが，<strong>複数のモデルの間にインタラクションを持たせる</strong>ための確率変数としては，なかなかよい選択に思えます．</p>
 
-<ul>
-<li>4/22 14:00 論文等へのリンクが間違っていたので修正しました．</li>
-</ul>
+<p>あとは，Focused Topic Modelの論文でも述べられている，<strong>コーパスレベルでのトピック生起確率と，個々のドキュメントでのトピック生起確率の相関</strong>に関する問題が，&#8221;法案&#8221;というドメインにおいては顕著に現れるという可能性もあります．私はアメリカの法律なんて読んだことないのですが，もし一つ一つの法案が(互いに語彙の重なりが少ないという意味で)専門的な文書になっているとすれば，Focused Topic Modelの利点が効いてくるのかもしれません．</p>
 
+<p>しかし，これくらいごちゃごちゃしたグラフィカルモデルをまじめに読み解くのは初めてで，なかなか骨が折れました．低ランク近似の周辺なんかは未だにイマイチつかめていませんし，Inferenceのところは理解を諦めてほぼ眺めただけですが，それでもたいへん勉強になりました．</p>
+
+<p>さて，読んでばっかいないで実装しろ，という声が聞こえたので今日はこのへんにて．とりあえず，ビールでも飲みに行ってきます．</p>
 </div>
   
   
@@ -168,7 +169,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/">グラフ結合度に基づく教師なし語義曖昧性解消について</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a></h1>
     
     
       <p class="meta">
@@ -184,151 +185,88 @@
   
 
 
-<time datetime="2013-04-01T13:13:00+09:00" pubdate data-updated="true">Apr 1<span>st</span>, 2013</time>
+<time datetime="2013-07-10T11:30:00+09:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>完全に春ですね．そろそろ新入生が来る時期．</p>
+  <div class="entry-content"><p>急に蒸し暑くなってきましたね．でぶちんなのでけっこうこたえます．タイトルはちょっと釣り気味．ビビっと来た方は是非論文に目を通してみてください:)</p>
 
-<p>書類を整理していたら，むかし読んだ Roberto Navigli (knowledge based WSDの大家) によるgraph based unsupervised WSDに関する論文の感想が出てきたのでちょっと再編集して公開してみます．あくまでメモなので，非常に読みづらいかも．もしご興味をもって頂けましたら，元論文をあたってみてください．</p>
+<p>例によって，仲間内でやっている小さな勉強会で論文紹介をしてきましたので，そのご紹介です．ぼくの専門というか興味の中心は自然言語処理なので，ふだんはそっち方面を追っているのですが，勉強会では機械学習方面を中心にいろいろ読んでみてます．</p>
+
+<p>今回は岡野原さんのこのツイートで興味を持った以下の論文を読ませていただきました．名前もかっこいい．<strong>ヴァニッシングコンポーネントアナリシス！</strong></p>
+
+<blockquote class="twitter-tweet"><p>ICML2013のbestpaper。データ中の集合（例えば画像中の8の字など）が0になるような生成多項式を求める（=集合のコンパクトな表現）効率的なアルゴリズムを提案し教師有学習時の特徴生成などに使える。すごい <a href="http://t.co/DedSoyLaJR">http://t.co/DedSoyLaJR</a></p>&mdash; 岡野原 大輔 (@hillbig) <a href="https://twitter.com/hillbig/statuses/347504853205000193">June 20, 2013</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
 <ul>
-<li><a href="http://wwwusers.di.uniroma1.it/~navigli/pubs/PAMI_2010_Navigli_Lapata.pdf">R. Navigli, M. Lapata. An Experimental Study of Graph Connectivity for Unsupervised Word Sense Disambiguation. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 32(4), IEEE Press, 2010, pp. 678-692.</a></li>
+<li><a href="http://jmlr.org/proceedings/papers/v28/livni13.pdf">&#8220;Vanishing Component Analysis&#8221;</a> Roi Livni et al, ICML 2013 (Best Paper)</li>
 </ul>
 
 
-<p>グラフの G = (V, E) をコンテキストおよび、ワードネットのネットワークから作成し，その上で 各語義 (vertexに対応)の重要度をはかるという方法に基づいたWSDに関するお話．</p>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/24079705" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
 
-<p>具体的には、まずコンテキスト（本論文では文）内の単語の各語義をグラフのノードとして初期化し、それぞれの語義からグラフ内のほかの語義へのリンクをDFSで探し，みつかればそのルート中の語義をグラフに追加していき，その間にエッジを張る．ということを行っている．</p>
 
-<p>この操作で出来たグラフの「あるノード」の重要度が高いようであれば，その語義はコンテキスト内での重要度が高く，語義候補である可能性が高い，という直感に基づいている．</p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/vanishing-component-analysis" title="Vanishing Component Analysis" target="_blank">Vanishing Component Analysis</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
 
-<p>グラフは以下の図のような感じ．これは，{動詞drink, 名詞milk}の例．それぞれ5つ，4つの語義が定義されていて，それらが 名詞boozing_1, 名詞beverage_1 ような語義を通して間接的に連結されていることがわかる．</p>
+<p>タイミングよく，<a href="http://partake.in/events/0ae21389-aa2a-42c1-a247-f93582127216">ICML2013読み会</a>という企画に乗っかるチャンスを頂けたので，今回はそちらでもお話させていただきました．会場には40人ほどいらっしゃったでしょうか．思いのほか多くの方が集まっており，演台から会場をみたときにちょっと圧倒されちゃいました・・・．外部でお話するのはとても久しぶりだったのですが，たいへん楽しい会でした．主催の <a href="http://twitter.com/sla">@sla</a> さん，会場を提供してくださった中川先生，ありがとうございました．</p>
 
-<p><img src="http://conditional.github.com/images/graph-based-wsd.png" width="480"></p>
+<p>この論文は，PCAやICAに代表される<strong>Component Analysis</strong>に，これまでとはまったく別の角度からアタックした論文です．</p>
 
-<p>肝心の重要度尺度であるが，彼らは local な尺度と globalな尺度という，大きく分けて二種類の尺度について実験を行っている．</p>
+<p>PCA,ICAというと，特徴量抽出とか信号分離などによく使われているイメージですね．多くの「なんとかComponent Analysis」はデータの成分がある種の確率分布(多くの場合，正規分布)にしたがって生成されているという仮定に立脚しています．また，見つけることのできる成分（基底といいます）は線形なものに限られることがほとんど．</p>
 
-<p>localな尺度を用いた手法では、グラフ内のノードをPagerankや度数といった指標に基づいてランキングし、もっともSenses(wi)に対応するノードの中で最も高いランクを得た語義を出力．こっちは簡単．</p>
+<p>対してこの論文では，<strong>「多項式」で表現されるような基底を抜き出す</strong>ことに焦点を当てています．無理やり1ページで説明しようとするとこんな感じ．</p>
 
-<p>globalな尺度はグラフ全体に対してスカラーの値を与えるものなので，語義選択においてはそのままでは用いることができない．そこで， G の部分集合となるような G&#8217;(コンテキスト内の単語それぞれについて語義ひとつだけを考えたもの) を考え，そのサブグラフのglobal measureの値が高いものを語義の組み合わせとして導きだす． たとえば，文が 2単語から成っており、それぞれが， 3つ，4つの語義を持っている場合は、3 *4 で12個のサブグラフを作り，それぞれに対して global measureを計算する。もっとも高いglobal measueを得たサブグラフを語義の組み合わせとして出力する．（計算量が爆発するという意味でオリジナルのLeskアルゴリズムと類似している）</p>
+<p><img class="center" src="/images/VCA.png" width="650"></p>
 
-<p>過去の研究として，</p>
+<p>で，興味をもっていただけましたらスライドを眺めていただきたいのですが，この「多項式集合」を特徴量抽出に使うと，いい感じに<strong>組み合わせを考慮した素性を抽出</strong>することができるようです．しかも，（※多少の前提条件は必要ですが）この方法で抽出した特徴ベクトルを分類問題に適用すると，<strong>線形分離できることが保証される</strong>，というありがたさ．多項式カーネルを直接用いる分類に比べ，精度がほとんど落ちることなく，分類において最大100倍ほどの高速化を達成しています．</p>
+
+<p>今後もいろいろな展開が考えられる，読んでいて楽しい論文でした．手法や達成した性能自体が凄い，というよりは，これまで機械学習で殆ど用いられてこなかった<strong>代数幾何の概念を完成度の高い形で既存の問題設定に組み込んだ</strong>．というのがBest Paperとして評価された一因なのかなとも思います．</p>
+
+<p>ICML読み会での発表後にTwitterを眺めていたら，</p>
+
+<blockquote class="twitter-tweet"><p>さっきグレブナー基底とか何とか言ったけど、これはむしろ自由度の高い単なる多項式回帰な気がするので、今からちゃんと読むです… [要出典]</p>&mdash; ぽよ子 (@tara_nai) <a href="https://twitter.com/tara_nai/statuses/354593532855590912">July 9, 2013</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>とのご指摘が・・・．これはすずかけ台の勉強会でも指摘されて，ちょっとアレレってなっていた部分でもありました．説明できなくてスミマセン．</p>
+
+<p>未だにアレレってなっているのですが，たしかに問題自体は多項式回帰の枠組みで考えることもできそうです．ただ，効率的にかつ冗長性を抑えながら，できるだけ小さい次数からFilterしていくということを考えると，イデアルのもつ吸収律を活用する，VCAのような枠組みが有効に働いてくるのではないかと思います．（スミマセン，イデアルとはいったい何なのか，グレブナー基底とはいったい何なのか，未だにあんまりわかってないので自信はありません・・・）</p>
+
+<p>ちなみにこのチーム，すでに<strong>Deep Learningへの応用</strong>を考えていらっしゃるみたいで，そちらの<a href="http://arxiv.org/abs/1304.7045">プレプリント</a>も出てたりします．なんともはや．</p>
+
+<p>他の方の発表も興味深い話が盛りだくさんで，すずかけの方では元同期の <a href="http://twitter.com/tma15">@tma15</a> くんが<a href="http://tma15.github.io/blog/2013/7/it-takes-a-long-time-to-become-young.html">オンラインコミュニティにおける参加者の寿命を言語的特徴から推測する話(WWWのベストペーパー)</a>を紹介してくれたり，ICML読み会のほうは．</p>
 
 <ul>
-<li>R. Barzilay and M. Elhadad, “Using Lexical Chains for Text Summarization,” Proc. ACL Workshop Intelligent Scalable Text Summarization, pp. 10-17, 1997.</li>
-<li>R. Mihalcea, “Unsupervised Large-Vocabulary Word Sense Disambiguation with Graph-Based Algorithms for Sequence Data Labeling,” Proc. Human Language Technology and Empirical Methods in Natural Language Processing, pp. 411-418, 2005</li>
-<li>M. Galley and K. McKeown, “Improving Word Sense Disambiguation in Lexical Chaining,” Proc. 18th Int’l Joint Conf. Artificial Intelligence, pp. 1486-1488, 2003.</li>
+<li>超多クラスのロジスティック回帰の分散学習</li>
+<li>オンラインのマルチタスク学習(Lifelong Learningというらしいです)の爆速化</li>
+<li>重みベクトルのビット数をAdaptiveに調節して省メモリに</li>
+<li>ローカルには線形なSVMを多数組み合わせることで非線形分類を高速化</li>
+<li>Deep LearningにおけるRectifierに代わる活性化関数Maxoutの提案</li>
+<li>高次の共起を考慮にいれたタグの補完に基づいた高速画像タギング</li>
+<li>ビデオ映像からの人間の動作認識</li>
+<li>複数の目的関数をパレート最適に持っていくようなActive Learning</li>
+<li>あんまり確率的ではないTopic Modelとその特徴付け</li>
 </ul>
 
 
-<p>が比較に挙げられているが，本論文の手法は one sense per one discourse を強く仮定しない(同じドキュメント内で同じ対象語に対してもコンテキストが異なれば違う語義が出力されうる)．また、グラフをunlabeled &amp; unweightedに構築している点が異なる．これには以下の二つの理由があるらしい．</p>
+<p>などなど（発表の要旨をつかめてなかったらすみません），何でもありな感じでワクテカ．実際の現場で機械学習を応用されてるPFIの方の発表が多かったこともあり，<strong>精度を下げずにいかに高速化するか</strong>，という方向性の論文が多かったように思います．</p>
 
-<ul>
-<li>広く合意を得たweightingの方法が確立されていない</li>
-<li>研究の焦点を絞りたい(まぁweightingは今のところ特に興味ない)</li>
-</ul>
+<p>個人的には， @sla さんがオープニングで話してくださった，「<strong>なんでもi.i.dを仮定するのはそろそろ脱却して，時間/空間に沿って変化するような動的なデータに対しても理論を作っていくべき</strong>」というコメントがたいへん興味深く感じました．</p>
 
+<p>機械学習が実世界に浸透していくにしたがって，これからはひとつのモデルなり分類器なりがそれなりに長く使われることを考えなければならない時期にきているのかなとも思います．そういう状況のもとでは，(たとえば言語の話でいえばその時々で流行語があるように)<strong>入力の分布がどんどん変わっていく</strong>ような状況に対してうまく適応していくような問題設定を明確に意識していく必要がありそうです．
+<a href="http://twitter.com/unnonouno">@unnonouno</a> さんが紹介してくださった，Lifelong Learningも，そういうモチベーションを含んでいるのかな．</p>
 
-<p>また、WordNet にくっついている MFS(というより，語義頻度) は本論文ではつかっていない．なんでかというと，それはhand-labeledなSemcorコーパスから得られたものであり，他の言語とかドメインに対しても有効な指標とは言えないから（この点は激しく同意）．</p>
+<p>私個人としましては，もう長いこと途絶えてしまっている外部へのアウトプットを再開するよい機会になりましたので，今後は知識を頂くだけではなく，自分の学んだことを共有することを心がけていきたいと感じた会でした．</p>
 
-<p>以下，それぞれの尺度についてまとめる．</p>
-
-<h3>local measure</h3>
-
-<p>local measureは特定のグラフのノードの重要度を表すもの．あるノードのグラフ全体に対する影響度，とみなすこともできる 値域は [0,1] で、1に近ければ重要、0に近ければ重要ではない．</p>
-
-<ul>
-<li><p><strong>Degree</strong> これは単なる次数。deg(v) = vの次数とすると， C_degree(v) = deg(v) / (|V| - 1)というように正規化しておく</p></li>
-<li><p><strong>Eigenvector</strong> ようは PagerankとHITS．特筆すべきことはなし．</p></li>
-<li><p><strong>KPP</strong>（あとで読む)</p></li>
-<li><p><strong>Betweeness</strong> shortest pathの数を用いる． σ<em>st = s->tへのshortest pathの数，　σ</em>st(v) そのうち、vを通るもの．σ<em>st(v) / σ</em>st をすべてのノードペアに対して和をとって，betweeness(v)とする．そして(|V| - 1)(|V| - 2)で割って正規化．</p></li>
-</ul>
-
-
-<h3>global measure</h3>
-
-<p>さきほどのlocal measureがグラフのノードに対して重要度を与えるものだったのに対して，こちらは特定の語義の組み合わせからなるグラフに対して[0,1]のスカラー値を与えるもの．</p>
-
-<ul>
-<li><strong>Compactness, Graph entropy, Edge density</strong> いわゆるグラフのコンパクト性などの一般的な尺度</li>
-</ul>
-
-
-<p>global measureは計算量的に無理がある（文内のすべての単語に対する語義の組み合わせを列挙してそれぞれに対して求めなければならない)ので工夫をしている．</p>
-
-<h4>global measure計算における工夫</h4>
-
-<ul>
-<li><p><strong>Simulated Annealing</strong> まずランダムに語義選択を初期化，ひとつ取りかえて上記 global measure の差分(ΔE)をみる．もしよくなっていれば採択、悪くなっている場合でも exp(ΔE/T)の確率で採択．Tは何らかの定数，これを u 回繰り返した結果を採用．書いてて思いましたが，Simulated Annealingというよりは，Metropolis Hastingsですねこれ．</p></li>
-<li><p><strong>Genetic Algorithms</strong>
-なんか面倒そうなので略．結局パラメータ調整は面倒だしあんまりいいこと無い，みたいな結論に至っており，若干残念な感じ．</p></li>
-</ul>
-
-
-<!--
-### Complexity
-
-まず初期グラフのノード数について，
-
-k = WordNet内の語の最大の語彙数(最も多い語義を持つ語の語義数)
-n = sentence σの長さ．
-|V_σ| は knのオーダーだけど、もう少しタイトに上界を抑えることはできるようだ
-
-グラフ作成には、だいたい O(n^2
-)くらい。
-各尺度の計算量については，論文中のTable3に書いてある．
--->
-
-
-<h3>Experiment</h3>
-
-<p>データはSemCor, Senseval-3, Semeval-2007．Sensemapつかって全部WordNet2.0にマップしてある．</p>
-
-<p>Sense-inventoryにはWordNet2.0 と EnWordNetというものを使っている．EnWordNetはcollocational relationをもちいてedgeを6万本くらい増やしたWordNetらしい．具体的な構築方法はよく分からないが． WN++みたいなものか．</p>
-
-<p>ふつうのWordNetから構築したグラフと，EnWordNetから構築したグラフの性質の比較も行っている．</p>
-
-<ul>
-<li><p><strong>small world effect</strong> : l = グラフのスモールワールド性（任意の頂点ペアの間の最短距離の平均)</p></li>
-<li><p><strong>clustering rate(or transitivity)</strong> : C = probability that two neighbors of a vertex are connected 詳しくは式参照 ネットワーク内の三角形の数で計算するらしい。</p></li>
-<li><p><strong>cumulative degree distribution</strong> : P_k = Σ p_k&#8217; (&lt;- k次のノードの割合)</p></li>
-</ul>
-
-
-<p>結果として，EnWordNetから構築したグラフのほうがdenseでござるという当たり前の議論が．(そりゃあエッジ足してるだけなのだから当然)</p>
-
-<p>グラフ生成におけるDFSの深さは6にしている（SemCor上で実験して決めたらしい)</p>
-
-<p>その他、GA, SAのパラメータについてうんたらかんたら．</p>
-
-<h4>Result</h4>
-
-<p>Degree（もっとも単純なlocal measure,ノードの次数そのもの) がもっともよく，いろいろ工夫した他のlocal measureやglobal measureは振るわなかった．残念．．．</p>
-
-<p>WordNet vs EnWordNetの比較では，EnWordNetの方が若干ながら良い結果．</p>
-
-<p>しかしながら，unsupervised WSDの常として，MFS(First Sense Baseline)は非常に強く，F1 measureで20ポイント以上の差をつけられてしまっている．</p>
-
-<h3>感想</h3>
-
-<p>グラフとしては最も基本的な， unlabeled, undirected, unweightedなものの上で何ができるか，を追求した研究といえる．</p>
-
-<p>単純な指標がうまくいってしまい，いろいろ工夫しても無駄っぽいのは残念だが，unsupervised WSDの難しさは語義粒度とknowledge baseの質如何でいくらでも変動しうるので，言語資源の整備が進めば，また違った結果が得られるかもしれない．</p>
-
-<p>WSDにおいて宿命になっている，&#8221;MFSに勝てない問題&#8221;については，近年は</p>
-
-<ul>
-<li><a href="http://www.aclweb.org/anthology/P/P10/P10-1154.pdf">SP Ponzetto, R Navigli &#8220;Knowledge-rich Word Sense Disambiguation Rivaling Supervised Systems&#8221; Proc of ACL 2010</a></li>
-</ul>
-
-
-<p>のように，知識ベース(WordNet)側をガンガン強化することで，ほぼ遜色ない性能を出すことができる手法も出てきている．しかし，こちらも，もっとも性能の良い尺度はDegreeなので，なんだかなぁという気はする．</p>
-
-<p>結局知識ベースの品質に強く依存するknowledge based WSDではあるが，まだ何かできることは無いかと考えると，うまくいくかはともかくとして，いろいろ面白そうだ．（ニッチなためか，機械学習屋さんがまだあまり進出してこない分野でもあるので）</p>
+<p>久しぶりにお会いした方もいらっしゃったので，ゆっくりお話できれば良かったのですが，ちょっと事情がありまして早々と帰宅．また近いうちにお会いできる機会があれば幸いです（人生相談にのっていただきたいのでした・・・）</p>
 </div>
   
   
@@ -341,7 +279,7 @@ n = sentence σの長さ．
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/">Posterior Regularization と Unified Expectation Maximizationについて</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a></h1>
     
     
       <p class="meta">
@@ -357,90 +295,51 @@ n = sentence σの長さ．
   
 
 
-<time datetime="2013-03-23T16:20:00+09:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2013</time>
+<time datetime="2013-06-01T15:26:00+09:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>桜がとってもきれいですね．すずかけ台は8分咲きといったところです．ところで，仲間で行っている小規模な勉強会で</p>
+  <div class="entry-content"><p>およそひと月ぶりに，仲間内で行っている小さな勉強会で論文紹介をしてまいりました．ICML2013の予稿がちょっとづつ出てきているので，本日はその中から一本．</p>
 
 <ul>
-<li><a href="http://www.aclweb.org/anthology/N/N12/N12-1087.pdf">&#8220;Unified Expectation Maximization&#8221;</a> Samdani et al, NAACL2012</li>
+<li><a href="http://jmlr.csail.mit.edu/proceedings/papers/v28/menon13.pdf">&#8220;A Machine Learning Framework for Programming by Example&#8221;</a> Aditya Menon et al, ICML 2013</li>
 </ul>
 
 
-<p>を紹介してきたので，資料をslideshareにあげておきました．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/17552885" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/22279251" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
 
 
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/unified-expectation-maximization" title="Unified Expectation Maximization" target="_blank">Unified Expectation Maximization</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/a-machine-learning-framework-for-programming-by-example" title="A Machine Learning Framework for Programming by Example" target="_blank">A Machine Learning Framework for Programming by Example</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
 
-<p>Unified EMというと，じゃっかん大風呂敷な感じのタイトルですが，キーとなるアイデアはとても単純で，EMアルゴリズムのE-Stepで最小化するKLダイバージェンスにちょっと細工を入れることで，Hard-EMとふつうのEMの中間くらいの性質を持ったアルゴリズムになりますよ．というお話です．Deterministic Annealing EMの逆バージョンみたいな雰囲気(実際，DAEMもこの枠組で書けることが示されています) 手元にEMのコードがあれば，実装も非常に容易．</p>
+<p>機械学習を使って，Programming by Example(PbE)をしようという論文です．PbEというのは私も初耳だったのですが，ざっくり言うと，<strong>人間が「例」を与えることで，その例をうまく再現するようなプログラムを自動的に生成する</strong>，というタスクのようです．</p>
 
-<p>ただ，やっぱりそれだけだと一発ネタにしかならないので，「制約付きEM」のほうへ話を進めています．「制約付きEM」というと聞きなれないアルゴリズムですが，Un(semi-)supervised learningにおいて，事前知識を用いてモデルがとんでもない方向へ飛ぶのを防ごう，というモチベーションに基づく技法のようです．</p>
+<p>それを部分的に実現している（らしい）のが，Excel2013に新しく搭載されたという<a href="http://blogs.office.com/b/microsoft-excel/archive/2012/08/08/flash-fill.aspx">&#8220;Flash Fill&#8221;</a>という機能．<strong>ユーザーの意図を推測して，ルールにしたがったセルの補完</strong>なんかをしてくれるみたいです．百聞は一見にしかず，以下の動画をご覧ください．</p>
 
-<p>自然言語処理におけるアプリケーションでは，たとえば以下のような制約を考えることができます：</p>
-
-<ul>
-<li><p>品詞タグ付けなら</p>
-
-<ul>
-<li>ある文には，名詞と動詞が最低一つづつ含まれる</li>
-<li>ある語が，複数のPOSに割り当てられることは稀</li>
-</ul>
-</li>
-<li><p>機械翻訳におけるアラインメントなら</p>
-
-<ul>
-<li>L1->L2のアラインメントと，L2->L1のアラインメントは一致する</li>
-<li>L1の一つの語が，L2の多数の語と対応付けられることは稀</li>
-</ul>
-</li>
-<li><p>関係抽出なら</p>
-
-<ul>
-<li>ある種のエンティティと，ある種のエンティティの間には，特定のリレーションしか成り立たない
-
-<ul>
-<li>(PERSON, LOCATION) -> LIVE IN</li>
-<li>(ORGANIZATION, PERSON) -> WORK FOR</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<iframe width="480" height="270" src="http://www.youtube.com/embed/YPG8PAQQ894?feature=oembed" frameborder="0" allowfullscreen></iframe>
 
 
-<p>こういった事前知識に基づく制約を満たすモデルを，確率分布の集合として表現し，そこから離れないようにEMアルゴリズムを行うことによって，ラベルつきデータが利用可能ではない（または，少量しか存在しない）状況において，うまく学習が行おうというのが，「制約付きEM」の肝となる部分です．直感的には，Posterior Regularizationの論文から引用した以下の図が分かりやすいかもしれません．（日本語注釈は私によるものです）</p>
+<p>Flash Fillは一行から一行（というよりは，セルからセル）への変換のみがターゲットでしたが，本論文では<strong>集計であるとか，重複の削除のように，複数の行にまたがった処理</strong>をうまく解く枠組みを提案しています．</p>
 
-<p><img src="http://conditional.github.com/images/posterior_regularization_fig.png" width="460" height="302"></p>
+<p>具体的には以下の例が分かりやすいかもしれません．</p>
 
-<p>歯切れのよいタイトルに惹かれて軽い気持ちで選んだ論文でしたが，そこそこホットな分野のようで，ACL 2011のチュートリアルで1トラックまるまるこの話題だったりしたらしく，問題設定や前提を理解するのにけっこう苦労しました．</p>
+<p><img class="center" src="/images/programming_by_example_menon2013.png" width="650"></p>
 
-<p>結果として，UEMの本題ではなく，問題設定や先行研究の紹介に半分近くのスライドを割くことに・・・．まぁ，楽しんで頂けたようなのでなによりです．しかしひさびさに緊張感のあるプレゼンだった．</p>
+<p>「書き換え前」「書き換え後」の文字列を与えると，それらをうまく繋ぐようなプログラムを生成する，というイメージです．Perlいらず？</p>
 
-<p>最後のスライドにも記載しましたが，以下の文献が，理解の助けになると思います．</p>
+<p>手法としてはさほど難しいことはしておらず，無理やり一言でまとめてしまうと，<strong>「書き換えプログラム」の生成モデルをPCFGでモデル化して，それぞれの生成ルールの確率をlog-linearで書き，そのパラメータをPCFGのn-best導出を延々と求めながら更新していく</strong>，というだけ．見方によっては，あまりICMLっぽくは無いかも．</p>
 
-<ul>
-<li><a href="http://sideinfo.wikkii.com/">&#8220;Rich Prior Knowledge in Learning for Natural Language Processing&#8221;</a> ACL 2011 tutorial
+<p>もちろん，書き換えルールの元になるような基礎的な関数セット(最低限チューリング完全なものがあれば原理的には可能ですが，現実的には重複除去とかカウントとかを用意しておくみたいです)はあらかじめ定義しておかなければならないのですが，あとは<strong>探索時間さえ掛ければ任意の書き換えを行うプログラムが生成可能</strong>である，というのがポイントです．</p>
 
-<ul>
-<li>ACLで行われたチュートリアルの資料です．このファミリーに属するアルゴリズムについての資料の多くはここからたどれるようになっています．各種のアルゴリズムのあいだの関係についてよくまとまっていますし，著者らによって異なる表記系もすっきりまとめられているので読みやすい．今回は取り上げませんでしたが，Labeled Feature とかも追ってみるとおもしろそうなトピックなので，ぜひ．</li>
-</ul>
-</li>
-<li><a href="http://jmlr.csail.mit.edu/papers/volume11/ganchev10a/ganchev10a.pdf">&#8220;Posterior Regularization for Structured Latent Variable Models&#8221;</a> JMLR 2010
+<p>ただ，現実的な時間で探索を行うためには<strong>探索に優先順位</strong>をつける必要があります．そこで，効率的に探索を行うために<strong>機械学習を用いて「書き換え」の集合をあつめたコーパスからPCFGのパラメータを学習</strong>しましょう，というのがこの論文の本旨のようです．実際，探索が難しいプログラムほど高速化が期待でき，brute forceな方法にくらべると40倍ほど速くなる場合もあるとのこと．</p>
 
-<ul>
-<li>今回紹介した論文の元ネタになっている Posterior Regularizationの論文です．品調ラベルづけにおける例とともに，少しづつ丁寧に議論が進められており，さすがジャーナルだけあって読みやすいです．</li>
-</ul>
-</li>
-</ul>
+<p>機械学習は「適応的なシステム」を作るのに使われる「重い」手法，というイメージがありますが，<strong>もともと原理的に解ける問題を「高速化」するために用いる</strong>，という意味で面白い視点を与える論文だと思いました．</p>
 
+<p>ビッグデータ感もなければ，ディープラーニングでもなく，曼荼羅のようなグラフィカルモデルもなんとかダイバージェンスも出てこない論文ですが，なかなか面白かったです．実用に近そうなのもいい．</p>
 
-<p>ひさびさに負荷の高い一週間だったので，来週はすこしゆっくりしたいと思います．（日記）</p>
+<p>話は変わりまして，先日大学の同期とのプチ同窓会で10人ばかり集まったのですが，誰一人結婚してなくて笑．もちろん，ある種の集合バイアスもあるとは思いますが，おいおい俺らそろそろみそじやで．</p>
 </div>
   
   
@@ -453,7 +352,7 @@ n = sentence σの長さ．
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/05/06/predicting-google-closures/">統計データに基づくGoogle各種サービスの生存予測</a></h1>
     
     
       <p class="meta">
@@ -469,101 +368,101 @@ n = sentence σの長さ．
   
 
 
-<time datetime="2013-03-14T17:59:00+09:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
+<time datetime="2013-05-06T11:53:00+09:00" pubdate data-updated="true">May 6<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>眠いですね．</p>
-
-<p>とくに機械学習のクロスバリデーションや，ごっつい集計クエリなどの時間のかかるバッチジョブを流す間，とても眠い．</p>
-
-<p>私の場合，そういう時にはディスプレイの前を離れて，お昼寝タイムにすることが多いです（基本いつも眠い）．実行時間の見積もりがつくようなジョブなら適当にアラームかけておけばよいのですが，実際はそうも行かないことも多いですよね．</p>
-
-<p>そこで，iOSデバイスにプッシュ通知を送れるアプリケーション <strong>Prowl</strong> を用いて，ジョブの終了をiPhoneに通知してくれる短いRubyスクリプトを書いてみました．ジョブ終わったらブルッと鳴って目覚めスッキリ．</p>
-
-<h2>Requirement</h2>
+  <div class="entry-content"><p>先日Prismaticを眺めていたら，興味深い記事を見つけたので紹介．</p>
 
 <ul>
-<li><a href="https://www.prowlapp.com/">Prowl</a></li>
-<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
+<li><a href="http://www.gwern.net/Google%20shutdowns">Predicting Google closures</a></li>
 </ul>
 
 
-<p>gem は <code>gem intall prowl</code> でインストールできます．</p>
+<p>Google Readerの停止がアナウンスされたのは記憶に新しいですね．はじまりあるものは，すべて終わりもあるもの．実際，最近のGoogleはビジネスにならないと判断したプロダクトを大胆に切っていっているような印象をうけます．</p>
 
-<h2>Instalation</h2>
+<p>この記事では，これまでGoogleが運営してきた<strong>350のサービス／プロダクト</strong>のデータを，疫学統計でよく用いられる（らしい）Coxモデルとよばれる統計モデルによって解析し，<strong>どのようなサービスが今後停止されるおそれが高いのか</strong>，分析を行っています．</p>
 
-<p>まず，ProwlのウェブサイトからAPIキーを取得します．いちおう登録＆ログインが必要ですが，メールアドレスは不要のようです，ログインして，<strong>API keys</strong> のページに進むと
-フォームが二つありますが，Provider keyは第三者にキー入りアプリを配布するときに使うものなので，今回は <strong>Generate a new API key</strong> のほうでOK．Noteは空でもいいのでとにかくサブミットボタンを押すと，API keyが取得できます．</p>
+<h2>特徴量</h2>
 
-<p><img src="http://conditional.github.com/images/generate_prowl_apikey.png"></p>
+<p>特徴量として用いているのは以下のような情報．詳細な基準は元記事を参照いただくとして，簡単に抜粋してみます．</p>
 
-<p>そんでもってスクリプトの中身はこんな感じ．<code>API_KEY</code>には先ほど取得したキーを．</p>
-
-<div><script src='https://gist.github.com/5161032.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p>環境変数 <code>PROWL_NOTICE_TITLE</code>, <code>PROWL_NOTICE_CONT</code> にメッセージをセットしておくと，その中身を通知してくれます．通知を受け取りたいプロセスと環境変数の設定をラップするようなシェルスクリプトを組んでおくと良いかもしれません．<code>ARGV</code> についてはあとで説明します．</p>
-
-<h2>Example</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sleep 10 && ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
+<ul>
+<li>プロダクト名をクエリとしたGoogleのヒット数(そのまま使うのは不公平なので，サービスのリリース時期に応じて補正を加えているそうです)</li>
+<li>プロダクトのタイプ．サービスなのか，プログラムなのか，モノ(Chrome Bookとか)なのか，それ以外（SoCとかI/Oのようなイベント等）なのか</li>
+<li>そのプロダクトが，直接Googleに収入をもたらしているか</li>
+<li>そのプロダクトが，FLOSSであるか，またはFLOSSに直接関係したものであるか</li>
+<li>そのプロダクトは，他社から買収したもの，またはそれをもとにしたものであるか</li>
+<li>そのプロダクトが，ソーシャルな要素を含んでいるか</li>
+<li>そのプロダクトは，Googleが2005年以前にリリースされたものであるか</li>
+</ul>
 
 
-<p>という感じでプロセスを実行すると，終了時にこんな感じで通知してくれます．</p>
+<p>元記事の著者はこれらの情報をまとめたCSVファイルを公開してくださっていますが，そのままではちょっと見にくいので，<a href="https://docs.google.com/spreadsheet/ccc?key=0ApJZf-tS-BfedDJ4NmxFaEpMYVVPV2FTQ0RsaXZsbnc&amp;usp=sharing">Google Docsに転載＆ちょっと整形してみました</a>のでよろしければご覧ください．ライセンスは元記事のとおり，<a href="http://creativecommons.org/about/cc0">CC0</a>で．</p>
 
-<p><img src="http://conditional.github.com/images/prowl_sleep.jpg" width="320" height="480"></p>
+<h2>分析結果</h2>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ export PROWL_NOTICE_TITLE='たいとるだよ'
-</span><span class='line'>$ export PROWL_NOTICE_DESC='おわったよ〜'
-</span><span class='line'>$ ruby prowlnotification.rb</span></code></pre></td></tr></table></div></figure>
+<p>このデータをCoxモデルにフィットさせた結果，以下のような要素がシャットダウンの<strong>リスクを低減させる</strong>ことが分かったそうです．</p>
 
-
-<p>とかするとこんな感じ．</p>
-
-<p><img src="http://conditional.github.com/images/prowl_with_env.jpg" width="320" height="480"></p>
-
-<h2>zsh(precmd/preexec)との組み合わせ</h2>
-
-<p>しかし，毎回コマンド打つのは面倒ですね．そこで，<a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a> で紹介されている方法を使うと，
-コマンドに一定以上の時間がかかったときに自動で通知してくれます．
-今回のスクリプトに合わせてちょっと改造してみました．<code>PROWL_NOTICE_TIME</code>を適当に設定して<code>.zshrc</code>に潜ませてみてください．</p>
-
-<div><script src='https://gist.github.com/5161045.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
+<ol>
+<li>Googleが他社から<strong>買収したプロダクトではない</strong>こと</li>
+<li>FLOSS<strong>ではない</strong>こと</li>
+<li>Googleに直接収益をもたらすこと</li>
+<li>ソーシャルネットワークと<strong>関係ない</strong>こと</li>
+<li>Google検索でのヒット数が多いこと</li>
+<li>2005年以前にリリースされたものであること</li>
+</ol>
 
 
-<p>とくに環境変数が設定されていない場合は，プロセスの名前と引数が通知されてきます．(<code>ARGV</code>を通してRubyスクリプトに渡されます)</p>
+<p>2番，4番の要素がちょっと意外．</p>
+
+<p>その結果，以下のようなプロダクトがシャットダウンのリスクが高い，という予測を行っています．</p>
+
+<ol>
+<li>Schemer</li>
+<li>Boutiques</li>
+<li>Magnifier</li>
+<li>Hotpot</li>
+<li>Page Speed Online API</li>
+<li>WhatsonWhen</li>
+<li>Unofficial Guides</li>
+<li>WDYL search engine</li>
+<li>Cloud Messaging</li>
+<li>Correlate</li>
+</ol>
+
+
+<p>あまり聞いたことないプロダクトが並びます．あれ，Google Boutiquesって閉鎖したんじゃなかったっけ？Google Correlateも，生きていたのが意外です．
+逆にシャットダウンのリスクが低いプロダクトは以下の通り．</p>
+
+<ol>
+<li>Search</li>
+<li>Translate</li>
+<li>AdWords</li>
+<li>Picasa</li>
+<li>Groups</li>
+<li>Image Search</li>
+<li>News</li>
+<li>Books</li>
+<li>Toolbar</li>
+<li>AdSense</li>
+</ol>
+
+
+<p>まぁこちらは妥当な感じ．PicasaやToolbarは微妙な感じもしますが．</p>
+
+<p><a href="http://www.gwern.net/Google%20shutdowns#TOC">元記事</a>には，いくつかの有名プロダクトの5年生存率を計算した表もありますので，そちらもあわせてご覧ください．<strong>Google Glassの5年生存率は37%</strong>，とか，ちょっぴりセンセーショナルな結果もあります．</p>
 
 <h2>まとめ</h2>
 
-<ul>
-<li>眠い時でも思う存分バッチを走らせることができるRubyスクリプトを書いてみました．</li>
-<li>実行に一定時間以上かかったら自動で通知してくれるzshの設定例を紹介しました．</li>
-<li>勤務時間中の居眠りは計画的に．</li>
-</ul>
+<p>350ものGoogleプロダクトのデータを用いて，どのようなサービスがシャットダウンのリスクが高いのか分析を行った記事を紹介しました．</p>
 
+<p>特徴量としては，ここに挙げられているもの意外にもさまざまなな要因が考えられるとは思いますが，分析の切り口として面白いものではあると思います．ソーシャルものは苦手だとか，FLOSSには消極的になりつつあるとか，何となく感じていたGoogleの企業としての特徴がデータからも透けてみえるのが興味深い．</p>
 
-<p>Prowlは有料(執筆現在250円)アプリですが，単に通知を受け取るだけではなく，通知を他のアプリにフォワードしてくれる機能があったり，<a href="http://www.prowlapp.com/apps.php">Chromeで開いているページを通知してくれるプラグイン</a>が用意されていたり，そこそこ遊べそうなので，今回導入してみました．</p>
-
-<p>もし同様の機能の無料アプリをご存知でしたら是非教えてください．</p>
-
-<h2>参考</h2>
-
-<ul>
-<li><a href="http://umezo.hatenablog.jp/entry/20100508/1273332857">処理時間が一定以上かかったらGrowlで通知するzshrc - 心魅 - cocoromi</a></li>
-<li><a href="https://www.prowlapp.com/">Prowl</a></li>
-<li><a href="https://github.com/augustl/ruby-prowl">prowl gem</a></li>
-</ul>
-
+<p>個人的には，Google Code Searchのシャットダウンが痛かった．．．いまだによい代替を見つけられずにいます．</p>
 </div>
   
   
@@ -576,7 +475,7 @@ n = sentence σの長さ．
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/05/05/predicting-google-closures/">Predicting Google Closures</a></h1>
     
     
       <p class="meta">
@@ -592,26 +491,14 @@ n = sentence σの長さ．
   
 
 
-<time datetime="2013-03-13T16:51:00+09:00" pubdate data-updated="true">Mar 13<span>th</span>, 2013</time>
+<time datetime="2013-05-05T00:00:00+09:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>とりあえずはじめてみた．</p>
-
-<p><a href="http://www.miukoba.net/blog/2013/01/05/start-octopress/">Octopressはじめました - mimemo</a></p>
-
-<p>が大変参考になりました．<a href="http://mouapp.com/">Mou</a>便利．markdown，必要に迫られたときしか
-書いてこなかったんだけど，少しづつ慣れていきたい．</p>
-
-<p>数式のテスト(<a href="https://gist.github.com/jessykate/834610">MathJax.rb</a>利用)</p>
-
-<script type="math/tex; mode=display">
-N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
-</script>
-
+  <div class="entry-content">
 </div>
   
   
@@ -620,6 +507,8 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -660,6 +549,46 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
         <a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/06/predicting-google-closures/">統計データに基づくGoogle各種サービスの生存予測</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/05/predicting-google-closures/">Predicting Google Closures</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/20/distance-metric-learning-and-kernel-learning/">距離計量学習とカーネル学習について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/">グラフ結合度に基づく教師なし語義曖昧性解消について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/">Posterior Regularization と Unified Expectation Maximizationについて</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a>
+      </li>
+    
   </ul>
 </section>
 
@@ -694,6 +623,15 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
 </script>
 
 
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 

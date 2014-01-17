@@ -812,434 +812,6 @@ a0  が最初の整数を， L  が桁数を表す． ただし， 1 ≤ L  ≤ 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-03T14:12:00+09:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>前回のVanishing Component Analysisに関する記事が思いのほか好評だったようで，
-なんか自分に対してのハードルあげちゃった感あったり，記事冒頭でデブとか書くんじゃなかった・・・（ハハハ）と後悔してたり．．．</p>
-
-<p>いつもどおり肩肘はらずに書きますね．例によって，マンスリー読み会で紹介した論文について．</p>
-
-<ul>
-<li><a href="http://books.nips.cc/papers/files/nips25/NIPS2012_0733.pdf">&#8220;Joint Modeling of a Matrix with Associated Text via Latent Binary Features&#8221;</a> XianXing Zhang and Lawrence Carin
-, NIPS 2012.</li>
-</ul>
-
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/24888804" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/joint-modeling-ofamatrixwithassociatedtext" title="Joint Modeling of a Matrix with Associated Text via Latent Binary Features" target="_blank">Joint Modeling of a Matrix with Associated Text via Latent Binary Features</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">Koji Matsuda</a></strong> </div></p>
-
-<p>行列と，その列or行に紐づいたテキストが存在するときに，行列をいかによくモデル化するか，というお話です．推薦システム界隈ではわりとよくある感じの話ではあると思うのですが，適用しているデータが面白かったので紹介．</p>
-
-<p><img class="center" src="/images/joint_modeling_matrix_and_text.png" width="650"></p>
-
-<p>なんと，<strong>アメリカ下院議員の(法案に対する)投票行動</strong>をモデル化しています．この問題ならではの面白い性質を使っているのかと思いながら読み進めたら実はそんなことも無くて肩透かしを食らった感じではあるのですが．</p>
-
-<p>法案が議会を通過するか（採択されるか）を予測する，というタスクでは，<strong>法案のテキストだけ</strong>が与えられた状況で，<strong>90%以上の正解率</strong>を達成しています．
-この数値が高いのか低いのか私には判断がつきかねる（そもそも，提出された法案がほとんど採択されるような状況では予測の意味が無い）ものの，かなり工夫の施された他手法に比べてもそれなりに高い性能を達成しているようです．
-特に政治ドメインならではのモデリングを行っているわけではなく，かなりGeneralなモデルなのですが，たとえば，政治に特化した工夫がなされたIdeal Point Topic Model(IPTM)のような既存手法に比べても高い性能，というのはなかなか面白いところです．</p>
-
-<p>割とよくある推薦システムの技術が，<strong>議会という，民主主義の根幹を担うおそらく極めて高度なシステムを，表面的にではあるもののエミュレーションできてしまう</strong>，というのはなかなか考えさせられるものがあります．</p>
-
-<p>今回の論文では，「議員の過去の投票行動と，法案のテキスト」の間の関係をモデル化しているだけなのですが，外部の情報，たとえば経済指標だとかパブリックコメントだとか，を組み込むことができるとすると（能力のある研究者がその気になれば不可能ではないとはおもいます），<strong>コンピュータが政治を行う，という時代も意外と近づいてきているのかも</strong>しれません．</p>
-
-<p>は〜ディストピアっぽい．</p>
-
-<hr />
-
-<p>以下，テクニカルな部分について．私は推薦システムだとかベイズモデルだとかはあんまり詳しくないので，色々間違っているかも．</p>
-
-<p>この論文では，テキストを<strong>Focused Topic Model</strong>というトピックモデル，賛否を表す行列を<strong>Binary Matrix Factorization</strong>という行列分解モデルで表現しています．</p>
-
-<p>そのうえで，<strong>全体を繋ぎあわせる</strong>ようなバイナリの変数を導入して，<strong>全体を一気にMCMCで推定</strong>する，という流れ．スライドの最後にも載せておきましたが，グラフィカルモデルにいろいろアノテーションしたものを貼っておきます．小さくて見づらい場合は「名前をつけて保存」とか，よしなに扱って頂いてかまいません．青四角はハイパーパラメータです．</p>
-
-<p><img class="center" src="/images/joint_modeling_matrix_and_text_model.png" width="650"></p>
-
-<p>そもそも，何故Focused Topic Modelなのか，何故Binary Matrix Fctorizationなのか，という部分には，論文中にはあまり説明がなかったのですが，ちょっと考えてみたらいくつか理由付け，というか動機の推察ができたのでメモしておきます．</p>
-
-<p>一つは，Focused Topic Modelの性質として，IBPから生成されるバイナリベクトルをトピック分布のサブセット選択に用いているため，トピック分布をスパースになる，というものがあります．スパースであること自体はさほど重要ではないのですが，<strong>IBPから出てくるバイナリのベクトルが，Binary Matrix Factorizationのバイナリ表現とうまくマッチする</strong>，というのは考えられそうです．両者が等価なものだとはあまり思えないのですが，<strong>複数のモデルの間にインタラクションを持たせる</strong>ための確率変数としては，なかなかよい選択に思えます．</p>
-
-<p>あとは，Focused Topic Modelの論文でも述べられている，<strong>コーパスレベルでのトピック生起確率と，個々のドキュメントでのトピック生起確率の相関</strong>に関する問題が，&#8221;法案&#8221;というドメインにおいては顕著に現れるという可能性もあります．私はアメリカの法律なんて読んだことないのですが，もし一つ一つの法案が(互いに語彙の重なりが少ないという意味で)専門的な文書になっているとすれば，Focused Topic Modelの利点が効いてくるのかもしれません．</p>
-
-<p>しかし，これくらいごちゃごちゃしたグラフィカルモデルをまじめに読み解くのは初めてで，なかなか骨が折れました．低ランク近似の周辺なんかは未だにイマイチつかめていませんし，Inferenceのところは理解を諦めてほぼ眺めただけですが，それでもたいへん勉強になりました．</p>
-
-<p>さて，読んでばっかいないで実装しろ，という声が聞こえたので今日はこのへんにて．とりあえず，ビールでも飲みに行ってきます．</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-10T11:30:00+09:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>急に蒸し暑くなってきましたね．でぶちんなのでけっこうこたえます．タイトルはちょっと釣り気味．ビビっと来た方は是非論文に目を通してみてください:)</p>
-
-<p>例によって，仲間内でやっている小さな勉強会で論文紹介をしてきましたので，そのご紹介です．ぼくの専門というか興味の中心は自然言語処理なので，ふだんはそっち方面を追っているのですが，勉強会では機械学習方面を中心にいろいろ読んでみてます．</p>
-
-<p>今回は岡野原さんのこのツイートで興味を持った以下の論文を読ませていただきました．名前もかっこいい．<strong>ヴァニッシングコンポーネントアナリシス！</strong></p>
-
-<blockquote class="twitter-tweet"><p>ICML2013のbestpaper。データ中の集合（例えば画像中の8の字など）が0になるような生成多項式を求める（=集合のコンパクトな表現）効率的なアルゴリズムを提案し教師有学習時の特徴生成などに使える。すごい <a href="http://t.co/DedSoyLaJR">http://t.co/DedSoyLaJR</a></p>&mdash; 岡野原 大輔 (@hillbig) <a href="https://twitter.com/hillbig/statuses/347504853205000193">June 20, 2013</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<ul>
-<li><a href="http://jmlr.org/proceedings/papers/v28/livni13.pdf">&#8220;Vanishing Component Analysis&#8221;</a> Roi Livni et al, ICML 2013 (Best Paper)</li>
-</ul>
-
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/24079705" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/vanishing-component-analysis" title="Vanishing Component Analysis" target="_blank">Vanishing Component Analysis</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
-
-<p>タイミングよく，<a href="http://partake.in/events/0ae21389-aa2a-42c1-a247-f93582127216">ICML2013読み会</a>という企画に乗っかるチャンスを頂けたので，今回はそちらでもお話させていただきました．会場には40人ほどいらっしゃったでしょうか．思いのほか多くの方が集まっており，演台から会場をみたときにちょっと圧倒されちゃいました・・・．外部でお話するのはとても久しぶりだったのですが，たいへん楽しい会でした．主催の <a href="http://twitter.com/sla">@sla</a> さん，会場を提供してくださった中川先生，ありがとうございました．</p>
-
-<p>この論文は，PCAやICAに代表される<strong>Component Analysis</strong>に，これまでとはまったく別の角度からアタックした論文です．</p>
-
-<p>PCA,ICAというと，特徴量抽出とか信号分離などによく使われているイメージですね．多くの「なんとかComponent Analysis」はデータの成分がある種の確率分布(多くの場合，正規分布)にしたがって生成されているという仮定に立脚しています．また，見つけることのできる成分（基底といいます）は線形なものに限られることがほとんど．</p>
-
-<p>対してこの論文では，<strong>「多項式」で表現されるような基底を抜き出す</strong>ことに焦点を当てています．無理やり1ページで説明しようとするとこんな感じ．</p>
-
-<p><img class="center" src="/images/VCA.png" width="650"></p>
-
-<p>で，興味をもっていただけましたらスライドを眺めていただきたいのですが，この「多項式集合」を特徴量抽出に使うと，いい感じに<strong>組み合わせを考慮した素性を抽出</strong>することができるようです．しかも，（※多少の前提条件は必要ですが）この方法で抽出した特徴ベクトルを分類問題に適用すると，<strong>線形分離できることが保証される</strong>，というありがたさ．多項式カーネルを直接用いる分類に比べ，精度がほとんど落ちることなく，分類において最大100倍ほどの高速化を達成しています．</p>
-
-<p>今後もいろいろな展開が考えられる，読んでいて楽しい論文でした．手法や達成した性能自体が凄い，というよりは，これまで機械学習で殆ど用いられてこなかった<strong>代数幾何の概念を完成度の高い形で既存の問題設定に組み込んだ</strong>．というのがBest Paperとして評価された一因なのかなとも思います．</p>
-
-<p>ICML読み会での発表後にTwitterを眺めていたら，</p>
-
-<blockquote class="twitter-tweet"><p>さっきグレブナー基底とか何とか言ったけど、これはむしろ自由度の高い単なる多項式回帰な気がするので、今からちゃんと読むです… [要出典]</p>&mdash; ぽよ子 (@tara_nai) <a href="https://twitter.com/tara_nai/statuses/354593532855590912">July 9, 2013</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>とのご指摘が・・・．これはすずかけ台の勉強会でも指摘されて，ちょっとアレレってなっていた部分でもありました．説明できなくてスミマセン．</p>
-
-<p>未だにアレレってなっているのですが，たしかに問題自体は多項式回帰の枠組みで考えることもできそうです．ただ，効率的にかつ冗長性を抑えながら，できるだけ小さい次数からFilterしていくということを考えると，イデアルのもつ吸収律を活用する，VCAのような枠組みが有効に働いてくるのではないかと思います．（スミマセン，イデアルとはいったい何なのか，グレブナー基底とはいったい何なのか，未だにあんまりわかってないので自信はありません・・・）</p>
-
-<p>ちなみにこのチーム，すでに<strong>Deep Learningへの応用</strong>を考えていらっしゃるみたいで，そちらの<a href="http://arxiv.org/abs/1304.7045">プレプリント</a>も出てたりします．なんともはや．</p>
-
-<p>他の方の発表も興味深い話が盛りだくさんで，すずかけの方では元同期の <a href="http://twitter.com/tma15">@tma15</a> くんが<a href="http://tma15.github.io/blog/2013/7/it-takes-a-long-time-to-become-young.html">オンラインコミュニティにおける参加者の寿命を言語的特徴から推測する話(WWWのベストペーパー)</a>を紹介してくれたり，ICML読み会のほうは．</p>
-
-<ul>
-<li>超多クラスのロジスティック回帰の分散学習</li>
-<li>オンラインのマルチタスク学習(Lifelong Learningというらしいです)の爆速化</li>
-<li>重みベクトルのビット数をAdaptiveに調節して省メモリに</li>
-<li>ローカルには線形なSVMを多数組み合わせることで非線形分類を高速化</li>
-<li>Deep LearningにおけるRectifierに代わる活性化関数Maxoutの提案</li>
-<li>高次の共起を考慮にいれたタグの補完に基づいた高速画像タギング</li>
-<li>ビデオ映像からの人間の動作認識</li>
-<li>複数の目的関数をパレート最適に持っていくようなActive Learning</li>
-<li>あんまり確率的ではないTopic Modelとその特徴付け</li>
-</ul>
-
-
-<p>などなど（発表の要旨をつかめてなかったらすみません），何でもありな感じでワクテカ．実際の現場で機械学習を応用されてるPFIの方の発表が多かったこともあり，<strong>精度を下げずにいかに高速化するか</strong>，という方向性の論文が多かったように思います．</p>
-
-<p>個人的には， @sla さんがオープニングで話してくださった，「<strong>なんでもi.i.dを仮定するのはそろそろ脱却して，時間/空間に沿って変化するような動的なデータに対しても理論を作っていくべき</strong>」というコメントがたいへん興味深く感じました．</p>
-
-<p>機械学習が実世界に浸透していくにしたがって，これからはひとつのモデルなり分類器なりがそれなりに長く使われることを考えなければならない時期にきているのかなとも思います．そういう状況のもとでは，(たとえば言語の話でいえばその時々で流行語があるように)<strong>入力の分布がどんどん変わっていく</strong>ような状況に対してうまく適応していくような問題設定を明確に意識していく必要がありそうです．
-<a href="http://twitter.com/unnonouno">@unnonouno</a> さんが紹介してくださった，Lifelong Learningも，そういうモチベーションを含んでいるのかな．</p>
-
-<p>私個人としましては，もう長いこと途絶えてしまっている外部へのアウトプットを再開するよい機会になりましたので，今後は知識を頂くだけではなく，自分の学んだことを共有することを心がけていきたいと感じた会でした．</p>
-
-<p>久しぶりにお会いした方もいらっしゃったので，ゆっくりお話できれば良かったのですが，ちょっと事情がありまして早々と帰宅．また近いうちにお会いできる機会があれば幸いです（人生相談にのっていただきたいのでした・・・）</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-01T15:26:00+09:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>およそひと月ぶりに，仲間内で行っている小さな勉強会で論文紹介をしてまいりました．ICML2013の予稿がちょっとづつ出てきているので，本日はその中から一本．</p>
-
-<ul>
-<li><a href="http://jmlr.csail.mit.edu/proceedings/papers/v28/menon13.pdf">&#8220;A Machine Learning Framework for Programming by Example&#8221;</a> Aditya Menon et al, ICML 2013</li>
-</ul>
-
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/22279251" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/koji_matsuda/a-machine-learning-framework-for-programming-by-example" title="A Machine Learning Framework for Programming by Example" target="_blank">A Machine Learning Framework for Programming by Example</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">koji_matsuda</a></strong> </div></p>
-
-<p>機械学習を使って，Programming by Example(PbE)をしようという論文です．PbEというのは私も初耳だったのですが，ざっくり言うと，<strong>人間が「例」を与えることで，その例をうまく再現するようなプログラムを自動的に生成する</strong>，というタスクのようです．</p>
-
-<p>それを部分的に実現している（らしい）のが，Excel2013に新しく搭載されたという<a href="http://blogs.office.com/b/microsoft-excel/archive/2012/08/08/flash-fill.aspx">&#8220;Flash Fill&#8221;</a>という機能．<strong>ユーザーの意図を推測して，ルールにしたがったセルの補完</strong>なんかをしてくれるみたいです．百聞は一見にしかず，以下の動画をご覧ください．</p>
-
-<iframe width="480" height="270" src="http://www.youtube.com/embed/YPG8PAQQ894?feature=oembed" frameborder="0" allowfullscreen></iframe>
-
-
-<p>Flash Fillは一行から一行（というよりは，セルからセル）への変換のみがターゲットでしたが，本論文では<strong>集計であるとか，重複の削除のように，複数の行にまたがった処理</strong>をうまく解く枠組みを提案しています．</p>
-
-<p>具体的には以下の例が分かりやすいかもしれません．</p>
-
-<p><img class="center" src="/images/programming_by_example_menon2013.png" width="650"></p>
-
-<p>「書き換え前」「書き換え後」の文字列を与えると，それらをうまく繋ぐようなプログラムを生成する，というイメージです．Perlいらず？</p>
-
-<p>手法としてはさほど難しいことはしておらず，無理やり一言でまとめてしまうと，<strong>「書き換えプログラム」の生成モデルをPCFGでモデル化して，それぞれの生成ルールの確率をlog-linearで書き，そのパラメータをPCFGのn-best導出を延々と求めながら更新していく</strong>，というだけ．見方によっては，あまりICMLっぽくは無いかも．</p>
-
-<p>もちろん，書き換えルールの元になるような基礎的な関数セット(最低限チューリング完全なものがあれば原理的には可能ですが，現実的には重複除去とかカウントとかを用意しておくみたいです)はあらかじめ定義しておかなければならないのですが，あとは<strong>探索時間さえ掛ければ任意の書き換えを行うプログラムが生成可能</strong>である，というのがポイントです．</p>
-
-<p>ただ，現実的な時間で探索を行うためには<strong>探索に優先順位</strong>をつける必要があります．そこで，効率的に探索を行うために<strong>機械学習を用いて「書き換え」の集合をあつめたコーパスからPCFGのパラメータを学習</strong>しましょう，というのがこの論文の本旨のようです．実際，探索が難しいプログラムほど高速化が期待でき，brute forceな方法にくらべると40倍ほど速くなる場合もあるとのこと．</p>
-
-<p>機械学習は「適応的なシステム」を作るのに使われる「重い」手法，というイメージがありますが，<strong>もともと原理的に解ける問題を「高速化」するために用いる</strong>，という意味で面白い視点を与える論文だと思いました．</p>
-
-<p>ビッグデータ感もなければ，ディープラーニングでもなく，曼荼羅のようなグラフィカルモデルもなんとかダイバージェンスも出てこない論文ですが，なかなか面白かったです．実用に近そうなのもいい．</p>
-
-<p>話は変わりまして，先日大学の同期とのプチ同窓会で10人ばかり集まったのですが，誰一人結婚してなくて笑．もちろん，ある種の集合バイアスもあるとは思いますが，おいおい俺らそろそろみそじやで．</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/06/predicting-google-closures/">統計データに基づくGoogle各種サービスの生存予測</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-06T11:53:00+09:00" pubdate data-updated="true">May 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>先日Prismaticを眺めていたら，興味深い記事を見つけたので紹介．</p>
-
-<ul>
-<li><a href="http://www.gwern.net/Google%20shutdowns">Predicting Google closures</a></li>
-</ul>
-
-
-<p>Google Readerの停止がアナウンスされたのは記憶に新しいですね．はじまりあるものは，すべて終わりもあるもの．実際，最近のGoogleはビジネスにならないと判断したプロダクトを大胆に切っていっているような印象をうけます．</p>
-
-<p>この記事では，これまでGoogleが運営してきた<strong>350のサービス／プロダクト</strong>のデータを，疫学統計でよく用いられる（らしい）Coxモデルとよばれる統計モデルによって解析し，<strong>どのようなサービスが今後停止されるおそれが高いのか</strong>，分析を行っています．</p>
-
-<h2>特徴量</h2>
-
-<p>特徴量として用いているのは以下のような情報．詳細な基準は元記事を参照いただくとして，簡単に抜粋してみます．</p>
-
-<ul>
-<li>プロダクト名をクエリとしたGoogleのヒット数(そのまま使うのは不公平なので，サービスのリリース時期に応じて補正を加えているそうです)</li>
-<li>プロダクトのタイプ．サービスなのか，プログラムなのか，モノ(Chrome Bookとか)なのか，それ以外（SoCとかI/Oのようなイベント等）なのか</li>
-<li>そのプロダクトが，直接Googleに収入をもたらしているか</li>
-<li>そのプロダクトが，FLOSSであるか，またはFLOSSに直接関係したものであるか</li>
-<li>そのプロダクトは，他社から買収したもの，またはそれをもとにしたものであるか</li>
-<li>そのプロダクトが，ソーシャルな要素を含んでいるか</li>
-<li>そのプロダクトは，Googleが2005年以前にリリースされたものであるか</li>
-</ul>
-
-
-<p>元記事の著者はこれらの情報をまとめたCSVファイルを公開してくださっていますが，そのままではちょっと見にくいので，<a href="https://docs.google.com/spreadsheet/ccc?key=0ApJZf-tS-BfedDJ4NmxFaEpMYVVPV2FTQ0RsaXZsbnc&amp;usp=sharing">Google Docsに転載＆ちょっと整形してみました</a>のでよろしければご覧ください．ライセンスは元記事のとおり，<a href="http://creativecommons.org/about/cc0">CC0</a>で．</p>
-
-<h2>分析結果</h2>
-
-<p>このデータをCoxモデルにフィットさせた結果，以下のような要素がシャットダウンの<strong>リスクを低減させる</strong>ことが分かったそうです．</p>
-
-<ol>
-<li>Googleが他社から<strong>買収したプロダクトではない</strong>こと</li>
-<li>FLOSS<strong>ではない</strong>こと</li>
-<li>Googleに直接収益をもたらすこと</li>
-<li>ソーシャルネットワークと<strong>関係ない</strong>こと</li>
-<li>Google検索でのヒット数が多いこと</li>
-<li>2005年以前にリリースされたものであること</li>
-</ol>
-
-
-<p>2番，4番の要素がちょっと意外．</p>
-
-<p>その結果，以下のようなプロダクトがシャットダウンのリスクが高い，という予測を行っています．</p>
-
-<ol>
-<li>Schemer</li>
-<li>Boutiques</li>
-<li>Magnifier</li>
-<li>Hotpot</li>
-<li>Page Speed Online API</li>
-<li>WhatsonWhen</li>
-<li>Unofficial Guides</li>
-<li>WDYL search engine</li>
-<li>Cloud Messaging</li>
-<li>Correlate</li>
-</ol>
-
-
-<p>あまり聞いたことないプロダクトが並びます．あれ，Google Boutiquesって閉鎖したんじゃなかったっけ？Google Correlateも，生きていたのが意外です．
-逆にシャットダウンのリスクが低いプロダクトは以下の通り．</p>
-
-<ol>
-<li>Search</li>
-<li>Translate</li>
-<li>AdWords</li>
-<li>Picasa</li>
-<li>Groups</li>
-<li>Image Search</li>
-<li>News</li>
-<li>Books</li>
-<li>Toolbar</li>
-<li>AdSense</li>
-</ol>
-
-
-<p>まぁこちらは妥当な感じ．PicasaやToolbarは微妙な感じもしますが．</p>
-
-<p><a href="http://www.gwern.net/Google%20shutdowns#TOC">元記事</a>には，いくつかの有名プロダクトの5年生存率を計算した表もありますので，そちらもあわせてご覧ください．<strong>Google Glassの5年生存率は37%</strong>，とか，ちょっぴりセンセーショナルな結果もあります．</p>
-
-<h2>まとめ</h2>
-
-<p>350ものGoogleプロダクトのデータを用いて，どのようなサービスがシャットダウンのリスクが高いのか分析を行った記事を紹介しました．</p>
-
-<p>特徴量としては，ここに挙げられているもの意外にもさまざまなな要因が考えられるとは思いますが，分析の切り口として面白いものではあると思います．ソーシャルものは苦手だとか，FLOSSには消極的になりつつあるとか，何となく感じていたGoogleの企業としての特徴がデータからも透けてみえるのが興味深い．</p>
-
-<p>個人的には，Google Code Searchのシャットダウンが痛かった．．．いまだによい代替を見つけられずにいます．</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/05/predicting-google-closures/">Predicting Google Closures</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-05T00:00:00+09:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1281,6 +853,46 @@ a0  が最初の整数を， L  が桁数を表す． ただし， 1 ≤ L  ≤ 
         <a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2013/08/03/joint-modeling-of-a-matrix-with-associated-text-via-latent-binary-features/">コンピュータが政治をする時代(あるいは，行列とテキストの結合モデル)について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/vanishing-component-analysis/">どんなデータでも(※)線形分離可能にしてしまう技術，Vanishing Component Analysis(ICML 2013)を紹介してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/01/machine-learning-framework-for-programming-by-example/">Programming by Exampleに対する機械学習からのアプローチ（あるいは，「重い」処理を機械学習で「軽く」する，という視点）について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/06/predicting-google-closures/">統計データに基づくGoogle各種サービスの生存予測</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/05/predicting-google-closures/">Predicting Google Closures</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/20/distance-metric-learning-and-kernel-learning/">距離計量学習とカーネル学習について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/01/unsupervised-wsd-with-graph-connectivity/">グラフ結合度に基づく教師なし語義曖昧性解消について</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/23/about-posterior-regularization-and-unified-expectation-maximization/">Posterior Regularization と Unified Expectation Maximizationについて</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/14/take-a-nap-with-prowl/">Prowl+zshで快適お昼寝タイム</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a>
+      </li>
+    
   </ul>
 </section>
 
@@ -1315,6 +927,15 @@ a0  が最初の整数を， L  が桁数を表す． ただし， 1 ≤ L  ≤ 
 </script>
 
 
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 
