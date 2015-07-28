@@ -9,7 +9,7 @@
   <meta name="author" content="Koji Matsuda">
 
   
-  <meta name="description" content="先日， @overlast さんから，DSIRNLP(データ構造と情報検索と言語処理勉強会 )という会にお誘いを頂きまして，以前から考えていたことをちょこっとお話してきました．当日の様子は， @mamoruk さんが togetter にまとめてくださっていますので，そちらもご覧ください． &hellip;">
+  <meta name="description" content="先日、第36回セマンティックウェブとオントロジー研究会-DBpediaシンポジウムに出席する機会を得た。最も大きな目的はStudio Ousiaの山田さんによるエンティティリンキングに関する招待講演を聴講することだったのだが、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,6 +27,11 @@
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+
+
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -76,6 +81,142 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/28/an-introduction-to-dbpedia/">DBpedia についてすこし調べてみた</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-28T21:33:00+09:00" pubdate data-updated="true">Jul 28<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>先日、<a href="https://sites.google.com/site/sigswo15/papers/36program">第36回セマンティックウェブとオントロジー研究会-DBpediaシンポジウム</a>に出席する機会を得た。最も大きな目的は<a href="http://www.ousia.jp/ja/">Studio Ousia</a>の山田さんによるエンティティリンキングに関する招待講演を聴講することだったのだが、DBpediaやその周辺環境についての研究発表やディスカッションにも興味をひかれた。</p>
+
+<p>その後、DBpediaについてしばらく調べていたのだが、すこしだけまとまったので、メモとして公開することにした。</p>
+
+<h2>What is DBpedia?</h2>
+
+<p>Wikipediaを自動的に、RDFトリプルに変換する仕組み、あるいはそのプロジェクト。</p>
+
+<p>できるだけ多くの項目を「あらかじめ決められた語彙」へマップすることによって、その語彙を使う他のリソースとの相互利用を進めたい、という意図がある(この動きを Linked Open Data と言うらしい)。</p>
+
+<p>「自動的に変換する」と言っても、NLPの人たちが想像するような「テキストデータからの自動獲得」ではなく、Wikipediaの編集者によって構造化されたデータ(Infobox)からの取得がメイン。</p>
+
+<h3>RDFトリプル？</h3>
+
+<p>主語(subject) 述語(predicate) 目的語(object) の組の集合（大きな有向グラフとみなすことができる）で情報を表現するしくみ。詳しくはググってくだしあ。</p>
+
+<h2>どのように変換が行われるか</h2>
+
+<p>以下の図のようなイメージ。</p>
+
+<p><img class="center" src="/images/dbpedia/1.png" width="650"></p>
+
+<p>DBpediaを構築するには&#8221;Mapping&#8221;, &#8220;Ontology&#8221;, &#8220;Wikipedia Dump&#8221;の三つの情報が必要である。</p>
+
+<p>先ほど述べたように、DBpediaでは、Wikipediaの項目内の情報(ほとんどはInfoboxの情報)が、主語、述語、目的語の組にマップされる。</p>
+
+<p>テンプレートの各スロットが、DBpediaオントロジーの語彙のどれにあたるか、という情報が整理されたものが &#8220;Mapping&#8221; である。Mappingには、例えば、 <code>会社</code> テンプレートの <code>代表者</code>というスロットに記載されている情報がオントロジーで定められた <code>keyPerson</code>という関係の目的語になる、といった情報が書かれている。</p>
+
+<p>語彙を定めるのは &#8220;Ontology&#8221;。こちらには、大別すると以下の三種類の知識が書かれている：</p>
+
+<ol>
+<li>会社は組織のサブクラスである、といったカテゴリ階層に関する知識 例) <a href="http://mappings.dbpedia.org/server/ontology/classes/#Company">http://mappings.dbpedia.org/server/ontology/classes/#Company</a></li>
+<li>会社はスタッフ数やCEOといった属性を持つ、といったプロパティに関する知識 例) <a href="http://mappings.dbpedia.org/server/ontology/classes/Company">http://mappings.dbpedia.org/server/ontology/classes/Company</a></li>
+<li><code>スタッフ数</code>は組織に対して定義される「非負の整数」で、<code>CEO</code>は組織に対して定義される「人」である、といった、定義域＆値域に関する知識</li>
+</ol>
+
+
+<p>メタな、特定のエンティティや言語に依存しない（オントロジカルな）知識が整理されている。</p>
+
+<p>これらの情報は誰でも編集ができるが、Mapping wikiにアカウントを作る、メーリングリストに挨拶メールを送る、といった手続きが必要らしい。</p>
+
+<p>DBpediaにおいてマッピングが定義されていないInfobox内の情報には、適当に項目名が付与される。たとえば、<a href="https://ja.wikipedia.org/wiki/%E7%A9%BA%E6%B5%B7">空海 - Wikipedia</a> は <code>Buddhist</code> という比較的マイナーなInfoboxを用いて書かれているが、現在(2015/07)はこのInfoboxに関するマッピングはDBpediaには存在しない。そのため、 <code>http://ja.dbpedia.org/property/宗派</code> <code>http://ja.dbpedia.org/property/法名</code> などといったプロパティが生成される。当然ながら、これらのプロパティは「野良プロパティ」とも呼べるようなもので、意味的な裏付けはあまりないと思う。</p>
+
+<p>Infoboxが使われていない記事の情報は、カテゴリやリンク先などの（取れそうな情報）はとられるが、それ以外の情報は入らない。記事が指すエンティティのカテゴリも特にデータベース化はなされない。</p>
+
+<h3>自分の手元で変換したい</h3>
+
+<p><a href="https://github.com/dbpedia/extraction-framework/wiki/Extraction-Instructions">github wiki上のインストラクション</a>に従うことで変換できる。ほとんど clone してビルドして実行するだけ。必要なデータのダウンロードも面倒をみてくれる。</p>
+
+<h2>DBpediaを使うにはどうすればよいか</h2>
+
+<p>手元にホストする必要が無い場合は、公開されているSPARQLエンドポイントを使うのがよさそう。SPARQLは、SQLライクな文法をもった問い合わせ言語。主語、述語、目的語のトリプルに対して、パターンマッチや集約を行うことができる。</p>
+
+<p>手元にRDFストアを構築したい、という場合は、<a href="https://github.com/openlink/virtuoso-opensource">Openlink Virtuoso</a>がデファクト・スタンダードみたい。導入には以下の記事が参考になった。他にもぐぐるとけっこう出てくる。</p>
+
+<ul>
+<li><a href="https://joernhees.de/blog/2014/11/10/setting-up-a-local-dbpedia-2014-mirror-with-virtuoso-7-1-0/">Setting up a local DBpedia 2014 mirror with Virtuoso 7.1.0 | Jörn&#8217;s Blog</a></li>
+<li><a href="http://d.hatena.ne.jp/next49/20140408/p2">Virtuoso Open Source Edition 7.1 on Ubuntu 12.10 - 発声練習 </a></li>
+</ul>
+
+
+<h2>類似プロジェクトとの差異</h2>
+
+<p>よく比較される Freebase との比較をすこしだけ。Freebase はオワコンらしいが、おそらくこれらの特徴の一部はWikidataにも引き継がれるだろう。</p>
+
+<table>
+<thead>
+<tr>
+<th align="center"> </th>
+<th align="left"> DBpedia </th>
+<th align="left"> Freebase  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">データ元</td>
+<td align="left"> Wikipedia。データの更新を行いたいときは、Wikipediaを更新しようという立場。 </td>
+<td align="left"> かならずしもWikipediaにのる必要はないという立場。直接いじることができる。</td>
+</tr>
+<tr>
+<td align="center">運営 </td>
+<td align="left"> ライプツィヒ大学とベルリン自由大学が起源だが、現在はDBpedia財団という組織があるらしい。日本版はNIIの武田研究室が中心となってホストしている。 </td>
+<td align="left"> MetaWeb => Google(シャットダウン)</td>
+</tr>
+<tr>
+<td align="center">クエリ言語</td>
+<td align="left"> SPARQLエンドポイントが提供される </td>
+<td align="left"> MQLなるクエリ言語がサポートされているらしいが、少し調べて見た限りではあまり使われていない印象を受ける(RDFのダンプをRDFストアに突っ込んでSPARQL等で問い合わせるか、KVSで力技、というケースが多い印象)</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>その他の関連プロジェクト</h2>
+
+<ul>
+<li><a href="http://schema.org/">http://schema.org/</a> : ウェブ企業が主体となって作っている語彙体系</li>
+<li><a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a> : Freebaseの後継？</li>
+<li><a href="http://www.wikipediaontology.org/">日本語Wikipediaオントロジー</a> : 慶応大の山口研究室によって半自動構築されたオントロジー</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -652,166 +793,6 @@ Neural Network向けのソフトウェアパッケージというと，
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-19T13:20:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>自然言語処理に関する最高峰の国際会議 <a href="http://www.acl2013.org/site/">ACL</a> が先日開催されました．
-発表された論文をいくつか眺めてみたのでメモ．</p>
-
-<p>ほんとうはもっといっぱい紹介したい論文があるのだけれど，時間の都合上，5本だけ．気がむいたら続編あるかも．</p>
-
-<p>すべての論文は，<a href="aclweb.org/anthology/">ACL Anthology</a>で入手することができる．</p>
-
-<hr />
-
-<h3><a href="http://aclweb.org/anthology/P/P13/P13-1044.pdf">&#8220;Nonconvex Global Optimization for Latent-Variable Models&#8221;</a> Matthew R. Gormley and Jason Eisner, ACL 2013</h3>
-
-<p>分枝限定法（評価関数の上限を推定しながら，探索木を刈りこむ）を用いて，隠れ変数モデルの大域解を求めよう，という話．
-実験にはDMV(Dependency Model with Valence)というわりと有名な Unsupervised Dependency Parsingのモデルを用いている．
-グラフを見る限り，劇的に性能が良くなっているわけではなさそう，というか，線がつぶれてよく分からないｗ</p>
-
-<p>正直さっぱり分かっていないんだけど，分枝限定法についてのぼくの限られた知識から推測すると，
-隠れ変数が離散値をとる場合しか使えないような気がする．
-(正確にmarginalを計算しているのではなく，MAP解だけを数え上げているようにみえる)</p>
-
-<p>実は，EMのような局所解に縛られる問題を，メタヒューリスティクスを使ってなんとかしよう，というのは，学部時代の恩氏が時々
-言っていた話なのだけれど，当時は（いまも）能力が追いつかなくてぜんぜん歯が立ちませんでした．</p>
-
-<p>すぐにどうこうする話ではなさそうだけれど，むかしから微妙に興味はあった話ではあるので，
-（小さな局所解がいっぱいあるような）モデルを扱うときのためにいちおう記憶にとどめておきたい．</p>
-
-<hr />
-
-<h3><a href="http://aclweb.org/anthology/P/P13/P13-1034.pdf">&#8220;Scaling Semi-supervised Naive Bayes with Feature Marginals&#8221;</a> Michael R. Lucas and Doug Downey, ACL 2013</h3>
-
-<p>Semi-supervised Naive Bayesというと，EMと組み合わせたNigamの有名な論文以来，きれいな構造とシンプルなアルゴリズムのため，
-よく使われるのだけれど，データ全体を何度もなめないといけないため，計算量が問題だった．あと，EMを使う以上，モデルが変な方向へ飛んでいってしまう(局所解につかまる)ため，性能が安定しないという問題があって，ちょっと扱いづらい．</p>
-
-<p>そこで，featureの各クラスにおける出現確率だけをunlabeledデータから求める，というアイディアに基づいて高速化をはかったのがこの論文．
-ラベルつきデータが少数しか利用できない場合，featureの出現回数の&#8221;信頼性&#8221;が無くなってしまうので，大量に用意できるunlabeledデータを用いてパラメータを補正する，という感じ．</p>
-
-<p>このとき，データが正例か負例かのどちらかに属する，という仮定を用いて，学習データにおける正例負例の割合をうまく取り込むことで精度を上げている．</p>
-
-<p>Semi-supervised NBだと，わりと最近では<a href="http://www.icml-2011.org/papers/93_icmlpaper.pdf">Semi-supervised Frequency Estimate</a>(Su+ ICML&#8217;11)という，ワンパスで解いちゃう劇的に速い方法が提案されていて，
-アイディアもとても似ている．精度では今回提案された手法が優れているよう．計算時間の比較はなかったけど，同じくらい？</p>
-
-<p>Naive Bayesは超有名なので，バリエーションも超大量にあるのだけれど，NBの良いところの一つはマルチクラス分類が自然に行えるところだと思っているので，
-データが2クラス限定になっちゃうこれはどうかなーと思ったりする部分もある．
-もちろん，one-versus-allのような仕組みでいくらでもマルチクラスに拡張できるのですが．</p>
-
-<p>このへんは，2010年代っぽくない，とか言う人もいるけど，最近でも時々掘って成果を出している人がいるみたい．</p>
-
-<hr />
-
-<h3><a href="http://aclweb.org/anthology/P/P13/P13-1021.pdf">&#8220;Unsupervised Transcription of Historical Documents&#8221;</a> Taylor Berg-Kirkpatrick, Greg Durrett and Dan Klein, ACL 2013</h3>
-
-<p>このあいだ草津にいったときに，ちょっと趣きのある看板をみつけたので，</p>
-
-<blockquote class="twitter-tweet"><p>そういや白根山でみつけたこの看板、自然言語処理に対する挑戦っぽい <a href="http://t.co/ps3qgUCGfO">pic.twitter.com/ps3qgUCGfO</a></p>&mdash; Koji Matsuda (@conditional) <a href="https://twitter.com/conditional/statuses/349186418167406593">June 24, 2013</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p></p>
-
-<p>とか言ってたら，マジで論文が出てきた・・・．主に，むかしのタイプライターとか活版印刷で印刷された，
-現在では読みにくくなってしまっている文書をいかにOCRするか，という題材．</p>
-
-<p>モデルは， 言語モデル × typesettingモデル(文字のレイアウト：右にこれくらいズレてる，とか) × inkingモデル(インクのつけすぎで太くなっちゃってるとか) × ノイズモデル(経時変化による文字の欠けとか)を一つひとつ丁寧に組み上げて，Jointしている．
-学習はEM．ちゃんと動くのか心配だけど，一つ一つの変数がちゃんと意味を持つよう工夫しているからか(むやみに変数が多くなりすぎないように工夫しているようにみえる)，
-ちゃんと学習できているらしい．</p>
-
-<p>学習したモデルでは，人工的にインクをダバ〜っとこぼした原稿も解読できたりするようで，このへんもなかなか興味深い．モデル自体の解釈も面白そう．</p>
-
-<hr />
-
-<h3><a href="http://aclweb.org/anthology/P/P13/P13-1036.pdf">&#8220;Scalable Decipherment for Machine Translation via Hash Sampling&#8221;</a> Sujith Ravi, ACL 2013</h3>
-
-<p>暗号解読のノリで，言語モデル+サンプリングを使って対訳コーパスなしで翻訳をしちゃうお話の続編．
-2011年の初出以来，年々進化を続けていて，今回は主に高速化がテーマになっている．</p>
-
-<p>最初はword-to-wordの置換に基づく翻訳だけだったのが，これまでの研究で，さまざまなfeatureが使えるようになったのだけれど，
-ちょっと計算に時間がかかりすぎるようになってきたので，Hash Samplingという手法で高速化を行っている．</p>
-
-<p>Hash Samplingというのは，あんまりよくわかっていないのだけれど，ベクトル同士の類似度をはかる
-(指数分布族からのサンプリングに用いる尤度項のテイラー近似は，パラメータベクトルと事例ベクトルの内積を用いて表せるらしい)
-ときに，feature vectorの空間で直接内積をとる代わりに，適当なハッシュ関数を通して，その間の差分(ハミング距離とか)を用いる方法のよう．</p>
-
-<p>この手法によって，現在のパラメーターに近い語は高い確率でサンプルされ，そうでない語は低い確率，というサンプリングを高速に実現している．
-{0,1}ベクトルのハミング距離は最近のCPUだとかなり高速に計算できるようで，BLEU値をほとんど落とさずに，2桁くらいの高速化を実現したらしい．</p>
-
-<p>Hash Samplingは，かなり汎用性が高い高速化手法っぽいので，そのうちじっくり読む機会があればいいなと思っている．
-テイラー展開による近似 + ハッシュによる近似，という2段階の近似を経ているあたりが少し気になったりはする．</p>
-
-<hr />
-
-<h3><a href="http://aclweb.org/anthology/P/P13/P13-1127.pdf">&#8220;From Natural Language Speciﬁcations to Program Input Parsers&#8221;</a> Tao Lei, Fan Long, Regina Barzilay, and Martin Rinard, ACL 2013</h3>
-
-<p>ICPCなどのプロコンの問題を，コンピュータに解かせよう！というモチベーションがありそうな研究．
-といっても，今回はまだ問題を解くところまでは行っていなくて，入力データの解析部分に対する挑戦．
-プロコンの問題では，たいてい，</p>
-
-<blockquote><p>入力は複数のデータセットからなる． 各データセットは2つの整数 a0  と L  が1個のスペースで区切られた1行であり，
-a0  が最初の整数を， L  が桁数を表す． ただし， 1 ≤ L  ≤ 6 かつ 0 ≤ a0  &lt; 10L である．</p>
-
-<p>from <a href="http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1180&amp;lang=jp">AIZU ONLINE JUDGE</a></p></blockquote>
-
-<p>というような入力データのフォーマット指示がなされているので，これを構文解析して，パーサーを構成するC++プログラムを自動で生成しよう，というテーマ．</p>
-
-<p>用いることの出来るデータは，上に挙げたようなフォーマット指示の問題文(英語)と，実際にプロコン主催者から与えられる入力データ．
-直接プログラムそのものへの変換を考えるのではなく，フォーマット指示文から，データ構造を表す &#8220;specification tree&#8221;を生成し，
-それを通してparsingプログラム(より正確には，yaccやbisonに入力するような形式文法)の生成を行っている．</p>
-
-<p>モデルは，
-テキスト中のそれぞれの要素が，他の要素とどのような関係を持っているかを当てるための dependency parsing と，
- それぞれのノードがプログラム内でどのような役割をもつか当てるための role labeling のふたつの要素で構成されている．</p>
-
-<p>学習は，だいたい次のような流れ．</p>
-
-<ol>
-<li>現在のモデルから specification tree をサンプリングする</li>
-<li>サンプリングされたtreeからプログラムを生成し，テスト用データをすべてパースできるか調べる(feedbackと呼ばれている)</li>
-<li>treeがどれくらい良いか，に応じて，Metropolis-Hasting ruleで次の状態を定める</li>
-</ol>
-
-
-<p>このfeedbackと呼ばれる学習手法によって，F値が54から80程度に向上したらしい．
-<a href="http://people.csail.mit.edu/taolei/papers/acl2013-slides.pdf">著者による発表スライド</a>もあるので，興味をもって頂けましたら，ぜひそちらも．</p>
-
-<p>つづく・・・かも？</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -832,6 +813,11 @@ a0  が最初の整数を， L  が桁数を表す． ただし， 1 ≤ L  ≤ 
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/07/28/an-introduction-to-dbpedia/">DBpedia についてすこし調べてみた</a> 
+	<a href="http://b.hatena.ne.jp/entry/http://conditional.github.io/blog/2015/07/28/an-introduction-to-dbpedia/"><img src="http://b.hatena.ne.jp/entry/image/http://conditional.github.io/blog/2015/07/28/an-introduction-to-dbpedia/"></a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/01/13/report-of-dsirnlp5/">「モデル」とは何か，について考えていたことを，DSIRNLP(データ構造と情報検索と言語処理勉強会)で発表してきました</a> 
@@ -921,7 +907,7 @@ a0  が最初の整数を， L  が桁数を表す． ただし， 1 ≤ L  ≤ 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Koji Matsuda -
+  Copyright &copy; 2015 - Koji Matsuda -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

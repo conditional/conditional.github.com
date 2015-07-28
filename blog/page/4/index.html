@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Deep Learning : Bengio先生のおすすめレシピ - a lonely miner</title>
+  <title>a lonely miner</title>
   <meta name="author" content="Koji Matsuda">
 
   
-  <meta name="description" content="先日，身内の勉強会(&amp;ラボの勉強会)で，Deep Learningについてお話してきました．これまで興味がなさそうだったのに何故急に？というのはおいておいて． 紹介したのは，Deep Learningの第一人者のひとり， Yoshua Bengio先生自身が執筆された，以下の論文． &hellip;">
+  <meta name="description" content="とりあえずはじめてみた． Octopressはじめました - mimemo が大変参考になりました．Mou便利．markdown，必要に迫られたときしか
+書いてこなかったんだけど，少しづつ慣れていきたい． 数式のテスト(MathJax.rb利用) N(m,\sigma^{2})=\frac{1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://conditional.github.io/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/">
+  <link rel="canonical" href="http://conditional.github.io/blog/page/4/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="a lonely miner" type="application/atom+xml">
@@ -79,12 +80,15 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Deep Learning : Bengio先生のおすすめレシピ</h1>
+      <h1 class="entry-title"><a href="/blog/2013/03/13/start-bloging-with-octopress/">Start Bloging With Octopress</a></h1>
     
     
       <p class="meta">
@@ -100,152 +104,41 @@
   
 
 
-<time datetime="2013-09-22T10:09:00+09:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2013</time>
+<time datetime="2013-03-13T16:51:00+09:00" pubdate data-updated="true">Mar 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>先日，身内の勉強会(&amp;ラボの勉強会)で，Deep Learningについてお話してきました．これまで興味がなさそうだったのに何故急に？というのはおいておいて．</p>
+  <div class="entry-content"><p>とりあえずはじめてみた．</p>
 
-<p>紹介したのは，Deep Learningの第一人者のひとり， <a href="http://www.iro.umontreal.ca/~bengioy/yoshua_en/index.html">Yoshua Bengio先生</a>自身が執筆された，以下の論文．</p>
+<p><a href="http://www.miukoba.net/blog/2013/01/05/start-octopress/">Octopressはじめました - mimemo</a></p>
 
-<ul>
-<li>Yoshua Bengio, <a href="http://arxiv.org/abs/1206.5533">Practical recommendations for gradient-based training of deep architectures</a>, arXiv:1206.5533v2, 2012</li>
-</ul>
+<p>が大変参考になりました．<a href="http://mouapp.com/">Mou</a>便利．markdown，必要に迫られたときしか
+書いてこなかったんだけど，少しづつ慣れていきたい．</p>
 
+<p>数式のテスト(<a href="https://gist.github.com/jessykate/834610">MathJax.rb</a>利用)</p>
 
-<p>どうやら書籍の草稿のようで，<strong>Bengio先生の長年の研究で得られたさまざまなノウハウ</strong>(最近の手法まで)がぎっしり詰め込まれています．すごい．</p>
+<script type="math/tex; mode=display">
+N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
+</script>
 
-<p>以前から気にはなりつつも，ちょっと分量が多い(30ページくらいある)ので，なかなか手を出すことができなかったのですが，ようやくヤル気が出てきたので，ちょっとがんばって読み込んでみました．</p>
-
-<p>スライドも置いておきます．50枚くらいあります（作るのしんどかった・・・．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/26420875" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/koji_matsuda/practical-recommendation-fordeeplearning" title="ractical recommendations for gradient-based training of deep architectures" target="_blank">ractical recommendations for gradient-based training of deep architectures</a> </strong> from <strong><a href="http://www.slideshare.net/koji_matsuda" target="_blank">Koji Matsuda</a></strong> </div></p>
-
-<p>Deep Learningは，その性能の高さから各所でブームになっていますが，実際に手を出してみると<strong>ハイパーパラメータがやたらと多く，最適化も難しい</strong>，ということで，使いこなしにくい技術になってしまっている感があります．</p>
-
-<p>この記事では，Bengio先生が長年蓄積されたきたノウハウをもとに，</p>
-
-<ul>
-<li>どんなハイパーパラメータがあるか</li>
-<li>どのように最適化すればよいか</li>
-<li>うまく動かないときは，何をチェックすればよいか</li>
-<li>学習の結果得られたネットワークを解釈するための可視化の方法</li>
-</ul>
-
-
-<p>など，実問題に適用する場合に役立つ，様々なアドバイスがまとめられています．</p>
-
-<p>特に興味深かったのは，<strong>ハイパーパラメータはグリッドサーチするのではなく，ランダムサンプリングしたほうが性能が出る場合が多い</strong>よ，という知見．</p>
-
-<p>何故なのか，というのは，スライドを見ていただいたり，以下の文献</p>
-
-<ul>
-<li>James Bergstra, Yoshua Bengio, <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">Random Search for Hyper-Parameter Optimization</a>, Journal of Machine Learning Research, 13(Feb):281−305, 2012.</li>
-</ul>
-
-
-<p>を読んで頂ければ合点がいくのではないかと思います．</p>
-
-<p>これが機械学習一般に対して言えるか，というと必ずしもそうではなく，SVMのようにハイパーパラメータが少ないモデルでは成り立たないのではないかとは思いますがが，なかなか衝撃的な事実です．は〜グリッドサーチとは一体なんだったのか．</p>
-
-<p>この論文を読めばDeep Learningが自在に使えるようになる，ということは無さそうですが，上手くいかず悩んでいる方がいらっしゃいましたら，少しでも参考にしていただければ幸いです．</p>
-
-<hr />
-
-<p>ところで，ふだんはPowerPointを使ってスライドを書いているのですが，今回は<a href="https://bitbucket.org/rivanvx/beamer/wiki/Home">Beamer</a>を使って作ってみました．まじめに使ったのは初めて．</p>
-
-<p>PowerPointと比較すると，以下のような感想を持ちました．</p>
-
-<ul>
-<li>あらかじめ用意されたスタイルから逸脱したことは非常にやりにくくなっているので，よくある「文字が小さすぎてギッシリ」みたいな読みにくいスライドは作りにくく，結果として読みやすいものができあがる</li>
-<li>タイプセット&amp;PDF生成に時間がかかるので(今回の場合，最終的に20秒くらいかかるようになってしまいました)，枚数がふえるとけっこうイライラ(要素の位置をちょっと調整する，とかで20秒かかるのはアホらしい)</li>
-<li>図を入れるのがめんどい．PPTならコピペでよいところが，キャプチャしてバウンディングボックス作ってincludegraphics…</li>
-<li>要素の入れ子の嵐になる(PPTならタブ一個でいいところが，itemize環境の追加になる)ので，可読性に劣る
-
-<ul>
-<li>Markdownとかから変換できればいいな〜</li>
-</ul>
-</li>
-<li>TeXの(バッド)ノウハウ・・・</li>
-</ul>
-
-
-<p>全体的に，準備に時間がかけられて，かつソコソコ長いプレゼン(20枚〜)であれば，使う価値はあると思います(ただしTeX慣れしてるのが大前提)</p>
-
-<p>ただ，長すぎるとタイプセットの時間でイライラするようになるので，一長一短ですね．</p>
-
-<p><a href="ftp://ftp.u-aizu.ac.jp/pub/tex/CTAN/macros/latex/contrib/beamer/doc/beameruserguide.pdf">公式のリファレンスマニュアル</a>は異様に詳しいのですが，どう見ても入門向きではないですし，読む気も起きないと思いますので，まずは<a href="http://www.uncg.edu/cmp/reu/presentations/Charles%20Batts%20-%20Beamer%20Tutorial.pdf">A Beamer Tutorial in Beamer</a>あたりを参考にされるとよいのではないかと思います．</p>
 </div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Koji Matsuda</span></span>
-
-      
-
-
-
-
-
-
-
-
   
 
 
-<time datetime="2013-09-22T10:09:00+09:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2013</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/blog/categories/learning/'>learning</a>, <a class='category' href='/blog/categories/machine/'>machine</a>
-  
-</span>
-
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  <a href="http://b.hatena.ne.jp/entry/http://conditional.github.io/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://conditional.github.io/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/" data-via="conditional" data-counturl="http://conditional.github.io/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/09/08/report-of-snlp5/" title="Previous Post: 第5回 最先端NLP勉強会に参加してきました">&laquo; 第5回 最先端NLP勉強会に参加してきました</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/12/07/an-introduction-to-torch7/" title="Next Post: [MLAC 2013 7日目] Torch7でお手軽ニューラルネットワーク">[MLAC 2013 7日目] Torch7でお手軽ニューラルネットワーク &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -349,7 +242,6 @@
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -364,10 +256,7 @@
       var disqus_shortname = 'condi';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://conditional.github.io/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/';
-        var disqus_url = 'http://conditional.github.io/blog/2013/09/22/practical-recommendations-for-gradient-based-training-of-deep-architectures/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

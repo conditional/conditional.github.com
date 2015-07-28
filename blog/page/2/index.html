@@ -9,8 +9,8 @@
   <meta name="author" content="Koji Matsuda">
 
   
-  <meta name="description" content="前回のVanishing Component Analysisに関する記事が思いのほか好評だったようで，
-なんか自分に対してのハードルあげちゃった感あったり，記事冒頭でデブとか書くんじゃなかった・・・（ハハハ）と後悔してたり．．． いつもどおり肩肘はらずに書きますね．例によって， &hellip;">
+  <meta name="description" content="自然言語処理に関する最高峰の国際会議 ACL が先日開催されました．
+発表された論文をいくつか眺めてみたのでメモ． ほんとうはもっといっぱい紹介したい論文があるのだけれど，時間の都合上，5本だけ．気がむいたら続編あるかも． すべての論文は，ACL Anthologyで入手することができる． &# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -28,6 +28,11 @@
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+
+
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -77,6 +82,166 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/19/acl2013-reading-list-part-1/">ACL2013 マイ・リーディングリスト(1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-19T13:20:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>自然言語処理に関する最高峰の国際会議 <a href="http://www.acl2013.org/site/">ACL</a> が先日開催されました．
+発表された論文をいくつか眺めてみたのでメモ．</p>
+
+<p>ほんとうはもっといっぱい紹介したい論文があるのだけれど，時間の都合上，5本だけ．気がむいたら続編あるかも．</p>
+
+<p>すべての論文は，<a href="aclweb.org/anthology/">ACL Anthology</a>で入手することができる．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1044.pdf">&#8220;Nonconvex Global Optimization for Latent-Variable Models&#8221;</a> Matthew R. Gormley and Jason Eisner, ACL 2013</h3>
+
+<p>分枝限定法（評価関数の上限を推定しながら，探索木を刈りこむ）を用いて，隠れ変数モデルの大域解を求めよう，という話．
+実験にはDMV(Dependency Model with Valence)というわりと有名な Unsupervised Dependency Parsingのモデルを用いている．
+グラフを見る限り，劇的に性能が良くなっているわけではなさそう，というか，線がつぶれてよく分からないｗ</p>
+
+<p>正直さっぱり分かっていないんだけど，分枝限定法についてのぼくの限られた知識から推測すると，
+隠れ変数が離散値をとる場合しか使えないような気がする．
+(正確にmarginalを計算しているのではなく，MAP解だけを数え上げているようにみえる)</p>
+
+<p>実は，EMのような局所解に縛られる問題を，メタヒューリスティクスを使ってなんとかしよう，というのは，学部時代の恩氏が時々
+言っていた話なのだけれど，当時は（いまも）能力が追いつかなくてぜんぜん歯が立ちませんでした．</p>
+
+<p>すぐにどうこうする話ではなさそうだけれど，むかしから微妙に興味はあった話ではあるので，
+（小さな局所解がいっぱいあるような）モデルを扱うときのためにいちおう記憶にとどめておきたい．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1034.pdf">&#8220;Scaling Semi-supervised Naive Bayes with Feature Marginals&#8221;</a> Michael R. Lucas and Doug Downey, ACL 2013</h3>
+
+<p>Semi-supervised Naive Bayesというと，EMと組み合わせたNigamの有名な論文以来，きれいな構造とシンプルなアルゴリズムのため，
+よく使われるのだけれど，データ全体を何度もなめないといけないため，計算量が問題だった．あと，EMを使う以上，モデルが変な方向へ飛んでいってしまう(局所解につかまる)ため，性能が安定しないという問題があって，ちょっと扱いづらい．</p>
+
+<p>そこで，featureの各クラスにおける出現確率だけをunlabeledデータから求める，というアイディアに基づいて高速化をはかったのがこの論文．
+ラベルつきデータが少数しか利用できない場合，featureの出現回数の&#8221;信頼性&#8221;が無くなってしまうので，大量に用意できるunlabeledデータを用いてパラメータを補正する，という感じ．</p>
+
+<p>このとき，データが正例か負例かのどちらかに属する，という仮定を用いて，学習データにおける正例負例の割合をうまく取り込むことで精度を上げている．</p>
+
+<p>Semi-supervised NBだと，わりと最近では<a href="http://www.icml-2011.org/papers/93_icmlpaper.pdf">Semi-supervised Frequency Estimate</a>(Su+ ICML&#8217;11)という，ワンパスで解いちゃう劇的に速い方法が提案されていて，
+アイディアもとても似ている．精度では今回提案された手法が優れているよう．計算時間の比較はなかったけど，同じくらい？</p>
+
+<p>Naive Bayesは超有名なので，バリエーションも超大量にあるのだけれど，NBの良いところの一つはマルチクラス分類が自然に行えるところだと思っているので，
+データが2クラス限定になっちゃうこれはどうかなーと思ったりする部分もある．
+もちろん，one-versus-allのような仕組みでいくらでもマルチクラスに拡張できるのですが．</p>
+
+<p>このへんは，2010年代っぽくない，とか言う人もいるけど，最近でも時々掘って成果を出している人がいるみたい．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1021.pdf">&#8220;Unsupervised Transcription of Historical Documents&#8221;</a> Taylor Berg-Kirkpatrick, Greg Durrett and Dan Klein, ACL 2013</h3>
+
+<p>このあいだ草津にいったときに，ちょっと趣きのある看板をみつけたので，</p>
+
+<blockquote class="twitter-tweet"><p>そういや白根山でみつけたこの看板、自然言語処理に対する挑戦っぽい <a href="http://t.co/ps3qgUCGfO">pic.twitter.com/ps3qgUCGfO</a></p>&mdash; Koji Matsuda (@conditional) <a href="https://twitter.com/conditional/statuses/349186418167406593">June 24, 2013</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p></p>
+
+<p>とか言ってたら，マジで論文が出てきた・・・．主に，むかしのタイプライターとか活版印刷で印刷された，
+現在では読みにくくなってしまっている文書をいかにOCRするか，という題材．</p>
+
+<p>モデルは， 言語モデル × typesettingモデル(文字のレイアウト：右にこれくらいズレてる，とか) × inkingモデル(インクのつけすぎで太くなっちゃってるとか) × ノイズモデル(経時変化による文字の欠けとか)を一つひとつ丁寧に組み上げて，Jointしている．
+学習はEM．ちゃんと動くのか心配だけど，一つ一つの変数がちゃんと意味を持つよう工夫しているからか(むやみに変数が多くなりすぎないように工夫しているようにみえる)，
+ちゃんと学習できているらしい．</p>
+
+<p>学習したモデルでは，人工的にインクをダバ〜っとこぼした原稿も解読できたりするようで，このへんもなかなか興味深い．モデル自体の解釈も面白そう．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1036.pdf">&#8220;Scalable Decipherment for Machine Translation via Hash Sampling&#8221;</a> Sujith Ravi, ACL 2013</h3>
+
+<p>暗号解読のノリで，言語モデル+サンプリングを使って対訳コーパスなしで翻訳をしちゃうお話の続編．
+2011年の初出以来，年々進化を続けていて，今回は主に高速化がテーマになっている．</p>
+
+<p>最初はword-to-wordの置換に基づく翻訳だけだったのが，これまでの研究で，さまざまなfeatureが使えるようになったのだけれど，
+ちょっと計算に時間がかかりすぎるようになってきたので，Hash Samplingという手法で高速化を行っている．</p>
+
+<p>Hash Samplingというのは，あんまりよくわかっていないのだけれど，ベクトル同士の類似度をはかる
+(指数分布族からのサンプリングに用いる尤度項のテイラー近似は，パラメータベクトルと事例ベクトルの内積を用いて表せるらしい)
+ときに，feature vectorの空間で直接内積をとる代わりに，適当なハッシュ関数を通して，その間の差分(ハミング距離とか)を用いる方法のよう．</p>
+
+<p>この手法によって，現在のパラメーターに近い語は高い確率でサンプルされ，そうでない語は低い確率，というサンプリングを高速に実現している．
+{0,1}ベクトルのハミング距離は最近のCPUだとかなり高速に計算できるようで，BLEU値をほとんど落とさずに，2桁くらいの高速化を実現したらしい．</p>
+
+<p>Hash Samplingは，かなり汎用性が高い高速化手法っぽいので，そのうちじっくり読む機会があればいいなと思っている．
+テイラー展開による近似 + ハッシュによる近似，という2段階の近似を経ているあたりが少し気になったりはする．</p>
+
+<hr />
+
+<h3><a href="http://aclweb.org/anthology/P/P13/P13-1127.pdf">&#8220;From Natural Language Speciﬁcations to Program Input Parsers&#8221;</a> Tao Lei, Fan Long, Regina Barzilay, and Martin Rinard, ACL 2013</h3>
+
+<p>ICPCなどのプロコンの問題を，コンピュータに解かせよう！というモチベーションがありそうな研究．
+といっても，今回はまだ問題を解くところまでは行っていなくて，入力データの解析部分に対する挑戦．
+プロコンの問題では，たいてい，</p>
+
+<blockquote><p>入力は複数のデータセットからなる． 各データセットは2つの整数 a0  と L  が1個のスペースで区切られた1行であり，
+a0  が最初の整数を， L  が桁数を表す． ただし， 1 ≤ L  ≤ 6 かつ 0 ≤ a0  &lt; 10L である．</p>
+
+<p>from <a href="http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1180&amp;lang=jp">AIZU ONLINE JUDGE</a></p></blockquote>
+
+<p>というような入力データのフォーマット指示がなされているので，これを構文解析して，パーサーを構成するC++プログラムを自動で生成しよう，というテーマ．</p>
+
+<p>用いることの出来るデータは，上に挙げたようなフォーマット指示の問題文(英語)と，実際にプロコン主催者から与えられる入力データ．
+直接プログラムそのものへの変換を考えるのではなく，フォーマット指示文から，データ構造を表す &#8220;specification tree&#8221;を生成し，
+それを通してparsingプログラム(より正確には，yaccやbisonに入力するような形式文法)の生成を行っている．</p>
+
+<p>モデルは，
+テキスト中のそれぞれの要素が，他の要素とどのような関係を持っているかを当てるための dependency parsing と，
+ それぞれのノードがプログラム内でどのような役割をもつか当てるための role labeling のふたつの要素で構成されている．</p>
+
+<p>学習は，だいたい次のような流れ．</p>
+
+<ol>
+<li>現在のモデルから specification tree をサンプリングする</li>
+<li>サンプリングされたtreeからプログラムを生成し，テスト用データをすべてパースできるか調べる(feedbackと呼ばれている)</li>
+<li>treeがどれくらい良いか，に応じて，Metropolis-Hasting ruleで次の状態を定める</li>
+</ol>
+
+
+<p>このfeedbackと呼ばれる学習手法によって，F値が54から80程度に向上したらしい．
+<a href="http://people.csail.mit.edu/taolei/papers/acl2013-slides.pdf">著者による発表スライド</a>もあるので，興味をもって頂けましたら，ぜひそちらも．</p>
+
+<p>つづく・・・かも？</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -470,42 +635,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/05/predicting-google-closures/">Predicting Google Closures</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-05T00:00:00+09:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -528,6 +657,11 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/07/28/an-introduction-to-dbpedia/">DBpedia についてすこし調べてみた</a> 
+	<a href="http://b.hatena.ne.jp/entry/http://conditional.github.io/blog/2015/07/28/an-introduction-to-dbpedia/"><img src="http://b.hatena.ne.jp/entry/image/http://conditional.github.io/blog/2015/07/28/an-introduction-to-dbpedia/"></a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/01/13/report-of-dsirnlp5/">「モデル」とは何か，について考えていたことを，DSIRNLP(データ構造と情報検索と言語処理勉強会)で発表してきました</a> 
@@ -617,7 +751,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Koji Matsuda -
+  Copyright &copy; 2015 - Koji Matsuda -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
